@@ -16,6 +16,25 @@ interface DispatchProps {
   postTweetBegin: (userId: string, message: string, geolocation: L.LatLngTuple) => void;
 }
 
+/* **************************** ↓mergeProps()を使う場合 **************************** */
+// <ModalTweetContainer/>のattributes
+// interface OwnProps {}
+
+// ModalTweetContainer: React.FC<MegedProps>の型
+// mergeProps()のみで使ってModalTweetContainerに渡さないattributesはomitする
+// type MergedProps = Omit<StateProps, ''> & Omit<DispatchProps, ''> & OwnProps;
+
+// connect(mapStateToProps, mapDispatchToProps, mergeProps)(ModalTweetContainer)の形で使う
+// const mergeProps:MergedProps<StateProps, DispatchProps, OwnProps, MergedProps> = (stateProps, dispatchProps, ownProps) => {
+// ModalTweetContainerに渡すものはここに展開
+// ...stateProps,
+// ...dipatchProps,
+// ...ownProps,
+// store, dispatchを利用する関数はここで定義してModalTweetContainerに渡す
+//   hoge: async () => {...}
+// };
+/* **************************** ↑mergeProps()を使う場合 **************************** */
+
 export type EnhancedModalTweetProps = StateProps & DispatchProps;
 
 const mapStateToProps = (state: RootState): StateProps => ({

@@ -4,6 +4,7 @@ import CustormMarker from '../../components/LeafletMap/CustomMarker';
 import {Tweet} from '../../services/socket/models';
 import {formatDateTime, fetchCurrentTime} from '../../utils/dateTime';
 
+// todo: rename to EnhancedCustomMarkerProps
 export interface CustomMarkerProps {
   tweet: Tweet;
 }
