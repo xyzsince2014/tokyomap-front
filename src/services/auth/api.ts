@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// todo: see https://d.potato4d.me/entry/20200831-factory-args/
 interface ApiConfig {
   baseURL?: string;
   timeout?: number;
@@ -36,10 +37,11 @@ export const getAuthFactory = (optionalConfig: ApiConfig = {}) => {
   const authenticate = async (): Promise<AuthenticateResult> => {
     try {
       const response = await instance.get('/auth/authenticate', {
-        validateStatus: status => status < 500,
+        validateStatus: status => status < 500, // todo: unnecessary
         withCredentials: true,
       });
 
+      // todo: remove this block
       if (response.status !== 200) {
         return {
           isAuthenticated: false,
@@ -52,6 +54,7 @@ export const getAuthFactory = (optionalConfig: ApiConfig = {}) => {
         userId: response.data.user.userId ? response.data.user.userId : '0', // todo: setting '0' here is improper
       };
     } catch (err) {
+      // todo: implement properly
       return err;
     }
   };
