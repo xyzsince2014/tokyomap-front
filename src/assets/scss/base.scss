@@ -1,10 +1,8 @@
 @charset "UTF-8";
 
 @import './libs/reset';
-@import './foundation';
-@import './layout';
-@import './objects';
 
+// todo: write at a proper place
 * {
   box-sizing: border-box;
 
@@ -13,3 +11,7 @@
     box-sizing: border-box;
   }
 }
+
+@import './foundation';
+@import './layout';
+@import './objects';
