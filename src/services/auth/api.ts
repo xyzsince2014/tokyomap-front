@@ -37,12 +37,11 @@ export const getAuthFactory = (optionalConfig: ApiConfig = {}) => {
   const authenticate = async (): Promise<AuthenticateResult> => {
     try {
       const response = await instance.get('/auth/authenticate', {
-        validateStatus: status => status < 500, // todo: unnecessary
+        validateStatus: statusCode => statusCode === 200,
         withCredentials: true,
       });
 
-      // todo: remove this block
-      if (response.status !== 200) {
+      if (!response.data.user.userId || !response.data.isAuthenticated) {
         return {
           isAuthenticated: false,
           userId: '',
@@ -50,12 +49,14 @@ export const getAuthFactory = (optionalConfig: ApiConfig = {}) => {
       }
 
       return {
-        isAuthenticated: response.data.isAuthenticated ? response.data.isAuthenticated : false,
-        userId: response.data.user.userId ? response.data.user.userId : '0', // todo: setting '0' here is improper
+        isAuthenticated: response.data.isAuthenticated,
+        userId: response.data.user.userId,
       };
     } catch (err) {
-      // todo: implement properly
-      return err;
+      return {
+        isAuthenticated: false,
+        userId: '',
+      };
     }
   };
 
