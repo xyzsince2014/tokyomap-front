@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@use './foundation' as f;
+
 .p-popup {
   min-width: 140px;
 
@@ -16,13 +18,13 @@
     &__user-name {
       display: inline-block;
       margin-right: .5em;
-      font-weight: $font-weight-bold;
+      font-weight: f.$font-weight-bold;
     }
 
     &__posted-at {
-      @include link-all-status-content {
+      @include f.link-all-status-content {
         cursor: pointer;
-        color: $colour-blue;
+        color: f.$colour-blue;
         text-decoration: none;
         font-size: .9em;
       }

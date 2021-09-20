@@ -1,13 +1,15 @@
 @charset "UTF-8";
 
+@use './foundation' as f;
+
 .u-hide-pc {
-  @include view-at(p) {
+  @include f.view-at(p) {
     display: none;
   }
 }
 
 .u-hide-sp {
-  @include view-at(s) {
+  @include f.view-at(s) {
     display: none;
   }
 }

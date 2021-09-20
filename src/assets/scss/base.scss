@@ -1,17 +1,5 @@
 @charset "UTF-8";
 
-@import './libs/reset';
-
-// todo: write at a proper place
-* {
-  box-sizing: border-box;
-
-  &::before,
-  &::after {
-    box-sizing: border-box;
-  }
-}
-
-@import './foundation';
-@import './layout';
-@import './objects';
+@use './libs/reset';
+@use './layout';
+@use './objects';

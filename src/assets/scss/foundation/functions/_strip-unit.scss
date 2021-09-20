@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@use 'sass:math';
+
 /**
 * strip off a unit to return a value only
 * Notice: http://stackoverflow.com/a/12335841
@@ -9,7 +11,7 @@
 */
 @function strip-unit($number) {
   @if type-of($number) == 'number' and not unitless($number) {
-    @return $number / ($number * 0 + 1);
+    @return math.div($number, ($number * 0 + 1));
   }
 
   @return $number;

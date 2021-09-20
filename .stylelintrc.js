@@ -83,7 +83,7 @@ module.exports = {
       'at-rule-no-unknown': [
         true,
         {
-          ignoreAtRules: ['function', 'mixin', 'include', 'if', 'else if', 'return', 'else', 'each', 'for', 'content'], // rules ignored
+          ignoreAtRules: ['function', 'mixin', 'include', 'if', 'else if', 'return', 'else', 'each', 'for', 'content', 'use', 'forward'],
         },
       ],
       'at-rule-name-case': 'lower', // @ルールは小文字指定（大文字を禁止）

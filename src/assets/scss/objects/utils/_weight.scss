@@ -1,49 +1,51 @@
 @charset "UTF-8";
 
+@use './foundation' as f;
+
 .u-weight-bold {
-  font-weight: $font-weight-bold;
+  font-weight: f.$font-weight-bold;
 }
 
 .u-weight-normal {
-  font-weight: $font-weight-normal;
+  font-weight: f.$font-weight-normal;
 }
 
 .u-weight-light {
-  font-weight: $font-weight-light;
+  font-weight: f.$font-weight-light;
 }
 
 .u-weight-bold-pc {
-  @include view-at(p) {
-    font-weight: $font-weight-bold;
+  @include f.view-at(p) {
+    font-weight: f.$font-weight-bold;
   }
 }
 
 .u-weight-normal-pc {
-  @include view-at(p) {
-    font-weight: $font-weight-normal;
+  @include f.view-at(p) {
+    font-weight: f.$font-weight-normal;
   }
 }
 
 .u-weight-light-pc {
-  @include view-at(p) {
-    font-weight: $font-weight-light;
+  @include f.view-at(p) {
+    font-weight: f.$font-weight-light;
   }
 }
 
 .u-weight-bold-sp {
-  @include view-at(s) {
-    font-weight: $font-weight-bold;
+  @include f.view-at(s) {
+    font-weight: f.$font-weight-bold;
   }
 }
 
 .u-weight-normal-sp {
-  @include view-at(s) {
-    font-weight: $font-weight-normal;
+  @include f.view-at(s) {
+    font-weight: f.$font-weight-normal;
   }
 }
 
 .u-weight-light-sp {
-  @include view-at(s) {
-    font-weight: $font-weight-light;
+  @include f.view-at(s) {
+    font-weight: f.$font-weight-light;
   }
 }

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@import './modal';
-@import './leafletmap';
-@import './spinner';
-@import './control';
+@forward './modal';
+@forward './leafletmap';
+@forward './spinner';
+@forward './control';

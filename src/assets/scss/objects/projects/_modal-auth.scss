@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@use './foundation' as f;
+
 .p-modal-auth {
   margin: auto;
   background: inherit;
@@ -8,7 +10,7 @@
   max-height: 250px;
   max-width: 300px;
 
-  @include view-at('p') {
+  @include f.view-at('p') {
     padding: 25px;
   }
 
@@ -32,9 +34,9 @@
   }
 
   &__btn {
-    color: $colour-white;
+    color: f.$colour-white;
     font-size: 16px;
-    font-weight: $font-weight-bold;
+    font-weight: f.$font-weight-bold;
     line-height: 22px;
 
     &:not(:first-child) {
@@ -42,15 +44,15 @@
     }
 
     &--facebook {
-      background-color: $colour-facebook;
+      background-color: f.$colour-facebook;
     }
 
     &--twitter {
-      background-color: $colour-blue;
+      background-color: f.$colour-blue;
     }
 
     &--line {
-      background-color: $colour-line;
+      background-color: f.$colour-line;
     }
 
     &__inner {
