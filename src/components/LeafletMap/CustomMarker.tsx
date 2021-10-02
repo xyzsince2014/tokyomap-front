@@ -15,6 +15,7 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({tweet, timeRemaining}) => {
   const ringLabel = timeRemaining > 60 * 85 ? 'warning' : 'caution';
   const isRingHidden = timeRemaining < 60 * 80;
 
+  // todo: rename
   const html =
     tweet.profileImageUrl !== null
       ? `<svg xmlns="http://www.w3.org/2000/svg" width="43.3" height="42.4" viewBox="0 0 43.3 42.4">

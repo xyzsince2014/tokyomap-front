@@ -27,7 +27,7 @@ describe('src/services/auth/api.ts', () => {
       const authenticate = getAuthFactory();
       const {isAuthenticated, userId} = await authenticate();
       expect(isAuthenticated).toBeFalsy();
-      expect(userId).toBe('0');
+      expect(userId).toBe('');
     });
 
     it('should resolve with forbidden', async () => {
@@ -35,7 +35,7 @@ describe('src/services/auth/api.ts', () => {
       try {
         const authenticate = getAuthFactory();
         await authenticate(); // todo: cover L44-47
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).toBe(403);
       }
     });
@@ -45,7 +45,7 @@ describe('src/services/auth/api.ts', () => {
       try {
         const authenticate = getAuthFactory();
         await authenticate();
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).toBe(500);
       }
     });

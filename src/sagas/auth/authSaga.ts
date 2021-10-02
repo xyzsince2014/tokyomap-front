@@ -25,7 +25,7 @@ export function* runAuthenticate(apiHandler: typeof authenticate) {
   try {
     const {isAuthenticated, userId} = yield call(apiHandler);
     yield put(authActions.authenticate.resolve({isAuthenticated, userId}));
-  } catch (err) {
+  } catch (err: unknown) {
     yield put(authActions.authenticate.reject(err));
   }
 }

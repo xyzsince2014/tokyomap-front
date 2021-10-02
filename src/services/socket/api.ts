@@ -2,8 +2,8 @@ export const getGeolocationFactory = () => {
   const getGeolocation = (): Promise<L.LatLngTuple> | void => {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
-        (pos: Position) => resolve([pos.coords.latitude, pos.coords.longitude]),
-        (err: PositionError) => reject(new Error(`${err}`)),
+        (pos: GeolocationPosition) => resolve([pos.coords.latitude, pos.coords.longitude]),
+        (err: GeolocationPositionError) => reject(new Error(`${err}`)),
         {
           enableHighAccuracy: true,
           timeout: 1000 * 10,

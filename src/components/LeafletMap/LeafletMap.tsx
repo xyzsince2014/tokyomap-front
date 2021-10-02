@@ -22,7 +22,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   getGeolocationBegin = () => {},
 }) => {
   return (
-    <div>
+    <>
       <Map
         className="l-leafletmap"
         center={[35.680722, 139.767271]}
@@ -80,7 +80,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
           <ModalAuth />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,9 +1,9 @@
-import {eventChannel} from 'redux-saga';
+import {eventChannel, EventChannel} from 'redux-saga';
 
-import {connectToSocket, postTweet} from '../../actions/Socket/socketActionCreator';
+import {connectToSocket, postTweet, SocketAction} from '../../actions/Socket/socketActionCreator';
 import * as Models from '../../services/socket/models';
 
-const subscribe = (socket: SocketIOClient.Socket) =>
+const subscribe = (socket: SocketIOClient.Socket): EventChannel<SocketAction> =>
   eventChannel(emit => {
     const initSocketStateResolve = (tweets: Models.Tweet[]) => {
       // todo: display connection notification

@@ -57,11 +57,13 @@ const ModalTweetContainer: React.FC<EnhancedModalTweetProps> = ({
   postTweetBegin,
 }) => {
   const handlePost = (): void => {
+    // todo: use `useRefs` instead of `document.getElementById`
     const message: HTMLInputElement = document.getElementById('message') as HTMLInputElement;
-    if (!message.value || !(Buffer.byteLength(message.value, 'utf-8') < 256)) {
-      window.alert('invalid input');
-      return;
-    }
+    // todo: `Buffer` was already removed caz it cause some trouble
+    // if (!message.value || !(Buffer.byteLength(message.value, 'utf-8') < 256)) {
+    //   window.alert('invalid input');
+    //   return;
+    // }
     postTweetBegin(userId, message.value, geolocation);
     message.value = '';
   };

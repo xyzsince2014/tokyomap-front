@@ -109,7 +109,6 @@ module.exports = {
     // react rules
     "react/jsx-filename-extension": ["error", { extensions: ["jsx", "tsx"] }], // resctricts extensions which may contain jsx
     "react/jsx-one-expression-per-line": "off", // limits to 1 expression per line in jsx
-    "react/jsx-uses-react": "error", // marks variables designated by @jsx pragma as used. About @jsx prgma, see here: https://bit.ly/2PHsrnT
     "react/jsx-uses-vars": "error", // marks variables used in jsx as used
     "react/prop-types": "off", // warns of import props' data types
     "react/prefer-stateless-function": "off", // enforcing stateless components to be pure functions

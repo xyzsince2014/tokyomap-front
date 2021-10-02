@@ -14,7 +14,7 @@ export function* watchSocket() {
     const action: ReturnType<typeof connectToSocket.begin> = yield take(
       ActionType.CONNECT_SOCKET_BEGIN,
     );
-    const socket = yield call(createSocketConnection);
+    const socket: SocketIOClient.Socket = yield call(createSocketConnection);
     yield fork(initSocketState, socket);
     yield fork(updateSocketState, socket);
     yield fork(dispatchActionFromChannel, socket);
