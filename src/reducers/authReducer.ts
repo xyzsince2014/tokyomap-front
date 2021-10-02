@@ -18,26 +18,28 @@ const authReducer: Reducer<AuthState, AuthAction> = (
   action: AuthAction,
 ): AuthState => {
   switch (action.type) {
-    case ActionType.BEGIN:
+    case ActionType.BEGIN: {
       return {
         ...state,
       };
-    case ActionType.RESOLVE:
+    }
+    case ActionType.RESOLVE: {
       return {
         ...state,
         isAuthenticated: action.payload.result.isAuthenticated,
         userId: action.payload.result.userId,
       };
-    case ActionType.REJECT:
+    }
+    case ActionType.REJECT: {
       return {
         ...state,
         isAuthenticated: false,
       };
-    default:
-      /* eslint-disable no-case-declarations */
-      /* eslint-disable @typescript-eslint/no-unused-vars */
+    }
+    default: {
       const _: never = action;
       return state;
+    }
   }
 };
 

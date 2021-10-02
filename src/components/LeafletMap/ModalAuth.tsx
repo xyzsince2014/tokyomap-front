@@ -5,7 +5,6 @@ import FacebookLogo from '../../assets/images/icons/logo_fb.png';
 import LineLogo from '../../assets/images/icons/logo_line.png';
 
 const ModalAuth: React.FC = () => (
-  /* eslint-disable jsx-a11y/click-events-have-key-events */
   <div
     className="l-modal"
     role="dialog"
@@ -23,7 +22,7 @@ const ModalAuth: React.FC = () => (
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    window.location.href = `${process.env.DOMAIN_API}/auth/twitter`;
+                    window.location.href = `${process.env.DOMAIN_API!}/auth/twitter`;
                   }}
                   className="p-modal-auth__btn__inner"
                 >
@@ -36,7 +35,7 @@ const ModalAuth: React.FC = () => (
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    window.location.href = `${process.env.DOMAIN_API}/auth/facebook`;
+                    window.location.href = `${process.env.DOMAIN_API!}/auth/facebook`;
                   }}
                   className="p-modal-auth__btn__inner"
                 >
@@ -49,7 +48,7 @@ const ModalAuth: React.FC = () => (
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    window.location.href = `${process.env.DOMAIN_API}/auth/line`;
+                    window.location.href = `${process.env.DOMAIN_API!}/auth/line`;
                   }}
                   className="p-modal-auth__btn__inner"
                 >
@@ -73,7 +72,6 @@ const ModalAuth: React.FC = () => (
       </div>
     </div>
   </div>
-  /* eslint-enable jsx-a11y/click-events-have-key-events */
 );
 
 export default ModalAuth;

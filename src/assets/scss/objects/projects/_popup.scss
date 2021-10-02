@@ -23,10 +23,10 @@
 
     &__posted-at {
       @include f.link-all-status-content {
-        cursor: pointer;
         color: f.$colour-blue;
-        text-decoration: none;
         font-size: .9em;
+        text-decoration: none;
+        cursor: pointer;
       }
     }
 

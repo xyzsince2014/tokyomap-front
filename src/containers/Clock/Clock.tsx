@@ -18,6 +18,6 @@ const useClock = () => {
   return datetime;
 };
 
-const ClockContainer: React.FC<{}> = () => <Clock datetime={useClock()} />;
+const ClockContainer: React.FC = () => <Clock datetime={useClock()} />;
 
 export default ClockContainer;

@@ -10,7 +10,9 @@
  * @param {Element} modal
  */
 export const setModals = (modal: Element) => {
-  const modalId = modal.getAttribute('data-modal');
+  const modalId = modal.getAttribute('data-modal') ?? '';
+
+  // todo: use `const`
   let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 
   const stopScroll = (e: Event) => {
@@ -32,6 +34,8 @@ export const setModals = (modal: Element) => {
   };
 
   // open triggers
+  // todo: use `useRef` instead of `document.querySelectorAll`
+  // todo: replace `map` with `forEach`
   Array.from(document.querySelectorAll(`[data-modal-trigger="${modalId}"]`)).map(el => {
     el.addEventListener('click', () => {
       openModal();

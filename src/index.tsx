@@ -16,11 +16,9 @@ import './assets/scss/base.scss';
 const composeEnhancers =
   process.env.NODE_ENV === 'development' &&
   typeof window === 'object' &&
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 const sagaMiddleWare = createSagaMiddleware();
 const enhancer = composeEnhancers(applyMiddleware(sagaMiddleWare));

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 // todo: see https://d.potato4d.me/entry/20200831-factory-args/
 interface ApiConfig {
@@ -26,7 +26,12 @@ const createAxiosInstance = (optionalConfig: ApiConfig) => {
   return instance;
 };
 
-interface AuthenticateResult {
+interface AuthenticateResponse {
+  isAuthenticated: boolean;
+  user?: {userId: string};
+}
+
+export interface AuthenticateResult {
   isAuthenticated: boolean;
   userId: string;
 }
@@ -36,12 +41,15 @@ export const getAuthFactory = (optionalConfig: ApiConfig = {}) => {
 
   const authenticate = async (): Promise<AuthenticateResult> => {
     try {
-      const response = await instance.get('/auth/authenticate', {
-        validateStatus: statusCode => statusCode === 200,
-        withCredentials: true,
-      });
+      const response: AxiosResponse<AuthenticateResponse> = await instance.get(
+        '/auth/authenticate',
+        {
+          validateStatus: statusCode => statusCode === 200,
+          withCredentials: true,
+        },
+      );
 
-      if (!response.data.user.userId || !response.data.isAuthenticated) {
+      if (!response.data.user?.userId || !response.data.isAuthenticated) {
         return {
           isAuthenticated: false,
           userId: '',

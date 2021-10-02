@@ -1,5 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+
 import {getAuthFactory} from '../../../services/auth/api';
 
 describe('src/services/auth/api.ts', () => {

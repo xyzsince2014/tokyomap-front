@@ -13,7 +13,7 @@ export interface CustomMarkerProps {
 const CustomMarker: React.FC<CustomMarkerProps> = ({tweet, timeRemaining}) => {
   const pinOpacity = timeRemaining / (60 * 90);
   const ringLabel = timeRemaining > 60 * 85 ? 'warning' : 'caution';
-  const isRingHidden = timeRemaining < 60 * 80;
+  const isRingHidden = timeRemaining < 60 * 80 ? 'true' : 'false';
 
   // todo: rename
   const html =
@@ -40,14 +40,13 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({tweet, timeRemaining}) => {
   });
 
   return (
-    /* eslint-disable jsx-a11y/anchor-is-valid */
     <Marker position={[tweet.lat, tweet.lng]} icon={icon}>
       <Popup className="leaflet-popup-content-wrapper p-popup">
         <div className="leaflet-popup-content p-popup__content">
           <span className="p-popup__content__user-name">{tweet.userName}</span>
-          <a className="p-popup__content__posted-at" title={tweet.postedAt} href="#">
+          <span className="p-popup__content__posted-at" title={tweet.postedAt}>
             {formatDateTime(tweet.postedAt).substr(-8, 5)}
-          </a>
+          </span>
           <br />
           <span className="p-popup__content__message">{tweet.message}</span>
         </div>
@@ -57,7 +56,6 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({tweet, timeRemaining}) => {
         {tweet.message}
       </Tooltip>
     </Marker>
-    /* eslint-enable jsx-a11y/anchor-is-valid */
   );
 };
 

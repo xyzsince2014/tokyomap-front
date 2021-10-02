@@ -14,7 +14,7 @@ export const authenticate = {
     type: ActionType.RESOLVE as typeof ActionType.RESOLVE,
     payload: {result},
   }),
-  reject: (error: any) => ({
+  reject: (error: unknown) => ({
     type: ActionType.REJECT as typeof ActionType.REJECT,
     payload: {error},
     error: true,

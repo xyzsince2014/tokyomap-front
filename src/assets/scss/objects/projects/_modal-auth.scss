@@ -3,31 +3,31 @@
 @use './foundation' as f;
 
 .p-modal-auth {
-  margin: auto;
-  background: inherit;
-  border-radius: 2px;
   width: 100%;
-  max-height: 250px;
   max-width: 300px;
+  max-height: 250px;
+  margin: auto;
+  border-radius: 2px;
+  background: inherit;
 
   @include f.view-at('p') {
     padding: 25px;
   }
 
   &::after {
+    content: '';
     position: absolute;
+    z-index: -1;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    margin: auto;
-    margin-top: 0;
-    content: '';
-    z-index: -1;
     width: 100%;
+    max-width: 300px;
     height: 100%;
     max-height: 250px;
-    max-width: 300px;
+    margin: auto;
+    margin-top: 0;
     background: inherit;
     box-shadow: 0 0 0 200px rgba(255, 255, 255, .05) inset;
     filter: blur(10px);
@@ -56,13 +56,13 @@
     }
 
     &__inner {
-      cursor: pointer;
       display: flex;
       padding: .5em .5em .5em 1em;
+      cursor: pointer;
 
       & > img {
-        height: 20px;
         width: 20px;
+        height: 20px;
       }
 
       & > span {
