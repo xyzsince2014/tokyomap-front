@@ -47,6 +47,7 @@ const LeafletMapContainer: React.FC<EnhancedLeafletMapProps> = ({
   React.useEffect(() => {
     connectToSocketInit();
     getIsAuthorisedBegin();
+    // todo: disconnectFromSocket on unmount, i.e. return a callback to disconnect here
   }, []);
   return (
     <LeafletMap
