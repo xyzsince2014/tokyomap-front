@@ -1,11 +1,10 @@
-import * as React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 
 import {postTweet} from '../../actions/Socket/socketActionCreator';
 import {RootState} from '../../reducers/rootReducer';
 import ModalTweet from '../../components/LeafletMap/ModalTweet';
-import {setModals} from '../../utils/modal';
+import useModal from '../../hooks/LeafletMap/use-modal';
 
 interface StateProps {
   userId: string;
@@ -56,26 +55,21 @@ const ModalTweetContainer: React.FC<EnhancedModalTweetProps> = ({
   geolocation,
   postTweetBegin,
 }) => {
+  const modalRef = useModal();
+
   const handlePost = (): void => {
-    // todo: use `useRefs` instead of `document.getElementById`
-    const message: HTMLInputElement = document.getElementById('message') as HTMLInputElement;
-    // todo: `Buffer` was already removed caz it cause some trouble
-    // if (!message.value || !(Buffer.byteLength(message.value, 'utf-8') < 256)) {
-    //   window.alert('invalid input');
-    //   return;
-    // }
+    const message = document.getElementById('message') as HTMLInputElement; // todo: use `useRefs` instead of `document.getElementById`
+    if (!message.value || message.value.length > 256) {
+      /* eslint-disable no-alert */
+      window.alert('invalid input');
+      /* eslint-enable no-alert */
+      return;
+    }
     postTweetBegin(userId, message.value, geolocation);
     message.value = '';
   };
 
-  React.useEffect(() => {
-    Array.from(document.getElementsByClassName('l-modal')).map(modal => {
-      setModals(modal);
-      return false;
-    });
-  }, []);
-
-  return <ModalTweet handlePost={handlePost} />;
+  return <ModalTweet ref={modalRef} handlePost={handlePost} />;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalTweetContainer);

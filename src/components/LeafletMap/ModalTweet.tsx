@@ -1,16 +1,17 @@
-import * as React from 'react';
+import {forwardRef} from 'react';
 
-export interface ModalTweetProps {
+interface ModalTweetProps {
   handlePost: () => void;
 }
 
-const Modal: React.FC<ModalTweetProps> = ({handlePost = () => {}}) => (
+const ModalTweet = forwardRef<HTMLDivElement, ModalTweetProps>(({handlePost}, modalRef) => (
   <div
     className="l-modal"
     role="dialog"
     data-modal="modal_tweet"
     aria-modal="true"
     aria-hidden="true"
+    ref={modalRef}
   >
     <div className="l-modal__inner">
       <div className="l-modal__inner__content" data-modal-wrapper="modal_tweet">
@@ -48,6 +49,6 @@ const Modal: React.FC<ModalTweetProps> = ({handlePost = () => {}}) => (
       </div>
     </div>
   </div>
-);
+));
 
-export default Modal;
+export default ModalTweet;

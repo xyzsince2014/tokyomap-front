@@ -1,16 +1,17 @@
-import * as React from 'react';
+import {forwardRef} from 'react';
 
 import TwitterLogo from '../../assets/images/icons/logo_tw.png';
 import FacebookLogo from '../../assets/images/icons/logo_fb.png';
 import LineLogo from '../../assets/images/icons/logo_line.png';
 
-const ModalAuth: React.FC = () => (
+const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
   <div
     className="l-modal"
     role="dialog"
     data-modal="modal_auth"
     aria-modal="true"
     aria-hidden="true"
+    ref={ref}
   >
     <div className="l-modal__inner">
       <div className="l-modal__inner__content" data-modal-wrapper="modal_auth">
@@ -72,6 +73,6 @@ const ModalAuth: React.FC = () => (
       </div>
     </div>
   </div>
-);
+));
 
 export default ModalAuth;

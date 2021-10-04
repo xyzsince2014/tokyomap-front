@@ -1,18 +1,9 @@
-import * as React from 'react';
-
 import ModalAuth from '../../components/LeafletMap/ModalAuth';
-import {setModals} from '../../utils/modal';
+import useModal from '../../hooks/LeafletMap/use-modal';
 
 const ModalAuthContainer: React.FC = () => {
-  // todo: use `useRef` instead of `useEffect` and `document.getElementsByClassName`
-  React.useEffect(() => {
-    Array.from(document.getElementsByClassName('l-modal')).map(modal => {
-      setModals(modal);
-      return false;
-    });
-  }, []);
-
-  return <ModalAuth />;
+  const modalRef = useModal();
+  return <ModalAuth ref={modalRef} />;
 };
 
 export default ModalAuthContainer;

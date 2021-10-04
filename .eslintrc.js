@@ -68,6 +68,7 @@ module.exports = {
     'space-before-blocks': ['warn', {functions: 'always'}], // a space before '{' after function or class
     'no-undef': 'error', // warn if an undefined var is used
     'import/prefer-default-export': 'off', // If there is only a single export from a module, prefer default export over named export
+    'no-empty-pattern': 'off',
 
     // eslint-plugin-jsx-a11y
     'jsx-a11y/anchor-is-valid': 'error',
