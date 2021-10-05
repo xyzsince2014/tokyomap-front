@@ -1,10 +1,10 @@
-import * as React from 'react';
+import {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 
 import {authenticate} from '../../actions/Auth/authActionCreator';
 import {connectToSocket, getGeolocation} from '../../actions/Socket/socketActionCreator';
-
+import DatetimeProvider from '../../providers/datetime/DatetimeProvider';
 import {RootState} from '../../reducers/rootReducer';
 import * as Models from '../../services/socket/models';
 import LeafletMap, {LeafletMapProps} from '../../components/LeafletMap/LeafletMap';
@@ -44,17 +44,20 @@ const LeafletMapContainer: React.FC<EnhancedLeafletMapProps> = ({
   getIsAuthorisedBegin,
   getGeolocationBegin,
 }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     connectToSocketInit();
     getIsAuthorisedBegin();
     // todo: disconnectFromSocket on unmount, i.e. return a callback to disconnect here
   }, [connectToSocketInit, getIsAuthorisedBegin]);
+
   return (
-    <LeafletMap
-      tweets={tweets}
-      isAuthenticated={isAuthenticated}
-      getGeolocationBegin={getGeolocationBegin}
-    />
+    <DatetimeProvider>
+      <LeafletMap
+        tweets={tweets}
+        isAuthenticated={isAuthenticated}
+        getGeolocationBegin={getGeolocationBegin}
+      />
+    </DatetimeProvider>
   );
 };
 

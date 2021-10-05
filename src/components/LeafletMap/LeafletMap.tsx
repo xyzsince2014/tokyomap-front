@@ -5,7 +5,7 @@ import {BiLogOutCircle} from 'react-icons/bi';
 import {TiMessage} from 'react-icons/ti';
 
 import {Tweet} from '../../services/socket/models';
-import Clock from '../../containers/Clock/Clock';
+import Clock from '../Clock/Clock';
 import CustomMarker from '../../containers/LeafletMap/CustomMarker';
 import ModalTweet from '../../containers/LeafletMap/ModalTweet';
 import ModalAuth from '../../containers/LeafletMap/ModalAuth';

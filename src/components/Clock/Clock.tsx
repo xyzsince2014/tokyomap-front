@@ -1,9 +1,10 @@
-import * as React from 'react';
+import {useContext} from 'react';
 
-interface ClockProps {
-  datetime: string;
-}
+import DatetimeContext from '../../providers/datetime/datetime-context';
 
-const Clock: React.FC<ClockProps> = ({datetime}) => <div className="p-clock">{datetime}</div>;
+const Clock: React.FC = () => {
+  const {datetime} = useContext(DatetimeContext);
+  return <div className="p-clock">{datetime}</div>;
+};
 
 export default Clock;
