@@ -1,70 +1,78 @@
 import {Reducer} from 'redux';
 
-import {SocketAction} from '../actions/Socket/socketActionCreator';
-import * as ActionType from '../actions/Socket/socketConstants';
-import * as Models from '../services/socket/models';
+import {
+  ConnectSocketType,
+  PostTweetType,
+  GetGeolocationType,
+} from '../actions/socket/socketActionType';
+import {SocketAction} from '../actions/socket/socketActionCreators';
 
 export interface SocketState {
-  tweets: Models.Tweet[];
+  tweets: Tweet[];
   geolocation: L.LatLngTuple;
 }
 
+// default geolocation is Tokyo Sta.
+const initialSocketState: SocketState = {tweets: [], geolocation: [35.680722, 139.767271]};
+
 const socketReducer: Reducer<SocketState, SocketAction> = (
-  state: SocketState = {tweets: [], geolocation: [35.680722, 139.767271]}, // default geolocation is Tokyo Sta.
+  state: SocketState = initialSocketState,
   action: SocketAction,
 ): SocketState => {
   switch (action.type) {
-    case ActionType.CONNECT_SOCKET_BEGIN: {
+    case ConnectSocketType.CONNECT_SOCKET_BEGIN: {
       return {
         ...state,
       };
     }
-    case ActionType.CONNECT_SOCKET_RESOLVE: {
+    case ConnectSocketType.CONNECT_SOCKET_RESOLVE: {
       return {
         ...state,
-        tweets: action.payload.tweets,
+        tweets: action.payload?.tweets ?? [],
       };
     }
-    case ActionType.CONNECT_SOCKET_REJECT: {
-      return {
-        ...state,
-      };
-    }
-    case ActionType.POST_TWEET_BEGIN: {
+    case ConnectSocketType.CONNECT_SOCKET_REJECT: {
       return {
         ...state,
       };
     }
-    case ActionType.POST_TWEET_RESOLVE: {
-      return {
-        ...state,
-        tweets: action.payload.tweets,
-      };
-    }
-    case ActionType.POST_TWEET_REJECT: {
+    case PostTweetType.POST_TWEET_BEGIN: {
       return {
         ...state,
       };
     }
-    case ActionType.GET_GEOLOCATION_BEGIN: {
+    case PostTweetType.POST_TWEET_RESOLVE: {
+      const payload = action.payload as {tweets: Tweet[]};
+      return {
+        ...state,
+        tweets: payload.tweets,
+      };
+    }
+    case PostTweetType.POST_TWEET_REJECT: {
       return {
         ...state,
       };
     }
-    case ActionType.GET_GEOLOCATION_RESOLVE: {
+    case GetGeolocationType.GET_GEOLOCATION_BEGIN: {
       return {
         ...state,
-        geolocation: action.payload.geolocation,
       };
     }
-    case ActionType.GET_GEOLOCATION_REJECT: {
+    case GetGeolocationType.GET_GEOLOCATION_RESOLVE: {
       return {
         ...state,
-        geolocation: [35.680722, 139.767271], // set geolocation = Tokyo Sta.
+        geolocation: action.payload?.geolocation ?? initialSocketState.geolocation,
+      };
+    }
+    case GetGeolocationType.GET_GEOLOCATION_REJECT: {
+      return {
+        ...state,
+        geolocation: initialSocketState.geolocation,
       };
     }
     default: {
-      const _: never = action;
+      // todo: fix the line below
+      // const _: never = action.type;
       return state;
     }
   }

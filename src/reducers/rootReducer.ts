@@ -7,7 +7,7 @@ export interface RootState {
   authState: AuthState;
 }
 
-const rootReducer = combineReducers({
+const rootReducer = combineReducers<RootState>({
   socketState: socketReducer,
   authState: authReducer,
 });

@@ -1,49 +1,28 @@
-import {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators, Dispatch} from 'redux';
+import {useEffect, useCallback} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {authenticate} from '../../actions/Auth/authActionCreator';
-import {connectToSocket, getGeolocation} from '../../actions/Socket/socketActionCreator';
+import {authenticate} from '../../actions/auth/authActionCreators';
+import {connectToSocket, getGeolocation} from '../../actions/socket/socketActionCreators';
 import DatetimeProvider from '../../providers/datetime/DatetimeProvider';
 import {RootState} from '../../reducers/rootReducer';
-import * as Models from '../../services/socket/models';
-import LeafletMap, {LeafletMapProps} from '../../components/LeafletMap/LeafletMap';
+import LeafletMap from '../../components/LeafletMap/LeafletMap';
 
-interface StateProps {
-  tweets: Models.Tweet[];
+interface LeafletMapState {
+  tweets: Tweet[];
   isAuthenticated: boolean;
 }
 
-interface DispatchProps {
-  connectToSocketInit: () => void;
-  getIsAuthorisedBegin: () => void;
-  getGeolocationBegin: () => void;
-}
+const LeafletMapContainer: React.FC = () => {
+  const {tweets, isAuthenticated} = useSelector<RootState, LeafletMapState>(rootState => ({
+    tweets: rootState.socketState.tweets,
+    isAuthenticated: rootState.authState.isAuthenticated,
+  }));
 
-type EnhancedLeafletMapProps = LeafletMapProps & StateProps & DispatchProps;
+  const dispatch = useDispatch();
+  const connectToSocketInit = useCallback(() => dispatch(connectToSocket.begin()), [dispatch]);
+  const getIsAuthorisedBegin = useCallback(() => dispatch(authenticate.begin()), [dispatch]);
+  const getGeolocationBegin = useCallback(() => dispatch(getGeolocation.begin()), [dispatch]);
 
-const mapStateToProps = (state: RootState): StateProps => ({
-  tweets: state.socketState.tweets,
-  isAuthenticated: state.authState.isAuthenticated,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
-  bindActionCreators(
-    {
-      connectToSocketInit: () => connectToSocket.begin(),
-      getIsAuthorisedBegin: () => authenticate.begin(),
-      getGeolocationBegin: () => getGeolocation.begin(),
-    },
-    dispatch,
-  );
-
-const LeafletMapContainer: React.FC<EnhancedLeafletMapProps> = ({
-  tweets,
-  isAuthenticated,
-  connectToSocketInit,
-  getIsAuthorisedBegin,
-  getGeolocationBegin,
-}) => {
   useEffect(() => {
     connectToSocketInit();
     getIsAuthorisedBegin();
@@ -61,4 +40,4 @@ const LeafletMapContainer: React.FC<EnhancedLeafletMapProps> = ({
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeafletMapContainer);
+export default LeafletMapContainer;

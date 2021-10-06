@@ -1,6 +1,5 @@
 import useTimer from '../../hooks/leafletMap/useTimer';
 import CustormMarker from '../../components/LeafletMap/CustomMarker';
-import {Tweet} from '../../services/socket/models';
 
 interface EnhancedCustomMarkerProps {
   tweet: Tweet;

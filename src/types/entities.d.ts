@@ -1,4 +1,4 @@
-export interface Tweet {
+declare interface Tweet {
   tweetId: string;
   userId?: number;
   userName: string;

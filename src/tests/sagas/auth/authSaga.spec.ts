@@ -1,9 +1,8 @@
-import {AxiosError} from 'axios';
 import {expectSaga} from 'redux-saga-test-plan';
 
 import authReducer from '../../../reducers/authReducer';
 import {watchGetIsAuthorised} from '../../../sagas/auth/authSaga';
-import * as authActions from '../../../actions/Auth/authActionCreator';
+import * as authActions from '../../../actions/auth/authActionCreators';
 
 describe('authSaga with authReducer', () => {
   const apiHandler = jest.fn(); // mock apiHandler
@@ -29,8 +28,8 @@ describe('authSaga with authReducer', () => {
     apiHandler.mockRejectedValue(err);
     return expectSaga(watchGetIsAuthorised, apiHandler)
       .withReducer(authReducer)
-      .hasFinalState({isAuthenticated: false, userId: '0'})
-      .put(authActions.authenticate.reject(err as AxiosError))
+      .hasFinalState({isAuthenticated: false, userId: ''})
+      .put(authActions.authenticate.reject())
       .dispatch(authActions.authenticate.begin())
       .silentRun();
   });

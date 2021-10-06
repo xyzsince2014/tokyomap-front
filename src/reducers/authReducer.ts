@@ -1,16 +1,16 @@
 import {Reducer} from 'redux';
 
-import {AuthAction} from '../actions/Auth/authActionCreator';
-import * as ActionType from '../actions/Auth/authConstants';
+import {AuthAction} from '../actions/auth/authActionCreators';
+import {AuthActionType} from '../actions/auth/authActionType';
 
 export interface AuthState {
   isAuthenticated: boolean;
   userId: string;
 }
 
-export const initialAuthState = {
+export const initialAuthState: AuthState = {
   isAuthenticated: false,
-  userId: '0',
+  userId: '',
 };
 
 const authReducer: Reducer<AuthState, AuthAction> = (
@@ -18,26 +18,26 @@ const authReducer: Reducer<AuthState, AuthAction> = (
   action: AuthAction,
 ): AuthState => {
   switch (action.type) {
-    case ActionType.BEGIN: {
+    case AuthActionType.BEGIN: {
       return {
         ...state,
       };
     }
-    case ActionType.RESOLVE: {
+    case AuthActionType.RESOLVE: {
       return {
         ...state,
-        isAuthenticated: action.payload.result.isAuthenticated,
-        userId: action.payload.result.userId,
+        isAuthenticated: action.payload?.result.isAuthenticated ?? false,
+        userId: action.payload?.result.userId ?? '',
       };
     }
-    case ActionType.REJECT: {
+    case AuthActionType.REJECT: {
       return {
         ...state,
         isAuthenticated: false,
       };
     }
     default: {
-      const _: never = action;
+      const _: never = action.type;
       return state;
     }
   }

@@ -2,9 +2,13 @@ import {EventChannel} from 'redux-saga';
 import {put, take, call} from 'redux-saga/effects';
 import io from 'socket.io-client';
 
+import {PostTweetType} from '../../actions/socket/socketActionType';
+import {
+  getGeolocation,
+  PostTweetAction,
+  SocketAction,
+} from '../../actions/socket/socketActionCreators';
 import subscribe from './subscriber';
-import * as ActionType from '../../actions/Socket/socketConstants';
-import {postTweet, getGeolocation, SocketAction} from '../../actions/Socket/socketActionCreator';
 import {getGeolocationFactory} from '../../services/socket/api';
 
 export const createSocketConnection = (): Promise<SocketIOClient.Socket> => {
@@ -31,7 +35,7 @@ export function* initSocketState(socket: SocketIOClient.Socket) {
  */
 export function* updateSocketState(socket: SocketIOClient.Socket) {
   while (true) {
-    const action: ReturnType<typeof postTweet.begin> = yield take(ActionType.POST_TWEET_BEGIN);
+    const action: PostTweetAction = yield take(PostTweetType.POST_TWEET_BEGIN);
     yield socket.emit('postTweet', action.payload);
   }
 }

@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as L from 'leaflet';
 import {Marker, Popup, Tooltip} from 'react-leaflet';
 
-import {Tweet} from '../../services/socket/models';
 import {formatDateTime} from '../../utils/dateTime';
 
 export interface CustomMarkerProps {

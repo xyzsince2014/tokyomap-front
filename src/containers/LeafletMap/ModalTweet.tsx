@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 
-import {postTweet} from '../../actions/Socket/socketActionCreator';
+import {postTweet, TweetPosted} from '../../actions/socket/socketActionCreators';
 import {RootState} from '../../reducers/rootReducer';
 import ModalTweet from '../../components/LeafletMap/ModalTweet';
-import useModal from '../../hooks/LeafletMap/useModal';
+import useModal from '../../hooks/leafletMap/useModal';
 
 interface StateProps {
   userId: string;
@@ -12,7 +12,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  postTweetBegin: (userId: string, message: string, geolocation: L.LatLngTuple) => void;
+  postTweetBegin: (tweetPosted: TweetPosted) => void;
 }
 
 /* **************************** ↓mergeProps()を使う場合 **************************** */
@@ -42,13 +42,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
-  bindActionCreators(
-    {
-      postTweetBegin: (userId, message, geolocation) =>
-        postTweet.begin(userId, message, geolocation),
-    },
-    dispatch,
-  );
+  bindActionCreators({postTweetBegin: tweetPosted => postTweet.begin(tweetPosted)}, dispatch);
 
 const ModalTweetContainer: React.FC<EnhancedModalTweetProps> = ({
   userId,
@@ -65,7 +59,7 @@ const ModalTweetContainer: React.FC<EnhancedModalTweetProps> = ({
       /* eslint-enable no-alert */
       return;
     }
-    postTweetBegin(userId, message.value, geolocation);
+    postTweetBegin({userId, message: message.value, geolocation});
     message.value = '';
   };
 
