@@ -1,5 +1,5 @@
 import ModalAuth from '../../components/LeafletMap/ModalAuth';
-import useModal from '../../hooks/LeafletMap/useModal';
+import useModal from '../../hooks/leafletMap/useModal';
 
 const ModalAuthContainer: React.FC = () => {
   const modalRef = useModal();
