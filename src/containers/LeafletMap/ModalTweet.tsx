@@ -4,7 +4,7 @@ import {bindActionCreators, Dispatch} from 'redux';
 import {postTweet} from '../../actions/Socket/socketActionCreator';
 import {RootState} from '../../reducers/rootReducer';
 import ModalTweet from '../../components/LeafletMap/ModalTweet';
-import useModal from '../../hooks/LeafletMap/use-modal';
+import useModal from '../../hooks/LeafletMap/useModal';
 
 interface StateProps {
   userId: string;
