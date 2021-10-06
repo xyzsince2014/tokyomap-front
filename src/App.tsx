@@ -1,30 +1,21 @@
 import {useEffect} from 'react';
-import {Route, Switch, Redirect} from 'react-router';
-import {useHistory, useLocation, BrowserRouter} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation} from 'react-router';
 
 import LeafletMap from './containers/LeafletMap/LeafletMap';
 
 const App: React.FC = () => {
-  const {action} = useHistory();
   const {hash, pathname} = useLocation();
 
   useEffect(() => {
-    if (!hash || action !== 'POP') {
-      window.scrollTo(0, 0);
-    }
-  }, [action, hash, pathname]);
+    if (!hash) window.scrollTo(0, 0);
+  }, [hash, pathname]);
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <LeafletMap />
-        </Route>
-        {/* todo: <Route path="/user/:userId"><User /></Route> */}
-        {/* todo: <Redirect from="/user/profile/:userId" to="/user/:userId" /> */}
-        <Redirect push to="/" />
-      </Switch>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<LeafletMap />} />
+      {/* todo: <Route path="/users" element={<Users/>}><Route path=":id" element={<UserProfile/>}/></Route> */}
+      <Route path="*" element={<Navigate to="/" replace />} />;
+    </Routes>
   );
 };
 export default App;
