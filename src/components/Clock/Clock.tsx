@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 
-import DatetimeContext from '../../providers/datetime/datetime-context';
+import DatetimeContext from '../../providers/datetime/datetimeContext';
 
 const Clock: React.FC = () => {
   const {datetime} = useContext(DatetimeContext);

@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 
-import Context from './datetime-context';
+import Context from './datetimeContext';
 import {fetchCurrentDatetime} from '../../utils/dateTime';
 
 const DatetimeProvider: React.FC = ({children}) => {
