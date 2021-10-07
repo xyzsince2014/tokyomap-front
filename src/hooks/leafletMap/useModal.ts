@@ -1,4 +1,52 @@
-import {useState, useCallback, useEffect, useRef} from 'react';
+import {useCallback, useEffect, useRef, useReducer} from 'react';
+import produce from 'immer';
+
+interface ModalState {
+  modalId: string;
+  scrollTop: number;
+}
+
+// todo: use redux toolkit
+const ModalActionType = {
+  setModalId: 'MODAL/SET_MODAL_ID',
+  setScrollTop: 'MODAL/SET_SCROLL_TOP',
+} as const;
+
+interface ModalAction {
+  type: ValueOf<typeof ModalActionType>;
+  payload?: ModalState | {modalId: string};
+}
+
+const modalActionCreator = {
+  setModalId: (modalId: string): ModalAction => ({
+    type: ModalActionType.setModalId,
+    payload: {modalId},
+  }),
+  setScrollTop: (): ModalAction => ({
+    type: ModalActionType.setScrollTop,
+  }),
+};
+
+const modalReducer = (state: ModalState, action: ModalAction): ModalState => {
+  switch (action.type) {
+    case ModalActionType.setModalId: {
+      return produce(state, draft => ({
+        modalId: action.payload?.modalId ?? '',
+        scrollTop: draft.scrollTop,
+      }));
+    }
+    case ModalActionType.setScrollTop: {
+      return produce(state, draft => ({
+        modalId: draft.modalId,
+        scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
+      }));
+    }
+    default: {
+      const _: never = action.type;
+      return state;
+    }
+  }
+};
 
 /**
  * set a modal to the referenced HTMLDivElement.
@@ -11,23 +59,24 @@ import {useState, useCallback, useEffect, useRef} from 'react';
  */
 const useModal = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const [modalId, setModalId] = useState('');
-  const [scrollTop, setScrollTop] = useState(
-    document.documentElement.scrollTop || document.body.scrollTop,
-  );
+
+  const [modalState, dispatch] = useReducer(modalReducer, {
+    modalId: '',
+    scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
+  });
 
   // todo: モーダル開閉で`scrollTop`の値が変わる度に`setModal()`が走ってeventListenerが蓄積するのでは？
   const stopScroll = useCallback(
     (e: Event) => {
       e.stopPropagation();
-      window.scrollTo(0, scrollTop);
+      window.scrollTo(0, modalState.scrollTop);
     },
-    [scrollTop],
+    [modalState.scrollTop],
   );
 
   const openModal = useCallback(
     (element: HTMLDivElement) => {
-      setScrollTop(document.documentElement.scrollTop || document.body.scrollTop);
+      dispatch(modalActionCreator.setScrollTop());
       element.setAttribute('aria-hidden', 'false');
       element.setAttribute('tabindex', '1');
       window.addEventListener('scroll', stopScroll, true);
@@ -47,50 +96,58 @@ const useModal = () => {
   const setModal = useCallback(
     (element: HTMLDivElement) => {
       // set open triggers
-      Array.from(document.querySelectorAll(`[data-modal-trigger="${modalId}"]`)).forEach(el => {
-        el.addEventListener('click', () => {
-          openModal(element);
-        });
-      });
+      Array.from(document.querySelectorAll(`[data-modal-trigger="${modalState.modalId}"]`)).forEach(
+        el => {
+          el.addEventListener('click', () => {
+            openModal(element);
+          });
+        },
+      );
 
       // set close triggers
-      Array.from(document.querySelectorAll(`[data-modal-close="${modalId}"]`)).forEach(el => {
-        el.addEventListener('click', e => {
-          e.preventDefault();
-          closeModal(element);
-        });
-      });
-
-      // set transition triggers
-      Array.from(document.querySelectorAll(`[data-modal-jump="${modalId}"]`)).forEach(el => {
-        el.addEventListener('click', () => {
-          closeModal(element);
-        });
-      });
-
-      // set close triggers
-      Array.from(document.querySelectorAll(`[data-modal-wrapper="${modalId}"]`)).forEach(el => {
-        el.addEventListener('click', e => {
-          const target = e.target as HTMLDivElement;
-          if (target.getAttribute('data-modal-wrapper') === modalId) {
+      Array.from(document.querySelectorAll(`[data-modal-close="${modalState.modalId}"]`)).forEach(
+        el => {
+          el.addEventListener('click', e => {
             e.preventDefault();
             closeModal(element);
-          }
-        });
-      });
+          });
+        },
+      );
+
+      // set transition triggers
+      Array.from(document.querySelectorAll(`[data-modal-jump="${modalState.modalId}"]`)).forEach(
+        el => {
+          el.addEventListener('click', () => {
+            closeModal(element);
+          });
+        },
+      );
+
+      // set close triggers
+      Array.from(document.querySelectorAll(`[data-modal-wrapper="${modalState.modalId}"]`)).forEach(
+        el => {
+          el.addEventListener('click', e => {
+            const target = e.target as HTMLDivElement;
+            if (target.getAttribute('data-modal-wrapper') === modalState.modalId) {
+              e.preventDefault();
+              closeModal(element);
+            }
+          });
+        },
+      );
     },
-    [modalId, openModal, closeModal],
+    [modalState.modalId, openModal, closeModal],
   );
 
   useEffect(() => {
-    setModalId(ref.current?.getAttribute('data-modal') ?? '');
+    dispatch(modalActionCreator.setModalId(ref.current?.getAttribute('data-modal') ?? ''));
   }, [ref]);
 
   useEffect(() => {
-    if (ref.current && modalId) {
+    if (ref.current && modalState.modalId) {
       setModal(ref.current);
     }
-  }, [modalId, setModal]);
+  }, [modalState.modalId, setModal]);
 
   return ref;
 };
