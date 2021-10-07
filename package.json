@@ -60,6 +60,7 @@
     "axios": "^0.22.0",
     "camelcase-keys": "^6.2.2",
     "history": "^5.0.1",
+    "immer": "^9.0.6",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
     "qs": "^6.9.3",

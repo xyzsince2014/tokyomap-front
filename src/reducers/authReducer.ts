@@ -1,4 +1,5 @@
 import {Reducer} from 'redux';
+import produce from 'immer';
 
 import {AuthAction} from '../actions/auth/authActionCreators';
 import {AuthActionType} from '../actions/auth/authActionType';
@@ -19,22 +20,13 @@ const authReducer: Reducer<AuthState, AuthAction> = (
 ): AuthState => {
   switch (action.type) {
     case AuthActionType.BEGIN: {
-      return {
-        ...state,
-      };
+      return state;
     }
     case AuthActionType.RESOLVE: {
-      return {
-        ...state,
-        isAuthenticated: action.payload?.result.isAuthenticated ?? false,
-        userId: action.payload?.result.userId ?? '',
-      };
+      return produce(state, () => action.payload?.result ?? {isAuthenticated: false, userId: ''});
     }
     case AuthActionType.REJECT: {
-      return {
-        ...state,
-        isAuthenticated: false,
-      };
+      return produce(state, () => ({isAuthenticated: false}));
     }
     default: {
       const _: never = action.type;

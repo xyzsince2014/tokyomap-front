@@ -58,7 +58,7 @@ module.exports = {
     'newline-before-return': 'off', // an empty line before return statement is NOT neeeded
     'no-console': 'warn', // warns `console.log()` in Production Env
     'require-yield': 'error', // disallows generators without yield
-    'no-param-reassign': 'error',
+    'no-param-reassign': ['error', {props: true, ignorePropertyModificationsForRegex: ['^draft']}],
     'no-use-before-define': 'off',
     'no-empty-function': 'off',
     'lines-between-class-members': ['error', 'always', {exceptAfterSingleLine: true}],
