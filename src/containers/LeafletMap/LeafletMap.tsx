@@ -31,11 +31,7 @@ const LeafletMapContainer: React.FC = () => {
 
   return (
     <DatetimeProvider>
-      <LeafletMap
-        tweets={tweets}
-        isAuthenticated={isAuthenticated}
-        getGeolocationBegin={getGeolocationBegin}
-      />
+      <LeafletMap {...{tweets, isAuthenticated, getGeolocationBegin}} />
     </DatetimeProvider>
   );
 };
