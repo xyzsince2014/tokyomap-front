@@ -51,8 +51,9 @@ const ModalTweetContainer: React.FC<EnhancedModalTweetProps> = ({
 }) => {
   const modalRef = useModal();
 
+  // todo: use react-hook-form
   const handlePost = (): void => {
-    const message = document.getElementById('message') as HTMLInputElement; // todo: use `useRefs` instead of `document.getElementById`
+    const message = document.getElementById('message') as HTMLInputElement;
     if (!message.value || message.value.length > 256) {
       /* eslint-disable no-alert */
       window.alert('invalid input');
