@@ -12,7 +12,7 @@ interface LeafletMapState {
   isAuthenticated: boolean;
 }
 
-const LeafletMapContainer: React.FC = () => {
+const EnhancedLeafletMap: React.FC = () => {
   const {tweets, isAuthenticated} = useSelector<RootState, LeafletMapState>(rootState => ({
     tweets: rootState.socketState.tweets,
     isAuthenticated: rootState.authState.isAuthenticated,
@@ -36,4 +36,4 @@ const LeafletMapContainer: React.FC = () => {
   );
 };
 
-export default LeafletMapContainer;
+export default EnhancedLeafletMap;

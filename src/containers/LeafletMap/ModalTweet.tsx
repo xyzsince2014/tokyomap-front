@@ -16,20 +16,20 @@ interface DispatchProps {
 }
 
 /* **************************** ↓mergeProps()を使う場合 **************************** */
-// <ModalTweetContainer/>のattributes
+// <EnhancedModalTweet/>のattributes
 // interface OwnProps {}
 
-// ModalTweetContainer: React.FC<MegedProps>の型
-// mergeProps()のみで使ってModalTweetContainerに渡さないattributesはomitする
+// EnhancedModalTweet: React.FC<MegedProps>の型
+// mergeProps()のみで使ってEnhancedModalTweetに渡さないattributesはomitする
 // type MergedProps = Omit<StateProps, ''> & Omit<DispatchProps, ''> & OwnProps;
 
-// connect(mapStateToProps, mapDispatchToProps, mergeProps)(ModalTweetContainer)の形で使う
+// connect(mapStateToProps, mapDispatchToProps, mergeProps)(EnhancedModalTweet)の形で使う
 // const mergeProps:MergedProps<StateProps, DispatchProps, OwnProps, MergedProps> = (stateProps, dispatchProps, ownProps) => {
-// ModalTweetContainerに渡すものはここに展開
+// EnhancedModalTweetに渡すものはここに展開
 // ...stateProps,
 // ...dipatchProps,
 // ...ownProps,
-// store, dispatchを利用する関数はここで定義してModalTweetContainerに渡す
+// store, dispatchを利用する関数はここで定義してEnhancedModalTweetに渡す
 //   hoge: async () => {...}
 // };
 /* **************************** ↑mergeProps()を使う場合 **************************** */
@@ -44,7 +44,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
   bindActionCreators({postTweetBegin: tweetPosted => postTweet.begin(tweetPosted)}, dispatch);
 
-const ModalTweetContainer: React.FC<EnhancedModalTweetProps> = ({
+const EnhancedModalTweet: React.FC<EnhancedModalTweetProps> = ({
   userId,
   geolocation,
   postTweetBegin,
@@ -67,4 +67,4 @@ const ModalTweetContainer: React.FC<EnhancedModalTweetProps> = ({
   return <ModalTweet ref={modalRef} handlePost={handlePost} />;
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ModalTweetContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EnhancedModalTweet);
