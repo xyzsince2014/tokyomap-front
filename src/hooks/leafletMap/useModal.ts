@@ -1,3 +1,4 @@
+import {createAction, createReducer, PayloadAction} from '@reduxjs/toolkit';
 import {useCallback, useEffect, useRef, useReducer} from 'react';
 import produce from 'immer';
 
@@ -6,47 +7,25 @@ interface ModalState {
   scrollTop: number;
 }
 
-// todo: use redux toolkit
-const ModalActionType = {
-  setModalId: 'MODAL/SET_MODAL_ID',
-  setScrollTop: 'MODAL/SET_SCROLL_TOP',
-} as const;
-
-interface ModalAction {
-  type: ValueOf<typeof ModalActionType>;
-  payload?: ModalState | {modalId: string};
-}
-
-const modalActionCreator = {
-  setModalId: (modalId: string): ModalAction => ({
-    type: ModalActionType.setModalId,
-    payload: {modalId},
-  }),
-  setScrollTop: (): ModalAction => ({
-    type: ModalActionType.setScrollTop,
-  }),
+const initialState = {
+  modalId: '',
+  scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
 };
 
-const modalReducer = (state: ModalState, action: ModalAction): ModalState => {
-  switch (action.type) {
-    case ModalActionType.setModalId: {
-      return produce(state, draft => ({
-        modalId: action.payload?.modalId ?? '',
-        scrollTop: draft.scrollTop,
-      }));
-    }
-    case ModalActionType.setScrollTop: {
-      return produce(state, draft => ({
-        modalId: draft.modalId,
-        scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
-      }));
-    }
-    default: {
-      const _: never = action.type;
-      return state;
-    }
-  }
-};
+const setModalIdAction = createAction<{modalId: string}>('MODAL/SET_MODAL_ID');
+const setScrollTopAction = createAction('MODAL/SET_SCROLL_TOP');
+
+const modalReducer = createReducer<ModalState>(initialState, {
+  [setModalIdAction.type]: (state, action: PayloadAction<{modalId: string}>) =>
+    produce(state, draft => ({
+      modalId: action.payload.modalId,
+      scrollTop: draft.scrollTop,
+    })),
+  [setScrollTopAction.type]: state =>
+    produce(state, () => ({
+      scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
+    })),
+});
 
 /**
  * set a modal to the referenced HTMLDivElement.
@@ -60,10 +39,7 @@ const modalReducer = (state: ModalState, action: ModalAction): ModalState => {
 const useModal = () => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [modalState, dispatch] = useReducer(modalReducer, {
-    modalId: '',
-    scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
-  });
+  const [modalState, dispatch] = useReducer(modalReducer, initialState);
 
   // todo: モーダル開閉で`scrollTop`の値が変わる度に`setModal()`が走ってeventListenerが蓄積するのでは？
   const stopScroll = useCallback(
@@ -76,7 +52,7 @@ const useModal = () => {
 
   const openModal = useCallback(
     (element: HTMLDivElement) => {
-      dispatch(modalActionCreator.setScrollTop());
+      dispatch(setScrollTopAction);
       element.setAttribute('aria-hidden', 'false');
       element.setAttribute('tabindex', '1');
       window.addEventListener('scroll', stopScroll, true);
@@ -140,7 +116,7 @@ const useModal = () => {
   );
 
   useEffect(() => {
-    dispatch(modalActionCreator.setModalId(ref.current?.getAttribute('data-modal') ?? ''));
+    dispatch(setModalIdAction({modalId: ref.current?.getAttribute('data-modal') ?? ''}));
   }, [ref]);
 
   useEffect(() => {
