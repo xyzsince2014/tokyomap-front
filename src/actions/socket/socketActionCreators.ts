@@ -6,6 +6,7 @@ interface ConnectToSocketAction {
   error?: boolean;
 }
 
+// todo: remove to types/hoge.d.ts
 export interface TweetPosted {
   userId: string;
   message: string;
