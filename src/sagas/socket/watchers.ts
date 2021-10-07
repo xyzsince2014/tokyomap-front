@@ -6,11 +6,11 @@ import {
   dispatchActionFromChannel,
   runGetGeolocation,
 } from './tasks';
-import {ConnectSocketType, GetGeolocationType} from '../../actions/socket/socketActionType';
+import {ConnectToSocketType, GetGeolocationType} from '../../actions/socket/socketActionType';
 
 export function* watchSocket() {
   while (true) {
-    yield take(ConnectSocketType.CONNECT_SOCKET_BEGIN);
+    yield take(ConnectToSocketType.CONNECT_TO_SOCKET_BEGIN);
     const socket: SocketIOClient.Socket = yield call(createSocketConnection);
     yield fork(initSocketState, socket);
     yield fork(updateSocketState, socket);

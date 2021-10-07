@@ -1,7 +1,7 @@
 import {Reducer} from 'redux';
 
 import {
-  ConnectSocketType,
+  ConnectToSocketType,
   PostTweetType,
   GetGeolocationType,
 } from '../actions/socket/socketActionType';
@@ -20,18 +20,18 @@ const socketReducer: Reducer<SocketState, SocketAction> = (
   action: SocketAction,
 ): SocketState => {
   switch (action.type) {
-    case ConnectSocketType.CONNECT_SOCKET_BEGIN: {
+    case ConnectToSocketType.CONNECT_TO_SOCKET_BEGIN: {
       return {
         ...state,
       };
     }
-    case ConnectSocketType.CONNECT_SOCKET_RESOLVE: {
+    case ConnectToSocketType.CONNECT_TO_SOCKET_RESOLVE: {
       return {
         ...state,
-        tweets: action.payload?.tweets ?? [],
+        tweets: action.payload ?? [],
       };
     }
-    case ConnectSocketType.CONNECT_SOCKET_REJECT: {
+    case ConnectToSocketType.CONNECT_TO_SOCKET_REJECT: {
       return {
         ...state,
       };

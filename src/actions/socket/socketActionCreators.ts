@@ -1,12 +1,11 @@
-import {ConnectSocketType, PostTweetType, GetGeolocationType} from './socketActionType';
+import {ConnectToSocketType, PostTweetType, GetGeolocationType} from './socketActionType';
 
 interface ConnectToSocketAction {
-  type: ValueOf<typeof ConnectSocketType>;
-  payload?: {tweets: Tweet[]};
+  type: ValueOf<typeof ConnectToSocketType>;
+  payload?: Tweet[];
   error?: boolean;
 }
 
-// todo: remove to types/hoge.d.ts
 export interface TweetPosted {
   userId: string;
   message: string;
@@ -27,16 +26,17 @@ interface GetGeolocationAction {
 
 export type SocketAction = ConnectToSocketAction | PostTweetAction | GetGeolocationAction;
 
+/* *** action creators *** */
 export const connectToSocket = {
   begin: (): ConnectToSocketAction => ({
-    type: ConnectSocketType.CONNECT_SOCKET_BEGIN,
+    type: ConnectToSocketType.CONNECT_TO_SOCKET_BEGIN,
   }),
   resolve: (tweets: Tweet[]): ConnectToSocketAction => ({
-    type: ConnectSocketType.CONNECT_SOCKET_RESOLVE,
-    payload: {tweets},
+    type: ConnectToSocketType.CONNECT_TO_SOCKET_RESOLVE,
+    payload: tweets,
   }),
   reject: (): ConnectToSocketAction => ({
-    type: ConnectSocketType.CONNECT_SOCKET_REJECT,
+    type: ConnectToSocketType.CONNECT_TO_SOCKET_REJECT,
     error: true,
   }),
 };
