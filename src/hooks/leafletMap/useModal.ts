@@ -17,14 +17,13 @@ const setScrollTopAction = createAction('MODAL/SET_SCROLL_TOP');
 
 const modalReducer = createReducer<ModalState>(initialState, {
   [setModalIdAction.type]: (state, action: PayloadAction<{modalId: string}>) =>
-    produce(state, draft => ({
-      modalId: action.payload.modalId,
-      scrollTop: draft.scrollTop,
-    })),
+    produce(state, draft => {
+      draft.modalId = action.payload.modalId;
+    }),
   [setScrollTopAction.type]: state =>
-    produce(state, () => ({
-      scrollTop: document.documentElement.scrollTop || document.body.scrollTop,
-    })),
+    produce(state, draft => {
+      draft.scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    }),
 });
 
 /**
