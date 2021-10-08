@@ -7,3 +7,4 @@ public/
 src/assets/**/libs/*
 web/public
 .*lintrc.js
+*.config.js
