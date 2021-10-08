@@ -1,9 +1,9 @@
 import {createContext} from 'react';
 
-interface IContext {
+interface IDatetimeContext {
   datetime: string;
 }
 
-const Context = createContext<IContext>({} as IContext);
+const DatetimeContext = createContext<IDatetimeContext>({} as IDatetimeContext);
 
-export default Context;
+export default DatetimeContext;

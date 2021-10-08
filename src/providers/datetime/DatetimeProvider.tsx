@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 
-import Context from './datetimeContext';
+import DatetimeContext from './datetimeContext';
 import {fetchCurrentDatetime} from '../../utils/dateTime';
 
 const DatetimeProvider: React.FC = ({children}) => {
@@ -15,7 +15,7 @@ const DatetimeProvider: React.FC = ({children}) => {
     return () => clearInterval(timerId);
   }, [tick]);
 
-  return <Context.Provider value={{datetime}}>{children}</Context.Provider>;
+  return <DatetimeContext.Provider value={{datetime}}>{children}</DatetimeContext.Provider>;
 };
 
 export default DatetimeProvider;
