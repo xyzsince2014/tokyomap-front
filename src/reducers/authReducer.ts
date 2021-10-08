@@ -23,10 +23,13 @@ const authReducer: Reducer<AuthState, AuthAction> = (
       return state;
     }
     case AuthActionType.RESOLVE: {
-      return produce(state, () => action.payload?.result ?? {isAuthenticated: false, userId: ''});
+      return produce(state, draft => {
+        draft.isAuthenticated = action.payload?.isAuthenticated ?? false;
+        draft.userId = action.payload?.userId ?? '';
+      });
     }
     case AuthActionType.REJECT: {
-      return produce(state, () => ({isAuthenticated: false}));
+      return initialAuthState;
     }
     default: {
       const _: never = action.type;

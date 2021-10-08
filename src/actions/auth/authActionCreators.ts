@@ -7,7 +7,7 @@ interface AuthResult {
 
 export interface AuthAction {
   type: ValueOf<typeof AuthActionType>;
-  payload?: {result: AuthResult};
+  payload?: AuthResult;
   error?: boolean;
 }
 
@@ -17,7 +17,7 @@ export const authenticate = {
   }),
   resolve: (result: AuthResult): AuthAction => ({
     type: AuthActionType.RESOLVE,
-    payload: {result},
+    payload: result,
   }),
   reject: (): AuthAction => ({
     type: AuthActionType.REJECT,

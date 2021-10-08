@@ -14,13 +14,13 @@ export interface TweetPosted {
 
 export interface PostTweetAction {
   type: ValueOf<typeof PostTweetType>;
-  payload?: TweetPosted | {tweets: Tweet[]};
+  payload?: TweetPosted | Tweet[];
   error?: boolean;
 }
 
 interface GetGeolocationAction {
   type: ValueOf<typeof GetGeolocationType>;
-  payload?: {geolocation: L.LatLngTuple};
+  payload?: L.LatLngTuple;
   error?: boolean;
 }
 
@@ -48,7 +48,7 @@ export const postTweet = {
   }),
   resolve: (tweets: Tweet[]): PostTweetAction => ({
     type: PostTweetType.POST_TWEET_RESOLVE,
-    payload: {tweets},
+    payload: tweets,
   }),
   reject: (): PostTweetAction => ({
     type: PostTweetType.POST_TWEET_REJECT,
@@ -62,7 +62,7 @@ export const getGeolocation = {
   }),
   resolve: (geolocation: L.LatLngTuple): GetGeolocationAction => ({
     type: GetGeolocationType.GET_GEOLOCATION_RESOLVE,
-    payload: {geolocation},
+    payload: geolocation,
   }),
   reject: (): GetGeolocationAction => ({
     type: GetGeolocationType.GET_GEOLOCATION_REJECT,

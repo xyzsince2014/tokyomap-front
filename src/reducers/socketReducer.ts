@@ -1,4 +1,5 @@
 import {Reducer} from 'redux';
+import produce from 'immer';
 
 import {
   ConnectToSocketType,
@@ -21,58 +22,41 @@ const socketReducer: Reducer<SocketState, SocketAction> = (
 ): SocketState => {
   switch (action.type) {
     case ConnectToSocketType.CONNECT_TO_SOCKET_BEGIN: {
-      return {
-        ...state,
-      };
+      return state;
     }
     case ConnectToSocketType.CONNECT_TO_SOCKET_RESOLVE: {
-      return {
-        ...state,
-        tweets: action.payload ?? [],
-      };
+      return produce(state, draft => {
+        draft.tweets = action.payload as Tweet[];
+      });
     }
     case ConnectToSocketType.CONNECT_TO_SOCKET_REJECT: {
-      return {
-        ...state,
-      };
+      return state;
     }
     case PostTweetType.POST_TWEET_BEGIN: {
-      return {
-        ...state,
-      };
+      return state;
     }
     case PostTweetType.POST_TWEET_RESOLVE: {
-      const payload = action.payload as {tweets: Tweet[]};
-      return {
-        ...state,
-        tweets: payload.tweets,
-      };
+      return produce(state, draft => {
+        draft.tweets = action.payload as Tweet[];
+      });
     }
     case PostTweetType.POST_TWEET_REJECT: {
-      return {
-        ...state,
-      };
+      return state;
     }
     case GetGeolocationType.GET_GEOLOCATION_BEGIN: {
-      return {
-        ...state,
-      };
+      return state;
     }
     case GetGeolocationType.GET_GEOLOCATION_RESOLVE: {
-      return {
-        ...state,
-        geolocation: action.payload?.geolocation ?? initialSocketState.geolocation,
-      };
+      return produce(state, draft => {
+        draft.geolocation = action.payload as L.LatLngTuple;
+      });
     }
     case GetGeolocationType.GET_GEOLOCATION_REJECT: {
-      return {
-        ...state,
-        geolocation: initialSocketState.geolocation,
-      };
+      return produce(state, draft => {
+        draft.geolocation = initialSocketState.geolocation;
+      });
     }
     default: {
-      // todo: fix the line below
-      // const _: never = action.type;
       return state;
     }
   }
