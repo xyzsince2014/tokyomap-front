@@ -1,6 +1,5 @@
 import {EventChannel} from 'redux-saga';
 import {put, take, call} from 'redux-saga/effects';
-import io from 'socket.io-client';
 
 import {PostTweetType} from '../../actions/socket/socketActionType';
 import {
@@ -8,18 +7,8 @@ import {
   PostTweetAction,
   SocketAction,
 } from '../../actions/socket/socketActionCreators';
-import subscribe from './subscriber';
+import subscribe from '../../services/socket/subscriber';
 import {getGeolocationFactory} from '../../services/socket/api';
-
-export const createSocketConnection = (): Promise<SocketIOClient.Socket> => {
-  const socket = io(`${process.env.DOMAIN_WEB!}`, {transports: ['websocket']});
-
-  return new Promise(resolve => {
-    socket.on('connect', () => {
-      resolve(socket);
-    });
-  });
-};
 
 /**
  * initialise the socket state

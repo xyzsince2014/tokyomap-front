@@ -1,12 +1,12 @@
 import {fork, take, call, takeLatest} from 'redux-saga/effects';
 import {
-  createSocketConnection,
   initSocketState,
   updateSocketState,
   dispatchActionFromChannel,
   runGetGeolocation,
 } from './tasks';
 import {ConnectToSocketType, GetGeolocationType} from '../../actions/socket/socketActionType';
+import createSocketConnection from '../../services/socket/connector';
 
 export function* watchSocket() {
   while (true) {
