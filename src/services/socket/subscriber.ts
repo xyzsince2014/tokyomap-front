@@ -2,7 +2,7 @@ import {eventChannel, EventChannel} from 'redux-saga';
 
 import {connectToSocket, postTweet, SocketAction} from '../../actions/socket/socketActionCreators';
 
-const subscribe = (socket: SocketIOClient.Socket): EventChannel<SocketAction> =>
+export const subscribe = (socket: SocketIOClient.Socket): EventChannel<SocketAction> =>
   eventChannel(emit => {
     const initSocketStateResolve = (tweets: Tweet[]) => {
       // todo: display connection notification
@@ -38,5 +38,3 @@ const subscribe = (socket: SocketIOClient.Socket): EventChannel<SocketAction> =>
 
     return unsubscribe;
   });
-
-export default subscribe;

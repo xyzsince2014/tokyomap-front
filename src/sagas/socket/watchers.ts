@@ -6,7 +6,7 @@ import {
   runGetGeolocation,
 } from './tasks';
 import {ConnectToSocketType, GetGeolocationType} from '../../actions/socket/socketActionType';
-import createSocketConnection from '../../services/socket/connector';
+import {createSocketConnection} from '../../services/socket/connector';
 
 export function* watchSocket() {
   while (true) {

@@ -7,7 +7,7 @@ import {
   PostTweetAction,
   SocketAction,
 } from '../../actions/socket/socketActionCreators';
-import subscribe from '../../services/socket/subscriber';
+import {subscribe} from '../../services/socket/subscriber';
 import {getGeolocationFactory} from '../../services/socket/api';
 
 /**
