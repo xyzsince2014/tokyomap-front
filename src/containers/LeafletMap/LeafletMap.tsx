@@ -2,7 +2,8 @@ import {useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {authenticate} from '../../actions/auth/authActionCreators';
-import {connectToSocket, getGeolocation} from '../../actions/socket/socketActionCreators';
+import {connectToSocket} from '../../actions/socket/socketActionCreators';
+import {getGeolocation} from '../../actions/geolocation/geolocationActionCreators';
 import DatetimeProvider from '../../providers/datetime/DatetimeProvider';
 import {RootState} from '../../reducers/rootReducer';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';

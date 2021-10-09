@@ -38,7 +38,7 @@ export type EnhancedModalTweetProps = StateProps & DispatchProps;
 
 const mapStateToProps = (state: RootState): StateProps => ({
   userId: state.authState.userId,
-  geolocation: state.socketState.geolocation,
+  geolocation: state.geolocationState.geolocation,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>

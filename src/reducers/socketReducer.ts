@@ -1,20 +1,14 @@
 import {Reducer} from 'redux';
 import produce from 'immer';
 
-import {
-  ConnectToSocketType,
-  PostTweetType,
-  GetGeolocationType,
-} from '../actions/socket/socketActionType';
+import {ConnectToSocketType, PostTweetType} from '../actions/socket/socketActionType';
 import {SocketAction} from '../actions/socket/socketActionCreators';
 
 export interface SocketState {
   tweets: Tweet[];
-  geolocation: L.LatLngTuple;
 }
 
-// default geolocation is Tokyo Sta.
-const initialSocketState: SocketState = {tweets: [], geolocation: [35.680722, 139.767271]};
+export const initialSocketState: SocketState = {tweets: []};
 
 const socketReducer: Reducer<SocketState, SocketAction> = (
   state: SocketState = initialSocketState,
@@ -42,19 +36,6 @@ const socketReducer: Reducer<SocketState, SocketAction> = (
     }
     case PostTweetType.POST_TWEET_REJECT: {
       return state;
-    }
-    case GetGeolocationType.GET_GEOLOCATION_BEGIN: {
-      return state;
-    }
-    case GetGeolocationType.GET_GEOLOCATION_RESOLVE: {
-      return produce(state, draft => {
-        draft.geolocation = action.payload as L.LatLngTuple;
-      });
-    }
-    case GetGeolocationType.GET_GEOLOCATION_REJECT: {
-      return produce(state, draft => {
-        draft.geolocation = initialSocketState.geolocation;
-      });
     }
     default: {
       return state;

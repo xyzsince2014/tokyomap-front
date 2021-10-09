@@ -6,8 +6,9 @@ import {BrowserRouter} from 'react-router-dom';
 
 import App from './App';
 import rootReducer from './reducers/rootReducer';
-import socketSaga from './sagas/socket/socketSaga';
 import authSaga from './sagas/auth/authSaga';
+import geolocationSaga from './sagas/geolocationSaga';
+import socketSaga from './sagas/socketSaga';
 
 import './assets/scss/base.scss';
 
@@ -28,8 +29,9 @@ const enhancer = composeEnhancer(applyMiddleware(sagaMiddleWare));
 /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
 const store = createStore(rootReducer, enhancer);
 
-sagaMiddleWare.run(socketSaga);
 sagaMiddleWare.run(authSaga);
+sagaMiddleWare.run(geolocationSaga);
+sagaMiddleWare.run(socketSaga);
 
 ReactDOM.render(
   <Provider store={store}>

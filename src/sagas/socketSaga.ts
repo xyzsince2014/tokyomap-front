@@ -1,14 +1,10 @@
 import {EventChannel} from 'redux-saga';
-import {put, take, call} from 'redux-saga/effects';
+import {all, call, fork, put, take} from 'redux-saga/effects';
 
-import {PostTweetType} from '../../actions/socket/socketActionType';
-import {
-  getGeolocation,
-  PostTweetAction,
-  SocketAction,
-} from '../../actions/socket/socketActionCreators';
-import {subscribe} from '../../services/socket/subscriber';
-import {getGeolocationFactory} from '../../services/socket/api';
+import {ConnectToSocketType, PostTweetType} from '../actions/socket/socketActionType';
+import {PostTweetAction, SocketAction} from '../actions/socket/socketActionCreators';
+import {createSocketConnection} from '../services/socket/connector';
+import {subscribe} from '../services/socket/subscriber';
 
 /**
  * initialise the socket state
@@ -41,12 +37,16 @@ export function* dispatchActionFromChannel(socket: SocketIOClient.Socket) {
   }
 }
 
-export function* runGetGeolocation(action: ReturnType<typeof getGeolocation.begin>) {
-  try {
-    const geolocation: L.LatLngTuple = yield call(getGeolocationFactory());
-    yield put(getGeolocation.resolve(geolocation));
-  } catch (err) {
-    window.alert('Enable geolocation'); // todo: display error notification
-    yield put(getGeolocation.reject());
+export function* watchSocket() {
+  while (true) {
+    yield take(ConnectToSocketType.CONNECT_TO_SOCKET_BEGIN);
+    const socket: SocketIOClient.Socket = yield call(createSocketConnection);
+    yield fork(initSocketState, socket);
+    yield fork(updateSocketState, socket);
+    yield fork(dispatchActionFromChannel, socket);
   }
+}
+
+export default function* socketSaga() {
+  yield all([fork(watchSocket)]);
 }

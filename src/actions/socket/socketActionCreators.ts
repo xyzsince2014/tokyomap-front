@@ -1,4 +1,4 @@
-import {ConnectToSocketType, PostTweetType, GetGeolocationType} from './socketActionType';
+import {ConnectToSocketType, PostTweetType} from './socketActionType';
 
 interface ConnectToSocketAction {
   type: ValueOf<typeof ConnectToSocketType>;
@@ -18,13 +18,7 @@ export interface PostTweetAction {
   error?: boolean;
 }
 
-interface GetGeolocationAction {
-  type: ValueOf<typeof GetGeolocationType>;
-  payload?: L.LatLngTuple;
-  error?: boolean;
-}
-
-export type SocketAction = ConnectToSocketAction | PostTweetAction | GetGeolocationAction;
+export type SocketAction = ConnectToSocketAction | PostTweetAction;
 
 /* *** action creators *** */
 export const connectToSocket = {
@@ -52,20 +46,6 @@ export const postTweet = {
   }),
   reject: (): PostTweetAction => ({
     type: PostTweetType.POST_TWEET_REJECT,
-    error: true,
-  }),
-};
-
-export const getGeolocation = {
-  begin: (): GetGeolocationAction => ({
-    type: GetGeolocationType.GET_GEOLOCATION_BEGIN,
-  }),
-  resolve: (geolocation: L.LatLngTuple): GetGeolocationAction => ({
-    type: GetGeolocationType.GET_GEOLOCATION_RESOLVE,
-    payload: geolocation,
-  }),
-  reject: (): GetGeolocationAction => ({
-    type: GetGeolocationType.GET_GEOLOCATION_REJECT,
     error: true,
   }),
 };
