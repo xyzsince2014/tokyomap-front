@@ -24,8 +24,10 @@ const authReducer: Reducer<AuthState, AuthAction> = (
     }
     case AuthActionType.RESOLVE: {
       return produce(state, draft => {
-        draft.isAuthenticated = action.payload?.isAuthenticated ?? false;
-        draft.userId = action.payload?.userId ?? '';
+        /* eslint-disable @typescript-eslint/no-non-null-assertion */
+        draft.isAuthenticated = action.payload!.isAuthenticated;
+        draft.userId = action.payload!.userId;
+        /* eslint-enable @typescript-eslint/no-non-null-assertion */
       });
     }
     case AuthActionType.REJECT: {

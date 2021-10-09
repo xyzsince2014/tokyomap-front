@@ -1,13 +1,13 @@
 import {AuthActionType} from './authActionType';
 
-interface AuthResult {
+interface AuthenticateResult {
   isAuthenticated: boolean;
   userId: string;
 }
 
 export interface AuthAction {
   type: ValueOf<typeof AuthActionType>;
-  payload?: AuthResult;
+  payload?: AuthenticateResult;
   error?: boolean;
 }
 
@@ -15,7 +15,7 @@ export const authenticate = {
   begin: (): AuthAction => ({
     type: AuthActionType.BEGIN,
   }),
-  resolve: (result: AuthResult): AuthAction => ({
+  resolve: (result: AuthenticateResult): AuthAction => ({
     type: AuthActionType.RESOLVE,
     payload: result,
   }),

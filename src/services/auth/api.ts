@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
+import statusCodes from 'http-status-codes';
 
 // todo: see https://d.potato4d.me/entry/20200831-factory-args/
 interface ApiConfig {
@@ -27,11 +28,10 @@ const createAxiosInstance = (optionalConfig: ApiConfig) => {
 };
 
 interface AuthenticateResponse {
-  isAuthenticated: boolean;
-  user?: {userId: string};
+  userId: string;
 }
 
-export interface AuthenticateResult {
+interface AuthenticateResult {
   isAuthenticated: boolean;
   userId: string;
 }
@@ -44,27 +44,29 @@ export const getAuthFactory = (optionalConfig: ApiConfig = {}) => {
       const response: AxiosResponse<AuthenticateResponse> = await instance.get(
         '/auth/authenticate',
         {
-          validateStatus: statusCode => statusCode === 200,
+          validateStatus: statusCode =>
+            statusCode === statusCodes.OK || statusCode === statusCodes.UNAUTHORIZED,
           withCredentials: true,
         },
       );
 
-      if (!response.data.user?.userId || !response.data.isAuthenticated) {
+      if (response.status === statusCodes.UNAUTHORIZED) {
         return {
           isAuthenticated: false,
           userId: '',
         };
       }
 
+      if (!response.data.userId) {
+        throw new Error();
+      }
+
       return {
-        isAuthenticated: response.data.isAuthenticated,
-        userId: response.data.user.userId,
+        isAuthenticated: true,
+        userId: response.data.userId,
       };
     } catch (err) {
-      return {
-        isAuthenticated: false,
-        userId: '',
-      };
+      throw new Error('Server Error');
     }
   };
 
