@@ -2,7 +2,6 @@ import {configure, addDecorator} from '@storybook/react';
 import {withInfo} from '@storybook/addon-info';
 import {withKnobs} from '@storybook/addon-knobs';
 
-import '../src/assets/css/libs/sematic.min.css';
 import '../src/assets/scss/parts/_base.scss';
 
 const req = require.context('../src/stories', true, /.(story|storeis).tsx$/);
@@ -11,6 +10,6 @@ const loadStoreis = () => {
   addDecorator(withInfo);
   addDecorator(withKnobs);
   req.keys().forEach(req);
-}
+};
 
 configure(loadStoreis, module);
