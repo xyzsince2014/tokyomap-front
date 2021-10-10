@@ -1,4 +1,4 @@
-import {all, call, fork, put, takeLatest} from 'redux-saga/effects';
+import {call, fork, put, takeLatest} from 'redux-saga/effects';
 import {GetGeolocationType} from '../actions/geolocation/geolocationActionType';
 
 import * as geolocationActionCreators from '../actions/geolocation/geolocationActionCreators';
@@ -21,5 +21,5 @@ export function* watchGeolocation(apiHandler: typeof getGeolocation) {
 }
 
 export default function* geolocationSaga() {
-  yield all([fork(watchGeolocation, getGeolocation)]);
+  yield fork(watchGeolocation, getGeolocation);
 }

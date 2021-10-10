@@ -1,4 +1,4 @@
-import {takeLatest, all, fork, put, call, SagaReturnType} from 'redux-saga/effects';
+import {takeLatest, fork, put, call, SagaReturnType} from 'redux-saga/effects';
 
 import {getAuthFactory} from '../services/auth/api';
 import * as authActionCreators from '../actions/auth/authActionCreators';
@@ -28,5 +28,5 @@ export function* watchGetIsAuthorised(apiHandler: typeof authenticate) {
 }
 
 export default function* authSaga() {
-  yield all([fork(watchGetIsAuthorised, authenticate)]);
+  yield fork(watchGetIsAuthorised, authenticate);
 }

@@ -6,14 +6,19 @@ import * as authActionCreators from '../../actions/auth/authActionCreators';
 
 describe('authSaga with authReducer', () => {
   const apiHandler = jest.fn(); // mock apiHandler
+  const validAuthenticateResult = {isAuthenticated: true, userId: 'hoge'};
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
   it('should be authenticated', async () => {
-    apiHandler.mockReturnValue({isAuthenticated: true, userId: 'hoge'});
+    apiHandler.mockReturnValue(validAuthenticateResult);
     return expectSaga(watchGetIsAuthorised, apiHandler)
       .withReducer(authReducer)
       .dispatch(authActionCreators.authenticate.begin()) // action to be taken by saga
-      .put(authActionCreators.authenticate.resolve({isAuthenticated: true, userId: 'hoge'})) // action expected to be dispatched by saga
-      .hasFinalState({isAuthenticated: true, userId: 'hoge'}) // expected state
+      .put(authActionCreators.authenticate.resolve(validAuthenticateResult)) // action expected to be dispatched by saga
+      .hasFinalState(validAuthenticateResult) // expected state
       .silentRun(); // run saga
   });
 
@@ -37,7 +42,7 @@ describe('authSaga with authReducer', () => {
       .silentRun();
   });
 
-  it('should reject with internal server error', async () => {
+  it('should fail with internal server error', async () => {
     const err = {
       message: 'Intrernal Server Error',
       response: {

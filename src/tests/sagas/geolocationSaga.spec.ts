@@ -7,6 +7,10 @@ import * as geolocationActionCreators from '../../actions/geolocation/geolocatio
 describe('geolocationSaga with geolocationReducer', () => {
   const apiHandler = jest.fn();
 
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('should succeed', async () => {
     const latLngTuple = [35.7242395, 139.7013494] as L.LatLngTuple;
     apiHandler.mockReturnValue(latLngTuple);

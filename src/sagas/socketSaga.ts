@@ -1,5 +1,5 @@
 import {EventChannel} from 'redux-saga';
-import {all, call, fork, put, take} from 'redux-saga/effects';
+import {call, fork, put, take} from 'redux-saga/effects';
 
 import {ConnectToSocketType, PostTweetType} from '../actions/socket/socketActionType';
 import {PostTweetAction, SocketAction} from '../actions/socket/socketActionCreators';
@@ -48,5 +48,5 @@ export function* watchSocket() {
 }
 
 export default function* socketSaga() {
-  yield all([fork(watchSocket)]);
+  yield fork(watchSocket);
 }
