@@ -1,8 +1,8 @@
 import {takeLatest, all, fork, put, call, SagaReturnType} from 'redux-saga/effects';
 
-import {getAuthFactory} from '../../services/auth/api';
-import * as authActionCreators from '../../actions/auth/authActionCreators';
-import {AuthActionType} from '../../actions/auth/authActionType';
+import {getAuthFactory} from '../services/auth/api';
+import * as authActionCreators from '../actions/auth/authActionCreators';
+import {AuthActionType} from '../actions/auth/authActionType';
 
 /* api handlers */
 const authenticate = getAuthFactory();

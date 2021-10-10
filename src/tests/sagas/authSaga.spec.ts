@@ -1,8 +1,8 @@
 import {expectSaga} from 'redux-saga-test-plan';
 
-import authReducer, {initialAuthState} from '../../../reducers/authReducer';
-import {watchGetIsAuthorised} from '../../../sagas/auth/authSaga';
-import * as authActionCreators from '../../../actions/auth/authActionCreators';
+import authReducer, {initialAuthState} from '../../reducers/authReducer';
+import {watchGetIsAuthorised} from '../../sagas/authSaga';
+import * as authActionCreators from '../../actions/auth/authActionCreators';
 
 describe('authSaga with authReducer', () => {
   const apiHandler = jest.fn(); // mock apiHandler
@@ -21,10 +21,10 @@ describe('authSaga with authReducer', () => {
     apiHandler.mockReturnValue({isAuthenticated: false, userId: ''});
     return expectSaga(watchGetIsAuthorised, apiHandler)
       .withReducer(authReducer)
-      .dispatch(authActionCreators.authenticate.begin()) // action to be taken by saga
-      .put(authActionCreators.authenticate.resolve({isAuthenticated: false, userId: ''})) // action expected to be dispatched by saga
-      .hasFinalState({isAuthenticated: false, userId: ''}) // expected state
-      .silentRun(); // run saga
+      .dispatch(authActionCreators.authenticate.begin())
+      .put(authActionCreators.authenticate.resolve({isAuthenticated: false, userId: ''}))
+      .hasFinalState({isAuthenticated: false, userId: ''})
+      .silentRun();
   });
 
   it('should fail with Error thrown', async () => {

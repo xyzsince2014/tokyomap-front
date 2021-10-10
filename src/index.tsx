@@ -6,7 +6,7 @@ import {BrowserRouter} from 'react-router-dom';
 
 import App from './App';
 import rootReducer from './reducers/rootReducer';
-import authSaga from './sagas/auth/authSaga';
+import authSaga from './sagas/authSaga';
 import geolocationSaga from './sagas/geolocationSaga';
 import socketSaga from './sagas/socketSaga';
 
