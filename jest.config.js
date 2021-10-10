@@ -11,4 +11,5 @@ module.exports = {
   testMatch: ['<rootDir>/src/tests/**/*.spec.(ts|tsx)'],
   collectCoverage: true,
   coverageDirectory: '<rootDir>/src/tests/coverage',
+  testEnvironment: 'jsdom', // cf. https://jestjs.io/docs/configuration#testenvironment-string
 };
