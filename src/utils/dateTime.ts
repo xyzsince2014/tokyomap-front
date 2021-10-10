@@ -1,6 +1,6 @@
-export const formatDateTime = (datetime: string) => datetime.replace('T', ' ').replace('.000Z', '');
-
-export const fetchCurrentTime = () => new Date();
+/** @param {string} datetime string in simplified extended ISO format */
+export const formatDateTime = (datetime: string): string =>
+  datetime.replace('T', ' ').replace(/\.\d{3}Z$/g, '');
 
 export const fetchCurrentDatetime = () =>
   new Date()
