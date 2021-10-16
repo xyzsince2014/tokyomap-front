@@ -19,7 +19,7 @@ export function* runAuthenticate(apiHandler: typeof authenticate) {
 }
 
 /* watchers */
-export function* watchGetIsAuthorised(apiHandler: typeof authenticate) {
+export function* watchGetIsAuthenticated(apiHandler: typeof authenticate) {
   // while (true) {
   //   const action: ReturnType<typeof authActionCreators.authenticate.begin> = yield take(ActionType.BEGIN);
   //   yield fork(runAuthenticate, apiHandler);
@@ -28,5 +28,5 @@ export function* watchGetIsAuthorised(apiHandler: typeof authenticate) {
 }
 
 export default function* authSaga() {
-  yield fork(watchGetIsAuthorised, authenticate);
+  yield fork(watchGetIsAuthenticated, authenticate);
 }
