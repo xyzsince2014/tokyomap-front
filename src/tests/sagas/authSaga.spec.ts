@@ -1,7 +1,7 @@
 import {expectSaga} from 'redux-saga-test-plan';
 
 import authReducer, {initialAuthState} from '../../reducers/authReducer';
-import {watchGetIsAuthenticated} from '../../sagas/authSaga';
+import authSaga from '../../sagas/authSaga';
 import * as authActionCreators from '../../actions/auth/authActionCreators';
 
 describe('authSaga with authReducer', () => {
@@ -14,7 +14,7 @@ describe('authSaga with authReducer', () => {
 
   it('should succeed (be authenticated)', async () => {
     apiHandler.mockReturnValue(validAuthenticateResult);
-    return expectSaga(watchGetIsAuthenticated, apiHandler)
+    return expectSaga(authSaga, apiHandler)
       .withReducer(authReducer)
       .dispatch(authActionCreators.authenticate.begin()) // action to be taken by saga
       .put(authActionCreators.authenticate.resolve(validAuthenticateResult)) // action expected to be dispatched by saga
@@ -24,7 +24,7 @@ describe('authSaga with authReducer', () => {
 
   it('should succeed (be unauthenticated)', async () => {
     apiHandler.mockReturnValue({isAuthenticated: false, userId: ''});
-    return expectSaga(watchGetIsAuthenticated, apiHandler)
+    return expectSaga(authSaga, apiHandler)
       .withReducer(authReducer)
       .dispatch(authActionCreators.authenticate.begin())
       .put(authActionCreators.authenticate.resolve({isAuthenticated: false, userId: ''}))
@@ -34,7 +34,7 @@ describe('authSaga with authReducer', () => {
 
   it('should fail with Error thrown', async () => {
     apiHandler.mockRejectedValue(Error('Server Error'));
-    return expectSaga(watchGetIsAuthenticated, apiHandler)
+    return expectSaga(authSaga, apiHandler)
       .withReducer(authReducer)
       .dispatch(authActionCreators.authenticate.begin())
       .put(authActionCreators.authenticate.reject())
@@ -51,7 +51,7 @@ describe('authSaga with authReducer', () => {
       },
     };
     apiHandler.mockRejectedValue(err);
-    return expectSaga(watchGetIsAuthenticated, apiHandler)
+    return expectSaga(authSaga, apiHandler)
       .withReducer(authReducer)
       .dispatch(authActionCreators.authenticate.begin())
       .put(authActionCreators.authenticate.reject())

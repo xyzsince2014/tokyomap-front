@@ -6,7 +6,7 @@ import getGeolocationFactory from '../services/geolocation/getGeolocationFactory
 
 const getGeolocation = getGeolocationFactory();
 
-export function* runGetGeolocation(apiHandler: typeof getGeolocation) {
+function* runGetGeolocation(apiHandler: typeof getGeolocation) {
   try {
     const geolocation = (yield call(apiHandler)) as L.LatLngTuple;
     yield put(geolocationActionCreators.getGeolocation.resolve(geolocation));
@@ -16,10 +16,12 @@ export function* runGetGeolocation(apiHandler: typeof getGeolocation) {
   }
 }
 
-export function* watchGeolocation(apiHandler: typeof getGeolocation) {
+function* watchGeolocation(apiHandler: typeof getGeolocation) {
   yield takeLatest(GetGeolocationType.GET_GEOLOCATION_BEGIN, runGetGeolocation, apiHandler);
 }
 
-export default function* geolocationSaga() {
-  yield fork(watchGeolocation, getGeolocation);
+export default function* geolocationSaga(
+  apiHandler: () => Promise<L.LatLngTuple> = getGeolocation,
+) {
+  yield fork(watchGeolocation, apiHandler);
 }
