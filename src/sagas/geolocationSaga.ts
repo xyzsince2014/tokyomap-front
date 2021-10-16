@@ -2,7 +2,7 @@ import {call, fork, put, takeLatest} from 'redux-saga/effects';
 import {GetGeolocationType} from '../actions/geolocation/geolocationActionType';
 
 import * as geolocationActionCreators from '../actions/geolocation/geolocationActionCreators';
-import {getGeolocationFactory} from '../services/geolocation/api';
+import getGeolocationFactory from '../services/geolocation/getGeolocationFactory';
 
 const getGeolocation = getGeolocationFactory();
 

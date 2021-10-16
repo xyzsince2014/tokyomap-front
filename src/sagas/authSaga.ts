@@ -1,11 +1,11 @@
 import {takeLatest, fork, put, call, SagaReturnType} from 'redux-saga/effects';
 
-import {getAuthFactory} from '../services/auth/api';
+import authenticateFactory from '../services/auth/authenticateFactory';
 import * as authActionCreators from '../actions/auth/authActionCreators';
 import {AuthActionType} from '../actions/auth/authActionType';
 
 /* api handlers */
-const authenticate = getAuthFactory();
+const authenticate = authenticateFactory();
 type AuthenticateResult = SagaReturnType<typeof authenticate>;
 
 /* tasks */

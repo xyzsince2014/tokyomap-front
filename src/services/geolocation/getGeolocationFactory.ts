@@ -1,4 +1,4 @@
-export const getGeolocationFactory = () => {
+const getGeolocationFactory = () => {
   const getGeolocation = (): Promise<L.LatLngTuple> =>
     new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
@@ -14,3 +14,5 @@ export const getGeolocationFactory = () => {
 
   return getGeolocation;
 };
+
+export default getGeolocationFactory;
