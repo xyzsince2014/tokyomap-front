@@ -1,10 +1,16 @@
 import {EventChannel} from 'redux-saga';
-import {call, fork, put, take} from 'redux-saga/effects';
+import {all, call, fork, put, take} from 'redux-saga/effects';
 
 import {ConnectToSocketType, PostTweetType} from '../actions/socket/socketActionType';
-import {PostTweetAction, SocketAction} from '../actions/socket/socketActionCreators';
-import {createSocketConnection} from '../services/socket/connector';
+import {
+  PostTweetAction,
+  SocketAction,
+  connectToSocket,
+} from '../actions/socket/socketActionCreators';
+import {createSocketFactory} from '../services/socket/createSocketFactory';
 import {subscribe} from '../services/socket/subscriber';
+
+const createSocket = createSocketFactory(`${process.env.DOMAIN_WEB!}`);
 
 /**
  * initialise the socket state
@@ -15,38 +21,51 @@ export function* initSocketState(socket: SocketIOClient.Socket) {
 }
 
 /**
+ * handle errors on socket connection
+ */
+export function* rejectConnectToSocket() {
+  yield put(connectToSocket.reject());
+}
+
+/**
  * add a tweet, and syncronise the socket state
  * @param socket
  */
 export function* updateSocketState(socket: SocketIOClient.Socket) {
   while (true) {
-    const action: PostTweetAction = yield take(PostTweetType.POST_TWEET_BEGIN);
+    const action = (yield take(PostTweetType.POST_TWEET_BEGIN)) as PostTweetAction;
     yield socket.emit('postTweet', action.payload);
   }
 }
 
 /**
- * fetch an action from the channel and dispatch it
+ * subscribe the socketChannel
  * @param socket
  */
-export function* dispatchActionFromChannel(socket: SocketIOClient.Socket) {
-  const eventChannel: EventChannel<SocketAction> = yield call(subscribe, socket);
+export function* subscribeChannel(socket: SocketIOClient.Socket) {
+  const eventChannel = (yield call(subscribe, socket)) as EventChannel<SocketAction>;
   while (true) {
-    const action: SocketAction = yield take(eventChannel);
+    const action = (yield take(eventChannel)) as SocketAction;
     yield put(action);
   }
 }
 
-export function* watchSocket() {
+export function* watchSocket(socketHandler: typeof createSocket) {
   while (true) {
     yield take(ConnectToSocketType.CONNECT_TO_SOCKET_BEGIN);
-    const socket: SocketIOClient.Socket = yield call(createSocketConnection);
-    yield fork(initSocketState, socket);
-    yield fork(updateSocketState, socket);
-    yield fork(dispatchActionFromChannel, socket);
+    try {
+      const socket = (yield call(socketHandler)) as SocketIOClient.Socket;
+      yield* [
+        fork(initSocketState, socket),
+        fork(subscribeChannel, socket),
+        fork(updateSocketState, socket),
+      ];
+    } catch (e: unknown) {
+      fork(rejectConnectToSocket);
+    }
   }
 }
 
 export default function* socketSaga() {
-  yield fork(watchSocket);
+  yield fork(watchSocket, createSocket);
 }
