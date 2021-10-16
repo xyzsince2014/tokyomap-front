@@ -133,7 +133,7 @@
     "prettier-stylelint": "^0.4.2",
     "react-docgen-typescript-loader": "^3.7.2",
     "react-test-renderer": "^17.0.0",
-    "redux-saga-test-plan": "^4.0.1",
+    "redux-saga-test-plan": "^4.0.3",
     "sass": "^1.41.1",
     "sass-loader": "^8.0.2",
     "stylelint": "^13.13.1",
