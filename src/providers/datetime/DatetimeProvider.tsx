@@ -1,13 +1,13 @@
 import {useCallback, useEffect, useState} from 'react';
 
 import DatetimeContext from './datetimeContext';
-import {fetchCurrentDatetime} from '../../utils/dateTime';
+import {fetchCurrentDatetimeJst} from '../../utils/dateTime';
 
 const DatetimeProvider: React.FC = ({children}) => {
-  const [datetime, setDatetime] = useState(fetchCurrentDatetime());
+  const [datetime, setDatetime] = useState(fetchCurrentDatetimeJst());
 
   const tick = useCallback(() => {
-    setDatetime(fetchCurrentDatetime());
+    setDatetime(fetchCurrentDatetimeJst());
   }, []);
 
   useEffect(() => {

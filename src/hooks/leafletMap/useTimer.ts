@@ -1,10 +1,15 @@
 import {useState, useEffect, useCallback, useRef} from 'react';
 
-/** @param {string} disappearAt "yyyy-mm-dd hh:mm:ss" */
+import {fetchCurrentJst, formatDateTime} from '../../utils/dateTime';
+
+/** @param {string} disappearAt `yyyy-mm-ddThh:mm:ss.sssZ` */
 const useTimer = (disappearAt: string) => {
-  // memorise the callback to calculate the tweet's remaining time to display
+  /* the callback to calculate the tweet's remaining time to display */
   const getTimeRemaining = useCallback(
-    () => Math.floor((new Date(disappearAt).getTime() - new Date().getTime()) / 1000),
+    () =>
+      Math.floor(
+        (new Date(formatDateTime(disappearAt)).getTime() - fetchCurrentJst().getTime()) / 1000,
+      ),
     [disappearAt],
   );
 
@@ -16,7 +21,7 @@ const useTimer = (disappearAt: string) => {
   }, [getTimeRemaining]);
 
   useEffect(() => {
-    timerId.current = setInterval(tick, 1000 * 5);
+    timerId.current = setInterval(tick, 1000);
     return () => {
       if (timerId.current) {
         clearInterval(timerId.current);
