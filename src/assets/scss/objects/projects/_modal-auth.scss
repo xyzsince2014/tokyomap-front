@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@use './foundation' as f;
+@use 'foundation' as *;
 
 .p-modal-auth {
   width: 100%;
@@ -10,7 +10,7 @@
   border-radius: 2px;
   background: inherit;
 
-  @include f.view-at('p') {
+  @include view-at('p') {
     padding: 25px;
   }
 
@@ -29,14 +29,14 @@
     margin: auto;
     margin-top: 0;
     background: inherit;
-    box-shadow: 0 0 0 200px rgba(255, 255, 255, .05) inset;
+    box-shadow: 0 0 0 200px rgba(255, 255, 255, 0.05) inset;
     filter: blur(10px);
   }
 
   &__btn {
-    color: f.$colour-white;
+    color: $colour-white;
     font-size: 16px;
-    font-weight: f.$font-weight-bold;
+    font-weight: $font-weight-bold;
     line-height: 22px;
 
     &:not(:first-child) {
@@ -44,20 +44,20 @@
     }
 
     &--facebook {
-      background-color: f.$colour-facebook;
+      background-color: $colour-facebook;
     }
 
     &--twitter {
-      background-color: f.$colour-blue;
+      background-color: $colour-blue;
     }
 
     &--line {
-      background-color: f.$colour-line;
+      background-color: $colour-line;
     }
 
     &__inner {
       display: flex;
-      padding: .5em .5em .5em 1em;
+      padding: 0.5em 0.5em 0.5em 1em;
       cursor: pointer;
 
       & > img {
@@ -66,12 +66,12 @@
       }
 
       & > span {
-        text-indent: .8em;
+        text-indent: 0.8em;
       }
     }
 
     &:hover {
-      opacity: .8;
+      opacity: 0.8;
     }
 
     &:focus {

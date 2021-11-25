@@ -11,7 +11,7 @@ module.exports = {
     'color-no-invalid-hex': true, // 無効な16進数の色指定を禁止
     'function-comma-space-after': 'always-single-line', // 単一行のカンマ後には空白が必要
     'function-comma-space-before': 'never', // カンマ前の空白を禁止
-    'number-leading-zero': 'never', // disallows "0.*"
+    'number-leading-zero': 'always', // enforces "0.*"
     'number-no-trailing-zeros': true, // 小数点以下の末尾0を禁止
     'string-no-newline': true, // 文字列の改行を禁止
     'string-quotes': 'single', // forces the use of ''
@@ -26,7 +26,6 @@ module.exports = {
     'declaration-empty-line-before': 'never',
     'declaration-bang-space-after': 'never', // 宣言後の空白を禁止
     'declaration-bang-space-before': 'always', // 宣言前の空白を必須
-    'declaration-colon-newline-after': 'always-multi-line', // 複数行の時のコロン後には改行が必須
     'declaration-colon-space-after': 'always-single-line', // 単一行の時のコロン後に空白が必須
     'declaration-colon-space-before': 'never', // コロン前の空白を禁止
     'declaration-block-no-duplicate-properties': [

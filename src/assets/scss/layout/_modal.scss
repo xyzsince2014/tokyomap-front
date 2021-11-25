@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
-@use './foundation' as f;
+@use 'foundation' as *;
 
 .l-modal {
   display: block;
   position: fixed;
-  z-index: f.$z-index-modal;
+  z-index: $z-index-modal;
   top: 0;
   right: 0;
   bottom: 0;
@@ -22,7 +22,7 @@
 
     &__content {
       display: table-cell;
-      background-color: rgba(f.$colour-cod-gray, .7);
+      background-color: rgba($colour-cod-gray, 0.7);
       vertical-align: middle;
     }
   }

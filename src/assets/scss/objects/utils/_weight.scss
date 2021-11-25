@@ -1,51 +1,51 @@
 @charset "UTF-8";
 
-@use './foundation' as f;
+@use 'foundation' as *;
 
 .u-weight-bold {
-  font-weight: f.$font-weight-bold;
+  font-weight: $font-weight-bold;
 }
 
 .u-weight-normal {
-  font-weight: f.$font-weight-normal;
+  font-weight: $font-weight-normal;
 }
 
 .u-weight-light {
-  font-weight: f.$font-weight-light;
+  font-weight: $font-weight-light;
 }
 
 .u-weight-bold-pc {
-  @include f.view-at(p) {
-    font-weight: f.$font-weight-bold;
+  @include view-at(p) {
+    font-weight: $font-weight-bold;
   }
 }
 
 .u-weight-normal-pc {
-  @include f.view-at(p) {
-    font-weight: f.$font-weight-normal;
+  @include view-at(p) {
+    font-weight: $font-weight-normal;
   }
 }
 
 .u-weight-light-pc {
-  @include f.view-at(p) {
-    font-weight: f.$font-weight-light;
+  @include view-at(p) {
+    font-weight: $font-weight-light;
   }
 }
 
 .u-weight-bold-sp {
-  @include f.view-at(s) {
-    font-weight: f.$font-weight-bold;
+  @include view-at(s) {
+    font-weight: $font-weight-bold;
   }
 }
 
 .u-weight-normal-sp {
-  @include f.view-at(s) {
-    font-weight: f.$font-weight-normal;
+  @include view-at(s) {
+    font-weight: $font-weight-normal;
   }
 }
 
 .u-weight-light-sp {
-  @include f.view-at(s) {
-    font-weight: f.$font-weight-light;
+  @include view-at(s) {
+    font-weight: $font-weight-light;
   }
 }

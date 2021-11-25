@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
-@use './foundation' as f;
+@use 'foundation' as *;
 
 .p-clock {
   bottom: -10px;
   left: -10px;
   padding: 4px 7.5px 3px;
-  border-bottom: 5px solid f.$colour-japanese-laurel;
-  opacity: .55;
-  background-color: rgba(f.$colour-black, .8);
-  color: f.$colour-white;
+  border-bottom: 5px solid $colour-japanese-laurel;
+  opacity: 0.55;
+  background-color: rgba($colour-black, 0.8);
+  color: $colour-white;
   font-size: 1.2em;
 }

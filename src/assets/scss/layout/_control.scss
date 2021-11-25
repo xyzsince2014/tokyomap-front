@@ -1,10 +1,10 @@
 @charset "UTF-8";
 
-@use './foundation' as f;
+@use 'foundation' as *;
 
 @mixin _control {
   position: fixed;
-  z-index: f.$z-index-control;
+  z-index: $z-index-control;
   @content;
 }
 

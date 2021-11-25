@@ -1,19 +1,19 @@
 @charset "UTF-8";
 
-@use './foundation' as f;
+@use 'foundation' as *;
 
 .u-font-size-mediam {
-  @include f.font-size(m);
+  @include font-size(m);
 }
 
 .u-font-size-large {
-  @include f.font-size(l);
+  @include font-size(l);
 }
 
 .u-font-size-small {
-  @include f.font-size(s);
+  @include font-size(s);
 }
 
 .u-font-size-xlarge {
-  @include f.font-size(xl);
+  @include font-size(xl);
 }

@@ -1,16 +1,15 @@
 @charset "UTF-8";
 
-@use './foundation' as f;
+@use 'foundation' as *;
 
 .u-colour-red {
-  color: f.$colour-red;
+  color: $colour-red;
 }
 
 .u-color-blue {
-  color: f.$colour-blue;
+  color: $colour-blue;
 }
 
 .u-color-gray {
-  color: f.$colour-gray-dark;
+  color: $colour-gray-dark;
 }
-

@@ -1,21 +1,21 @@
 @charset "UTF-8";
 
-@use './foundation' as f;
+@use 'foundation' as *;
 
 $_gap: 5px;
 
 @for $i from 0 to 16 {
-  .u-mb#{$i * f.strip-unit($_gap)} {
+  .u-mb#{$i * strip-unit($_gap)} {
     margin-bottom: $i * $_gap;
 
     &-pc {
-      @include f.view-at(p) {
+      @include view-at(p) {
         margin-bottom: $i * $_gap;
       }
     }
 
     &-sp {
-      @include f.view-at(s) {
+      @include view-at(s) {
         margin-bottom: $i * $_gap;
       }
     }
