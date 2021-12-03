@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@use 'foundation' as *;
+@use 'foundation' as f;
 
 $_duration-pulse: 2s;
 $_iteration-pulse: infinite;
@@ -8,7 +8,7 @@ $_iteration-pulse: infinite;
 @mixin _opacity-pulse($colour-name, $colour) {
   @keyframes _opacity-pulse-#{$colour-name} {
     0% {
-      opacity: 0.1;
+      opacity: .1;
       fill: $colour;
     }
 
@@ -18,25 +18,25 @@ $_iteration-pulse: infinite;
     }
 
     100% {
-      opacity: 0.1;
+      opacity: .1;
       fill: $colour;
     }
   }
 }
 
-@include _opacity-pulse('contessa', $colour-contessa);
-@include _opacity-pulse('yellow', $colour-yellow);
+@include _opacity-pulse('contessa', f.$colour-contessa);
+@include _opacity-pulse('yellow', f.$colour-yellow);
 
 .p-custom-marker {
   & .ring-inner {
     opacity: 0;
 
     &[aria-label='warning'] {
-      animation: _opacity-pulse-contessa $_duration-pulse cubic-bezier(0.4, 0.74, 0.56, 0.82) $_iteration-pulse;
+      animation: _opacity-pulse-contessa $_duration-pulse cubic-bezier(.4, .74, .56, .82) $_iteration-pulse;
     }
 
     &[aria-label='caution'] {
-      animation: _opacity-pulse-yellow $_duration-pulse cubic-bezier(0.4, 0.74, 0.56, 0.82) $_iteration-pulse;
+      animation: _opacity-pulse-yellow $_duration-pulse cubic-bezier(.4, .74, .56, .82) $_iteration-pulse;
     }
 
     &[aria-hidden='true'] {
@@ -48,11 +48,11 @@ $_iteration-pulse: infinite;
     opacity: 0;
 
     &[aria-label='warning'] {
-      animation: _opacity-pulse-contessa $_duration-pulse cubic-bezier(1, 0.14, 1, 1) $_iteration-pulse;
+      animation: _opacity-pulse-contessa $_duration-pulse cubic-bezier(1, .14, 1, 1) $_iteration-pulse;
     }
 
     &[aria-label='caution'] {
-      animation: _opacity-pulse-yellow $_duration-pulse cubic-bezier(1, 0.14, 1, 1) $_iteration-pulse;
+      animation: _opacity-pulse-yellow $_duration-pulse cubic-bezier(1, .14, 1, 1) $_iteration-pulse;
     }
 
     &[aria-hidden='true'] {

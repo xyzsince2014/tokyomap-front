@@ -1,16 +1,16 @@
 @charset "UTF-8";
 
-@use 'foundation' as *;
+@use 'foundation' as f;
 
 .p-tooltip {
   min-width: 100px;
   margin-top: -10px;
   border: none;
-  background-color: rgba($colour-black, 0.7);
-  color: $colour-white;
+  background-color: rgba(f.$colour-black, .7);
+  color: f.$colour-white;
 
   &__posted-at {
     display: inline-block;
-    margin-right: 0.5em;
+    margin-right: .5em;
   }
 }

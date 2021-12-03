@@ -11,7 +11,7 @@ module.exports = {
     'color-no-invalid-hex': true, // 無効な16進数の色指定を禁止
     'function-comma-space-after': 'always-single-line', // 単一行のカンマ後には空白が必要
     'function-comma-space-before': 'never', // カンマ前の空白を禁止
-    'number-leading-zero': 'always', // enforces "0.*"
+    'number-leading-zero': 'never', // disallows "0.*"
     'number-no-trailing-zeros': true, // 小数点以下の末尾0を禁止
     'string-no-newline': true, // 文字列の改行を禁止
     'string-quotes': 'single', // forces the use of ''

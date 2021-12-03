@@ -1,20 +1,20 @@
 @charset "UTF-8";
 
-@use 'foundation' as *;
+@use 'foundation' as f;
 
 .c-modal {
   display: block;
   position: relative;
   margin: 0 auto;
   padding: 1.25em;
-  border-radius: 0.3125em;
-  background-color: $colour-white;
+  border-radius: .3125em;
+  background-color: f.$colour-white;
 
-  @include view-at('p') {
+  @include f.view-at('p') {
     max-width: 400px;
   }
 
-  @include view-at('s') {
+  @include f.view-at('s') {
     width: 90%;
   }
 
@@ -44,28 +44,28 @@
       width: 110px;
       height: 35px;
       margin: 10px;
-      padding: 0.55em 10px;
-      border-radius: 0.25em;
-      background-color: $colour-blue;
+      padding: .55em 10px;
+      border-radius: .25em;
+      background-color: f.$colour-blue;
       cursor: pointer;
 
       & > span {
-        color: $colour-white;
+        color: f.$colour-white;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 1.3em;
-        font-weight: $font-weight-normal;
+        font-weight: f.$font-weight-normal;
       }
 
       &--white {
-        background-color: $colour-white;
+        background-color: f.$colour-white;
 
         & > span {
-          color: $colour-black;
+          color: f.$colour-black;
         }
       }
 
       &--gray-dark {
-        background-color: $colour-gray-dark;
+        background-color: f.$colour-gray-dark;
       }
     }
   }
