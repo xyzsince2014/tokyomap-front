@@ -55,6 +55,7 @@
       background-color: f.$colour-line;
     }
 
+    // todo: elements must not be nested
     &__inner {
       display: flex;
       padding: .5em .5em .5em 1em;
