@@ -1,8 +1,9 @@
 import {forwardRef} from 'react';
 
 import TwitterLogo from '../../assets/images/icons/logo_tw.png';
-import FacebookLogo from '../../assets/images/icons/logo_fb.png';
+// import FacebookLogo from '../../assets/images/icons/logo_fb.png';
 import LineLogo from '../../assets/images/icons/logo_line.png';
+import EmailLogo from '../../assets/images/icons/logo_email.png';
 
 const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
   <div
@@ -27,11 +28,11 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
                   }}
                   className="p-modal-auth__btn__inner"
                 >
-                  <img src={TwitterLogo} alt="Sign In with Twitter" />
-                  <span>Sign In with Twitter</span>
+                  <img src={TwitterLogo} alt="Sign in with Twitter" />
+                  <span>Sign in with Twitter</span>
                 </div>
               </li>
-              <li className="p-modal-auth__btn p-modal-auth__btn--facebook" key={2}>
+              {/* <li className="p-modal-auth__btn p-modal-auth__btn--facebook" key={2}>
                 <div
                   role="button"
                   tabIndex={0}
@@ -40,10 +41,10 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
                   }}
                   className="p-modal-auth__btn__inner"
                 >
-                  <img src={FacebookLogo} alt="Sign In with Facebook" />
-                  <span>Sign In with Facebook</span>
+                  <img src={FacebookLogo} alt="Sign in with Facebook" />
+                  <span>Sign in with Facebook</span>
                 </div>
-              </li>
+              </li> */}
               <li className="p-modal-auth__btn p-modal-auth__btn--line" key={3}>
                 <div
                   role="button"
@@ -53,8 +54,21 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
                   }}
                   className="p-modal-auth__btn__inner"
                 >
-                  <img src={LineLogo} alt="Sign In with Line" />
-                  <span>Sign In with Line</span>
+                  <img src={LineLogo} alt="Sign in with Line" />
+                  <span>Sign in with Line</span>
+                </div>
+              </li>
+              <li className="p-modal-auth__btn p-modal-auth__btn--email" key={4}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => {
+                    window.location.href = `${process.env.DOMAIN_API!}/auth/authorise`;
+                  }}
+                  className="p-modal-auth__btn__inner"
+                >
+                  <img src={EmailLogo} alt="Sign in with email" />
+                  <span>Sign in with email</span>
                 </div>
               </li>
             </ul>

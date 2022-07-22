@@ -55,6 +55,10 @@
       background-color: f.$colour-line;
     }
 
+    &--email {
+      background-color: f.$colour-red;
+    }
+
     // todo: elements must not be nested
     &__inner {
       display: flex;

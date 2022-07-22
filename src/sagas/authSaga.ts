@@ -18,7 +18,7 @@ function* runAuthenticate(apiHandler: typeof authenticate) {
 
 function* watchGetIsAuthenticated(apiHandler: typeof authenticate) {
   // while (true) {
-  //   const action: ReturnType<typeof authActionCreators.authenticate.begin> = yield take(ActionType.BEGIN);
+  //   const action: ReturnType<typeof authActionCreators.authenticate.begin> = yield take(AuthActionType.BEGIN);
   //   yield fork(runAuthenticate, apiHandler);
   // }
   yield takeLatest(AuthActionType.BEGIN, runAuthenticate, apiHandler); // a syntactic sugar for the snippet above. cf. https://github.com/redux-saga/redux-saga/issues/684
