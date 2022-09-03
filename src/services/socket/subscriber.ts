@@ -5,8 +5,7 @@ import {connectToSocket, postTweet, SocketAction} from '../../actions/socket/soc
 export const subscribe = (socket: SocketIOClient.Socket): EventChannel<SocketAction> =>
   eventChannel(emit => {
     const initSocketStateResolve = (tweets: Tweet[]) => {
-      // todo: display connection notification
-      emit(connectToSocket.resolve(tweets));
+      emit(connectToSocket.resolve(tweets)); // todo: display connection notification
     };
 
     const initSocketStateReject = (err: Error) => {

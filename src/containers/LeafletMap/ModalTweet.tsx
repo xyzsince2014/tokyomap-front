@@ -51,7 +51,6 @@ const EnhancedModalTweet: React.FC<EnhancedModalTweetProps> = ({
 }) => {
   const modalRef = useModal();
 
-  // todo: use react-hook-form
   const handlePost = (): void => {
     const message = document.getElementById('message') as HTMLInputElement;
     if (!message.value || message.value.length > 256) {
