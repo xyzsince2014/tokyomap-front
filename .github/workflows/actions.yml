@@ -6,12 +6,11 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16]
     steps:
-      - uses: actions/checkout@v2
-      - name: yarn install
-        run: yarn install
-      - name: yarn test
-        run: yarn test
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          # todo: node-version: 18.8.0
+          node-version: 14.20.0
+      - run: yarn install
+      - run: yarn test
