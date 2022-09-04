@@ -17,7 +17,7 @@ node_modules/
 aws/public/
 aws/certs/
 aws/*.sh
-web/public/
+public/
 
 # vscode
 .vscode/chrome
