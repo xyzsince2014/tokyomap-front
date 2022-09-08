@@ -12,7 +12,7 @@ module.exports = (env, args) => {
   const isProduction = args.mode === 'production';
   const outputPath = isProduction
     ? path.resolve(__dirname, 'aws/public')
-    : path.resolve(__dirname, 'web/public');
+    : path.resolve(__dirname, 'public');
 
   return {
     mode: isProduction ? 'production' : 'development',

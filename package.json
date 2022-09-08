@@ -1,5 +1,5 @@
 {
-  "name": "tokyomap-web",
+  "name": "tokyomap-front",
   "version": "2.0.4",
   "private": false,
   "description": "A mock of https://hkmap.live/",
@@ -9,7 +9,7 @@
   "man": "./README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xyzsince2014/tokyomap.live.git"
+    "url": "https://github.com/xyzsince2014/tokyomap-front"
   },
   "bugs": {
     "url": "https://github.com/xyzsince2014/tokyomap.live.git/issues",
