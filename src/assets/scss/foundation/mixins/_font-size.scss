@@ -1,44 +1,44 @@
 @charset "UTF-8";
 
-@import './view-at';
+@use './view-at' as va;
 
 @mixin font-size($size: 'm') {
   @if ($size == 's') {
-    @include view-at(p) {
+    @include va.view-at(p) {
       font-size: 12px;
     }
 
-    @include view-at(s) {
+    @include va.view-at(s) {
       font-size: 10px;
     }
   }
 
   @else if ($size == 'm') {
-    @include view-at(u) {
+    @include va.view-at(u) {
       font-size: 14px;
     }
 
-    @include view-at(l) {
+    @include va.view-at(l) {
       font-size: 12px;
     }
   }
 
   @else if ($size == 'l') {
-    @include view-at(p) {
+    @include va.view-at(p) {
       font-size: 16px;
     }
 
-    @include view-at(s) {
+    @include va.view-at(s) {
       font-size: 14px;
     }
   }
 
   @else if ($size == 'xl') {
-    @include view-at(p) {
+    @include va.view-at(p) {
       font-size: 18px;
     }
 
-    @include view-at(s) {
+    @include va.view-at(s) {
       font-size: 16px;
     }
   }

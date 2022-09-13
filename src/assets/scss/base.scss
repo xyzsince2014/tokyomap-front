@@ -1,15 +1,5 @@
 @charset "UTF-8";
 
-@import './libs/reset';
-@import './foundation';
-@import './layout';
-@import './objects';
-
-* {
-  box-sizing: border-box;
-
-  &::before,
-  &::after {
-    box-sizing: border-box;
-  }
-}
+@use 'libs/destyle';
+@use 'layout';
+@use 'objects';

@@ -1,6 +1,10 @@
+build/
 public/
-docs/
-node_modules/
+**/docs/
+**/coverage/
+**/node_modules/
+**/*.min.js
 src/assets/**/libs/*
-webpack.config.js
 web/public
+.*lintrc.js
+*.config.js

@@ -1,34 +1,36 @@
 @charset "UTF-8";
 
-@mixin control {
+@use 'foundation' as f;
+
+@mixin _control {
   position: fixed;
-  z-index: $z-index-control;
+  z-index: f.$z-index-control;
   @content;
 }
 
 .l-control {
   &__topleft {
-    @include control;
+    @include _control;
     top: 0;
     left: 0;
-    margin: 10px 0 0 10px;
-    height: 20px;
     width: 30px;
+    height: 20px;
+    margin: 10px 0 0 10px;
   }
 
   &__topright {
-    @include control;
+    @include _control;
     top: 0;
     right: 0;
-    margin: 10px 10px 0 0;
-    height: 20px;
     width: 30px;
+    height: 20px;
+    margin: 10px 10px 0 0;
   }
 
   &__bottomleft {
-    @include control;
-    left: 0;
+    @include _control;
     bottom: 0;
+    left: 0;
     pointer-events: none;
   }
 }

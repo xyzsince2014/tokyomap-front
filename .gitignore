@@ -1,9 +1,6 @@
 # dependencies
 node_modules/
 
-# production
-public/
-
 # logs
 *.log
 
@@ -16,10 +13,14 @@ public/
 # misc
 .DS_Store
 
-# prod
+# production
 aws/public/
 aws/certs/
 aws/*.sh
+public/
 
 # vscode
 .vscode/chrome
+
+# test coverage
+src/tests/coverage/

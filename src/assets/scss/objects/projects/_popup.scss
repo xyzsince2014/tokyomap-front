@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+@use 'foundation' as f;
+
 .p-popup {
   min-width: 140px;
 
@@ -13,18 +15,19 @@
     line-height: 1.65;
     word-break: break-word;
 
+    // todo: elements must not be nested
     &__user-name {
       display: inline-block;
       margin-right: .5em;
-      font-weight: $font-weight-bold;
+      font-weight: f.$font-weight-bold;
     }
 
     &__posted-at {
-      @include link-all-status-content {
-        cursor: pointer;
-        color: $colour-blue;
-        text-decoration: none;
+      @include f.link-all-status-content {
+        color: f.$colour-blue;
         font-size: .9em;
+        text-decoration: none;
+        cursor: pointer;
       }
     }
 

@@ -1,16 +1,17 @@
 import {Reducer} from 'redux';
+import produce from 'immer';
 
-import {AuthAction} from '../actions/Auth/authActionCreator';
-import * as ActionType from '../actions/Auth/authConstants';
+import {AuthAction} from '../actions/auth/authActionCreators';
+import {AuthActionType} from '../actions/auth/authActionType';
 
 export interface AuthState {
   isAuthenticated: boolean;
   userId: string;
 }
 
-export const initialAuthState = {
+export const initialAuthState: AuthState = {
   isAuthenticated: false,
-  userId: '0',
+  userId: '',
 };
 
 const authReducer: Reducer<AuthState, AuthAction> = (
@@ -18,26 +19,24 @@ const authReducer: Reducer<AuthState, AuthAction> = (
   action: AuthAction,
 ): AuthState => {
   switch (action.type) {
-    case ActionType.BEGIN:
-      return {
-        ...state,
-      };
-    case ActionType.RESOLVE:
-      return {
-        ...state,
-        isAuthenticated: action.payload.result.isAuthenticated,
-        userId: action.payload.result.userId,
-      };
-    case ActionType.REJECT:
-      return {
-        ...state,
-        isAuthenticated: false,
-      };
-    default:
-      /* eslint-disable no-case-declarations */
-      /* eslint-disable @typescript-eslint/no-unused-vars */
-      const _: never = action;
+    case AuthActionType.BEGIN: {
       return state;
+    }
+    case AuthActionType.RESOLVE: {
+      return produce(state, draft => {
+        /* eslint-disable @typescript-eslint/no-non-null-assertion */
+        draft.isAuthenticated = action.payload!.isAuthenticated;
+        draft.userId = action.payload!.userId;
+        /* eslint-enable @typescript-eslint/no-non-null-assertion */
+      });
+    }
+    case AuthActionType.REJECT: {
+      return initialAuthState;
+    }
+    default: {
+      const _: never = action.type;
+      return state;
+    }
   }
 };
 

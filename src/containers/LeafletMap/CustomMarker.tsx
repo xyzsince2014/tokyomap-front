@@ -1,38 +1,13 @@
-import * as React from 'react';
+import useTimer from '../../hooks/leafletMap/useTimer';
+import CustormMarker from '../../components/LeafletMap/CustomMarker';
 
-import CustormMarker from '../../presentationals/LeafletMap/CustomMarker';
-import {Tweet} from '../../services/socket/models';
-import {formatDateTime, fetchCurrentTime} from '../../utils/dateTime';
-
-export interface CustomMarkerProps {
+interface EnhancedCustomMarkerProps {
   tweet: Tweet;
 }
 
-const useTimer = (tweet: Tweet) => {
-  const getTimeRemaining = () => {
-    const disapperAt = new Date(formatDateTime(tweet.disappearAt));
-    return Math.floor((disapperAt.getTime() - fetchCurrentTime().getTime()) / 1000);
-  };
-  const [timeRemaining, setTimeRemaining] = React.useState<number>(getTimeRemaining());
-
-  const tick = () => {
-    setTimeRemaining(getTimeRemaining());
-  };
-
-  React.useEffect(() => {
-    const timer = setInterval(tick, 1000 * 10);
-    return () => clearInterval(timer);
-  }, []);
-
-  return timeRemaining;
+const EnhancedCustormMarker: React.FC<EnhancedCustomMarkerProps> = ({tweet}) => {
+  const {timeRemaining} = useTimer(tweet.disappearAt);
+  return timeRemaining > 0 ? <CustormMarker tweet={tweet} timeRemaining={timeRemaining} /> : <></>;
 };
 
-const CustormMarkerContainer: React.FC<CustomMarkerProps> = ({tweet}) => {
-  const timeRemaining = useTimer(tweet);
-  if (timeRemaining < 0) {
-    return <div />;
-  }
-  return <CustormMarker tweet={tweet} timeRemaining={timeRemaining} />;
-};
-
-export default CustormMarkerContainer;
+export default EnhancedCustormMarker;

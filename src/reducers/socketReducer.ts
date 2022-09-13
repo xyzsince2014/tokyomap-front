@@ -1,64 +1,45 @@
 import {Reducer} from 'redux';
+import produce from 'immer';
 
-import {SocketAction} from '../actions/Socket/socketActionCreator';
-import * as ActionType from '../actions/Socket/socketConstants';
-import * as Models from '../services/socket/models';
+import {ConnectToSocketType, PostTweetType} from '../actions/socket/socketActionType';
+import {SocketAction} from '../actions/socket/socketActionCreators';
 
 export interface SocketState {
-  tweets: Models.Tweet[];
-  geolocation: L.LatLngTuple;
+  tweets: Tweet[];
 }
 
+export const initialSocketState: SocketState = {tweets: []};
+
 const socketReducer: Reducer<SocketState, SocketAction> = (
-  state: SocketState = {tweets: [], geolocation: [35.680722, 139.767271]}, // default geolocation is Tokyo Sta.
+  state: SocketState = initialSocketState,
   action: SocketAction,
 ): SocketState => {
   switch (action.type) {
-    case ActionType.CONNECT_SOCKET_BEGIN:
-      return {
-        ...state,
-      };
-    case ActionType.CONNECT_SOCKET_RESOLVE:
-      return {
-        ...state,
-        tweets: action.payload.tweets,
-      };
-    case ActionType.CONNECT_SOCKET_REJECT:
-      return {
-        ...state,
-      };
-    case ActionType.POST_TWEET_BEGIN:
-      return {
-        ...state,
-      };
-    case ActionType.POST_TWEET_RESOLVE:
-      return {
-        ...state,
-        tweets: action.payload.tweets,
-      };
-    case ActionType.POST_TWEET_REJECT:
-      return {
-        ...state,
-      };
-    case ActionType.GET_GEOLOCATION_BEGIN:
-      return {
-        ...state,
-      };
-    case ActionType.GET_GEOLOCATION_RESOLVE:
-      return {
-        ...state,
-        geolocation: action.payload.geolocation,
-      };
-    case ActionType.GET_GEOLOCATION_REJECT:
-      return {
-        ...state,
-        geolocation: [35.680722, 139.767271], // set geolocation = Tokyo Sta.
-      };
-    default:
-      /* eslint-disable no-case-declarations */
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _: never = action;
+    case ConnectToSocketType.CONNECT_TO_SOCKET_BEGIN: {
       return state;
+    }
+    case ConnectToSocketType.CONNECT_TO_SOCKET_RESOLVE: {
+      return produce(state, draft => {
+        draft.tweets = action.payload as Tweet[];
+      });
+    }
+    case ConnectToSocketType.CONNECT_TO_SOCKET_REJECT: {
+      return state;
+    }
+    case PostTweetType.POST_TWEET_BEGIN: {
+      return state;
+    }
+    case PostTweetType.POST_TWEET_RESOLVE: {
+      return produce(state, draft => {
+        draft.tweets = action.payload as Tweet[];
+      });
+    }
+    case PostTweetType.POST_TWEET_REJECT: {
+      return state;
+    }
+    default: {
+      return state;
+    }
   }
 };
 

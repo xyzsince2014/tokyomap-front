@@ -3,17 +3,12 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 12
+      nodejs: 14.20.0
     commands:
       - yarn install
-  pre_build:
-    commands:
-      - aws s3 cp --recursive s3://tokyomap-web/certs/ aws/certs/
   build:
     commands:
       - yarn build
-      - docker build -t ${ECR_REPO}:${VERSION} aws
   post_build:
     commands:
-      - aws ecr get-login-password | docker login --username AWS --password-stdin ${ECR_REPO}
-      - docker push ${ECR_REPO}:${VERSION}
+      - aws s3 sync --delete public s3://tokyomap-front

@@ -1,18 +1,20 @@
 @charset "UTF-8";
 
-.c-modal {
-  position: relative;
-  display: block;
-  margin: 0 auto;
-  border-radius: .3125em;
-  background-color: $colour-white;
-  padding: 1.25em;
+@use 'foundation' as f;
 
-  @include view-at('p') {
+.c-modal {
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  padding: 1.25em;
+  border-radius: .3125em;
+  background-color: f.$colour-white;
+
+  @include f.view-at('p') {
     max-width: 400px;
   }
 
-  @include view-at('s') {
+  @include f.view-at('s') {
     width: 90%;
   }
 
@@ -21,49 +23,49 @@
   }
 
   &__content {
-    height: 200px;
     padding: 10px 20px;
 
     & textarea {
-      height: 190px;
       width: 100%;
-      max-height: 190px;
       max-width: 100%;
+      height: 190px;
+      max-height: 190px;
     }
   }
 
   &__select {
-    margin: 10px auto 0;
     width: 80%;
+    margin: 10px auto 0;
     text-align: center;
 
+    // todo: elements must not be nested
     &__btn {
       display: inline-block;
-      margin: 10px;
-      height: 35px;
       width: 110px;
-      border-radius: .25em;
-      background-color: $colour-blue;
+      height: 35px;
+      margin: 10px;
       padding: .55em 10px;
+      border-radius: .25em;
+      background-color: f.$colour-blue;
       cursor: pointer;
 
       & > span {
+        color: f.$colour-white;
         font-family: Arial, Helvetica, sans-serif;
         font-size: 1.3em;
-        font-weight: $font-weight-normal;
-        color: $colour-white;
+        font-weight: f.$font-weight-normal;
       }
 
       &--white {
-        background-color: $colour-white;
+        background-color: f.$colour-white;
 
         & > span {
-          color: $colour-black;
+          color: f.$colour-black;
         }
       }
 
       &--gray-dark {
-        background-color: $colour-gray-dark;
+        background-color: f.$colour-gray-dark;
       }
     }
   }
