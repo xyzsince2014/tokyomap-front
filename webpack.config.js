@@ -10,9 +10,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = (env, args) => {
   const isProduction = args.mode === 'production';
-  const outputPath = isProduction
-    ? path.resolve(__dirname, 'aws/public')
-    : path.resolve(__dirname, 'public');
+  const outputPath = path.resolve(__dirname, 'public');
 
   return {
     mode: isProduction ? 'production' : 'development',
