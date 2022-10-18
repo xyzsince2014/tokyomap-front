@@ -7,7 +7,7 @@ export interface ApiConfig {
 }
 
 const DEFAULT_API_CONFIG: ApiConfig = {
-  baseURL: process.env.DOMAIN_API,
+  baseURL: `${process.env.DOMAIN!}/api`,
   timeout: 1000 * 10,
 };
 
