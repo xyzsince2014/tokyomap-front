@@ -24,7 +24,7 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    window.location.href = `${process.env.DOMAIN_API!}/auth/twitter`;
+                    window.location.href = `${process.env.DOMAIN!}/api/auth/twitter`;
                   }}
                   className="p-modal-auth__btn__inner"
                 >
@@ -37,7 +37,7 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    window.location.href = `${process.env.DOMAIN_API!}/auth/facebook`;
+                    window.location.href = `${process.env.DOMAIN!}/api/auth/facebook`;
                   }}
                   className="p-modal-auth__btn__inner"
                 >
@@ -50,7 +50,7 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    window.location.href = `${process.env.DOMAIN_API!}/auth/line`;
+                    window.location.href = `${process.env.DOMAIN!}/api/auth/line`;
                   }}
                   className="p-modal-auth__btn__inner"
                 >
@@ -63,7 +63,7 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    window.location.href = `${process.env.DOMAIN_API!}/auth/authorise`;
+                    window.location.href = `${process.env.DOMAIN!}/api/auth/authorise`;
                   }}
                   className="p-modal-auth__btn__inner"
                 >

@@ -10,7 +10,7 @@ import {
 import {createSocketFactory} from '../services/socket/createSocketFactory';
 import {subscribe} from '../services/socket/subscriber';
 
-const createSocket = createSocketFactory(`${process.env.DOMAIN_WEB!}`);
+const createSocket = createSocketFactory(`${process.env.DOMAIN!}`);
 
 /**
  * initialise the socket state
