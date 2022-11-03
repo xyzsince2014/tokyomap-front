@@ -1,12 +1,12 @@
-# About the application
+# tokyomap-front
 
-<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/xyzsince2014/tokyomap-web">
-<img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/xyzsince2014/tokyomap-web">
+<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/xyzsince2014/tokyomap-front">
+<img alt="GitHub tag (latest by date)" src="https://img.shields.io/github/v/tag/xyzsince2014/tokyomap-front">
 
-## Abstract
+## Abstract for the applicaiton
 
 <p>A web mapping service which tracks locations of users in the Greater Tokyo Area.</p>
-<p>You can see it's application demo <strong><a href="https://imgur.com/gallery/3tVWKBd">here</a></strong>.</p>
+<p>You can see it's demo <strong><a href="https://imgur.com/gallery/3tVWKBd">here</a></strong>.</p>
 
 ## URL
 
@@ -18,20 +18,11 @@ https://www.tokyomap.live
 
 <img src="https://user-images.githubusercontent.com/30502252/109414006-e3c0a880-79f3-11eb-8278-2a1b68b28f3a.png" width="75%"><br>
 
-## Development
+## How to dev
 
 ```bash
-# node modules installation
+# enable CloudFront and run backend containers beforehand
 yarn install
-
-# run the app on the development server
-yarn start
-
-# build and run the app on the web server for development
 yarn build:dev
-docker-compose up -d
+./sync-s3-dev.sh
 ```
-
-## Deployment
-
-Merge the develop branch to the master one before push `Start Build` on CodeBuild GUI.
