@@ -28,8 +28,7 @@
     "lint:conflict": "yarn x eslint-config-prettier 'src/**/*.{js,jsx,ts,tsx}'",
     "storybook": "start-storybook -p 6006",
     "build:storybook": "build-storybook -o docs",
-    "test": "jest --verbose --config jest.config.js",
-    "postinstall": "typesync"
+    "test": "jest --verbose --config jest.config.js"
   },
   "browserslist": {
     "production": [
@@ -186,5 +185,8 @@
     "testMatch": [
       "**/tests/**/*.spec.ts"
     ]
+  },
+  "resolutions": {
+    "sharp": "^0.32.6"
   }
 }
