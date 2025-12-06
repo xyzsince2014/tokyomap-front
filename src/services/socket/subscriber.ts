@@ -1,39 +1,43 @@
 import {eventChannel, EventChannel} from 'redux-saga';
+import {connectToSocket, postTweet,SocketAction} from '../../actions/socket/socketActionCreators';
 
-import {connectToSocket, postTweet, SocketAction} from '../../actions/socket/socketActionCreators';
+export const subscribe = (socket: SocketIOClient.Socket): EventChannel<SocketAction> => eventChannel(emit => {
+    // Listen for initSocketState response
+    socket.on('initSocketState:resolve', (tweets: Tweet[]) => {
+      emit(connectToSocket.resolve(tweets));
+    });
 
-export const subscribe = (socket: SocketIOClient.Socket): EventChannel<SocketAction> =>
-  eventChannel(emit => {
-    const initSocketStateResolve = (tweets: Tweet[]) => {
-      emit(connectToSocket.resolve(tweets)); // todo: display connection notification
-    };
-
-    const initSocketStateReject = (err: Error) => {
-      window.alert('failed to fetch tweets'); // todo: display error notification
+    socket.on('initSocketState:reject', (error: Error) => {
       emit(connectToSocket.reject());
-    };
+    });
 
-    const updateSocketStateResolve = (tweets: Tweet[]) => {
+    // Listen for postTweet response
+    socket.on('postTweet:resolve', (tweets: Tweet[]) => {
       emit(postTweet.resolve(tweets));
-    };
+    });
 
-    const updateSocketStateReject = (err: Error) => {
-      window.alert('failed to post'); // todo: display error notification
+    socket.on('postTweet:reject', (error: Error) => {
       emit(postTweet.reject());
+    });
+
+    // Handle connection events
+    socket.on('connect', () => {
+    });
+
+    socket.on('disconnect', () => {
+    });
+
+    socket.on('connect_error', (error: Error) => {
+    });
+
+    // Unsubscribe function
+    return () => {
+      socket.off('initSocketState:resolve');
+      socket.off('initSocketState:reject');
+      socket.off('postTweet:resolve');
+      socket.off('postTweet:reject');
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('connect_error');
     };
-
-    socket.on('initSocketState:resolve', initSocketStateResolve);
-    socket.on('initSocketState:reject', initSocketStateReject);
-    socket.on('postTweet:resolve', updateSocketStateResolve);
-    socket.on('postTweet:reject', updateSocketStateReject);
-
-    // the subscriber must return `unsubscribe()`, which will be invoked when the saga calls `channel.close()`
-    const unsubscribe = () => {
-      socket.off('initSocketState:resolve', initSocketStateResolve);
-      socket.off('initSocketState:reject', initSocketStateReject);
-      socket.off('postTweet:resolve', updateSocketStateResolve);
-      socket.off('postTweet:reject', updateSocketStateReject);
-    };
-
-    return unsubscribe;
   });
