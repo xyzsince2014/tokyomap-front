@@ -1,10 +1,5 @@
 import {forwardRef} from 'react';
 
-import TwitterLogo from '../../assets/images/icons/logo_tw.png';
-// import FacebookLogo from '../../assets/images/icons/logo_fb.png';
-import LineLogo from '../../assets/images/icons/logo_line.png';
-import EmailLogo from '../../assets/images/icons/logo_email.png';
-
 const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
   <div
     className="l-modal"
@@ -16,62 +11,24 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
   >
     <div className="l-modal__inner">
       <div className="l-modal__inner__content" data-modal-wrapper="modal_auth">
-        <div className="c-modal c-modal--transparent" role="document">
+        <div className="c-modal" role="document">
+          <div className="c-modal__header">
+            <h2>Welcome to Tokyo Map</h2>
+            <p className="c-modal__subtitle">Sign in to share your moments</p>
+          </div>
           <div className="c-modal__content">
-            <ul className="p-modal-auth">
-              <li className="p-modal-auth__btn p-modal-auth__btn--twitter" key={1}>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    window.location.href = `${process.env.DOMAIN!}/api/auth/twitter`;
-                  }}
-                  className="p-modal-auth__btn__inner"
-                >
-                  <img src={TwitterLogo} alt="Sign in with Twitter" />
-                  <span>Sign in with Twitter</span>
-                </div>
-              </li>
-              {/* <li className="p-modal-auth__btn p-modal-auth__btn--facebook" key={2}>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    window.location.href = `${process.env.DOMAIN!}/api/auth/facebook`;
-                  }}
-                  className="p-modal-auth__btn__inner"
-                >
-                  <img src={FacebookLogo} alt="Sign in with Facebook" />
-                  <span>Sign in with Facebook</span>
-                </div>
-              </li> */}
-              <li className="p-modal-auth__btn p-modal-auth__btn--line" key={3}>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    window.location.href = `${process.env.DOMAIN!}/api/auth/line`;
-                  }}
-                  className="p-modal-auth__btn__inner"
-                >
-                  <img src={LineLogo} alt="Sign in with Line" />
-                  <span>Sign in with Line</span>
-                </div>
-              </li>
-              <li className="p-modal-auth__btn p-modal-auth__btn--email" key={4}>
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => {
-                    window.location.href = `${process.env.DOMAIN!}/api/auth/authorise`;
-                  }}
-                  className="p-modal-auth__btn__inner"
-                >
-                  <img src={EmailLogo} alt="Sign in with email" />
-                  <span>Sign in with email</span>
-                </div>
-              </li>
-            </ul>
+            <button
+              type="button"
+              className="c-modal__select__btn c-modal__select__btn--email"
+              onClick={() => {
+                window.location.href = `${process.env.DOMAIN!}/api/auth/authorise`;
+              }}
+            >
+              <svg className="c-modal__select__btn__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 8L10.89 13.26C11.5 13.67 12.5 13.67 13.11 13.26L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <span>Sign in with Email</span>
+            </button>
           </div>
           <div className="c-modal__select">
             <div

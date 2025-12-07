@@ -16,13 +16,17 @@ const ModalTweet = forwardRef<HTMLDivElement, ModalTweetProps>(({handlePost}, mo
     <div className="l-modal__inner">
       <div className="l-modal__inner__content" data-modal-wrapper="modal_tweet">
         <div className="c-modal" role="document">
+          <div className="c-modal__header">
+            <h2>Share your moment</h2>
+          </div>
           <div className="c-modal__content">
             <form>
-              <ul>
-                <li>
-                  <textarea id="message" placeholder="message" />
-                </li>
-              </ul>
+              <textarea 
+                id="message"
+                name="message"
+                placeholder="Share something with the world..." 
+                aria-label="What's happening?"
+              />
             </form>
           </div>
           <div className="c-modal__select">
@@ -38,11 +42,11 @@ const ModalTweet = forwardRef<HTMLDivElement, ModalTweetProps>(({handlePost}, mo
             </div>
             <div
               role="button"
-              className="c-modal__select__btn c-modal__select__btn--gray-dark"
+              className="c-modal__select__btn c-modal__select__btn--white"
               data-modal-close="modal_tweet"
               tabIndex={0}
             >
-              <span>Close</span>
+              <span>Cancel</span>
             </div>
           </div>
         </div>
