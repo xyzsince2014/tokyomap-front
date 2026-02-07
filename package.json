@@ -61,7 +61,7 @@
     "http-status-codes": "^2.1.4",
     "immer": "^9.0.6",
     "leaflet": "^1.6.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.23",
     "qs": "^6.9.3",
     "query-string": "^6.12.0",
     "react": "17.0.0",
