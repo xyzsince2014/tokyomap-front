@@ -10,7 +10,7 @@
 
 ## URL
 
-https://www.tokyomap.live
+https://tokyomap.live
 
 ※ The service is suspended to avoid running cost being charged.
 

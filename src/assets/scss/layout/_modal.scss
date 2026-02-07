@@ -3,27 +3,49 @@
 @use 'foundation' as f;
 
 .l-modal {
-  display: block;
   position: fixed;
-  z-index: f.$z-index-modal;
+  display: flex;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .5);
+  backdrop-filter: blur(4px);
 
+  // Hidden state
   &[aria-hidden='true'] {
-    display: none;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility 0s linear .3s;
+    opacity: 0;
+
+    .c-modal {
+      transform: scale(.9) translateY(-20px);
+    }
+  }
+
+  // Visible state
+  &[aria-hidden='false'] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity .3s ease, visibility 0s linear 0s;
   }
 
   &__inner {
-    display: table;
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 100%;
+    justify-content: center;
 
     &__content {
-      display: table-cell;
-      background-color: rgba(f.$colour-cod-gray, .7);
-      vertical-align: middle;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
