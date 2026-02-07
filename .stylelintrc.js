@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['stylelint-config-standard', 'stylelint-config-property-sort-order-smacss'],
+  extends: ['stylelint-config-standard'],
   ignoreFiles: ['**/node_modules/**', '**/tests/**'],
   plugins: ['stylelint-order'],
   rules: {

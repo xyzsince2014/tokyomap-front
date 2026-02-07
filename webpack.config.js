@@ -43,9 +43,26 @@ module.exports = (env, args) => {
       new CleanWebpackPlugin({}),
       new Dotenv({path: isProduction ? './env/.env' : './env/.dev.env'}),
       new FaviconsWebpackPlugin({
-        logo: './src/assets/favicon/logo192.ico',
+        logo: './src/assets/favicon/favicon.svg', // Use SVG as source
         outputPath: '/assets/favicon',
-      }),
+        prefix: 'assets/favicon/',
+        // Plugin will automatically generate all sizes and formats
+        favicons: {
+          appName: 'TokyoMap',
+          appDescription: 'Real-time location sharing in Tokyo',
+          developerName: 'Tokyo Map Team',
+          background: '#FFF9E6',
+          theme_color: '#FF6B6B',
+          icons: {
+            android: true, // Android icons
+            appleIcon: true, // Apple touch icons
+            appleStartup: false,
+            favicons: true, // Regular favicons
+            windows: true, // Windows tiles
+            yandex: false
+          }
+        }
+      })
     ],
     optimization: {
       minimizer: isProduction

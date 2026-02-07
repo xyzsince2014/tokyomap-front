@@ -6,10 +6,10 @@ import {fetchCurrentJst, formatDateTime} from '../../utils/dateTime';
 const useTimer = (disappearAt: string) => {
   /* the callback to calculate the tweet's remaining time to display */
   const getTimeRemaining = useCallback(
-    () =>
-      Math.floor(
-        (new Date(formatDateTime(disappearAt)).getTime() - fetchCurrentJst().getTime()) / 1000,
-      ),
+    () => {
+      const remaining = Math.floor((new Date(disappearAt).getTime() - fetchCurrentJst().getTime()) / 1000);
+      return remaining;
+    },
     [disappearAt],
   );
 

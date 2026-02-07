@@ -18,8 +18,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   tweets = [],
   isAuthenticated = false,
   getGeolocationBegin = () => {},
-}) => (
-  <>
+}) => (<>
     <Map
       className="l-leafletmap"
       center={[35.680722, 139.767271]}
@@ -33,10 +32,9 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       />
       <ZoomControl position="bottomright" />
       {tweets.map(t => (
-        <div key={`tweet_${t.tweetId}`}>
-          <CustomMarker tweet={t} />
-        </div>
+        <CustomMarker key={`tweet_${t.tweetId}`} tweet={t} />
       ))}
+      
     </Map>
     {isAuthenticated ? (
       <div>
@@ -77,7 +75,6 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
         <ModalAuth />
       </div>
     )}
-  </>
-);
+  </>);
 
 export default LeafletMap;
