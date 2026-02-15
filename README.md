@@ -19,10 +19,15 @@ https://tokyomap.live
 <img src="https://user-images.githubusercontent.com/30502252/109414006-e3c0a880-79f3-11eb-8278-2a1b68b28f3a.png" width="75%"><br>
 
 ## How to dev
-
 ```bash
-# enable CloudFront and run backend containers beforehand
 yarn install
+
+# run dev server
+## serves http://localhost:3000
+yarn start
+
+# or transpile and push to S3 bucket
+## cf. https://github.com/xyzsince2014/tokyomap-dev
 yarn build:dev
 ./sync-s3-dev.sh
 ```
