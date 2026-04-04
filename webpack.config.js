@@ -40,6 +40,12 @@ module.exports = (env, args) => {
         filename: 'index.html',
         template: 'src/index.html',
       }),
+      new HtmlWebpackPlugin({
+        title: 'Tokyomap.live - Tokyo Live Map',
+        filename: 'error.html',
+        template: 'src/error.html',
+        inject: false,
+      }),
       new CleanWebpackPlugin({}),
       new Dotenv({path: isProduction ? './env/.env' : './env/.dev.env'}),
       new FaviconsWebpackPlugin({
