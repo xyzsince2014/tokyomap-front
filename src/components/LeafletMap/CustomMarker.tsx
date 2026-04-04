@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as L from 'leaflet';
 import {Marker, Popup, Tooltip} from 'react-leaflet';
 
-import {formatDateTime} from '../../utils/dateTime';
 
 export interface CustomMarkerProps {
   tweet: Tweet;
@@ -44,14 +43,14 @@ const CustomMarker: React.FC<CustomMarkerProps> = ({tweet, timeRemaining}) => {
         <div className="leaflet-popup-content p-popup__content">
           <span className="p-popup__content__user-name">{tweet.userName}</span>
           <span className="p-popup__content__posted-at" title={tweet.postedAt}>
-            {formatDateTime(tweet.postedAt).substr(-8, 5)}
+            {tweet.postedAt.substring(11, 16)}
           </span>
           <br />
           <span className="p-popup__content__message">{tweet.message}</span>
         </div>
       </Popup>
       <Tooltip className="p-tooltip">
-        <span className="p-tooltip__posted-at">{formatDateTime(tweet.postedAt).substr(-8, 5)}</span>
+        <span className="p-tooltip__posted-at">{tweet.postedAt.substring(11, 16)}</span>
         {tweet.message}
       </Tooltip>
     </Marker>
