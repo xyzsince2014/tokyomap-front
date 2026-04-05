@@ -1,11 +1,13 @@
+/** JST is UTC+9; backend timestamps are JST encoded with a `Z` suffix (fake-UTC) */
+export const JST_OFFSET_MS = 9 * 60 * 60 * 1000;
+
 /**
  * @param {string} datetime string in the form of `yyyy-mm-ddThh:mm:ss.sssZ`
  * @returns {string} datetime string in JST in the form of `yyyy/mm/dd hh:mm:ss`
  */
 export const formatDateTime = (datetime: string): string => {
   const date = new Date(datetime);
-  const jstOffset = 9 * 60 * 60 * 1000; // 9 hours in milliseconds
-  const jstDate = new Date(date.getTime() + jstOffset);
+  const jstDate = new Date(date.getTime() + JST_OFFSET_MS);
 
   const year = jstDate.getUTCFullYear();
   const month = String(jstDate.getUTCMonth() + 1).padStart(2, '0');
@@ -22,9 +24,8 @@ export const formatDateTime = (datetime: string): string => {
  */
 export const fetchCurrentJst = (): Date => {
   const localUnixTime = Date.now(); // msec
-  const jstTimelag = 9 * 60; // jst timelag from utc in min
   const timezoneOffset = new Date().getTimezoneOffset(); // @utc → 0, @jst → -540(min)
-  const clientTimelagFromJst = (timezoneOffset + jstTimelag) * 60 * 1000; // msec
+  const clientTimelagFromJst = timezoneOffset * 60 * 1000 + JST_OFFSET_MS; // msec
   return new Date(localUnixTime + clientTimelagFromJst);
 };
 
