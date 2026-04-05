@@ -29,6 +29,18 @@ export const fetchCurrentJst = (): Date => {
 };
 
 /**
+ * @param {string} datetime string in the form of `yyyy-mm-ddThh:mm:ss.sssZ` where the time value is JST encoded as UTC
+ * @returns {string} time string in JST in the form of `HH:mm`
+ */
+export const formatTimeJst = (datetime: string): string =>
+  new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'UTC',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).format(new Date(datetime));
+
+/**
  * @returns {string} the current time string in the form of `1 Jan 12:00`
  */
 export const fetchCurrentDatetimeJst = (): string =>
