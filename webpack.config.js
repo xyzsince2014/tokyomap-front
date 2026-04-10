@@ -26,6 +26,17 @@ module.exports = (env, args) => {
       contentBase: outputPath,
       compress: false,
       port: 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080',
+          pathRewrite: { '^/api': '' },
+          changeOrigin: true
+        },
+        '/socket.io': {
+          target: 'ws://localhost:8080',
+          ws: true, // enablle WebSocket proxy
+        }
+      }
     },
     plugins: [
       new BundleAnalyzerPlugin({
