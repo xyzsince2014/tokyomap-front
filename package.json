@@ -1,6 +1,5 @@
 {
   "name": "tokyomap-front",
-  "version": "2.0.4",
   "private": false,
   "description": "A mock of https://hkmap.live/",
   "main": "./src/index.tsx",

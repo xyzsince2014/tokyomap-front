@@ -26,6 +26,17 @@ module.exports = (env, args) => {
       contentBase: outputPath,
       compress: false,
       port: 3000,
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080',
+          pathRewrite: { '^/api': '' },
+          changeOrigin: true
+        },
+        '/socket.io': {
+          target: 'ws://localhost:8080',
+          ws: true, // enablle WebSocket proxy
+        }
+      }
     },
     plugins: [
       new BundleAnalyzerPlugin({
@@ -39,6 +50,12 @@ module.exports = (env, args) => {
         title: 'Tokyomap.live - Tokyo Live Map',
         filename: 'index.html',
         template: 'src/index.html',
+      }),
+      new HtmlWebpackPlugin({
+        title: 'Tokyomap.live - Tokyo Live Map',
+        filename: 'error.html',
+        template: 'src/error.html',
+        inject: false,
       }),
       new CleanWebpackPlugin({}),
       new Dotenv({path: isProduction ? './env/.env' : './env/.dev.env'}),
