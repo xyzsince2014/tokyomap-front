@@ -1,7 +1,7 @@
 const path = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
@@ -18,12 +18,12 @@ module.exports = (env, args) => {
     output: {
       path: outputPath,
       publicPath: isProduction ? undefined : '/',
-      filename: 'assets/js/[name].[hash:8].js',
+      filename: 'assets/js/[name].[contenthash:8].js',
     },
     devtool: isProduction ? 'source-map' : 'eval-source-map',
     devServer: {
       historyApiFallback: true,
-      contentBase: outputPath,
+      static: outputPath,
       compress: false,
       port: 3000,
       proxy: {
@@ -35,16 +35,17 @@ module.exports = (env, args) => {
         '/socket.io': {
           target: 'ws://localhost:8080',
           ws: true, // enablle WebSocket proxy
+          logLevel: 'silent',
         }
       }
     },
     plugins: [
-      new BundleAnalyzerPlugin({
+      ...(isProduction ? [new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false,
-      }),
+      })] : []),
       new MiniCssExtractPlugin({
-        filename: 'assets/css/[name].[hash:8].css',
+        filename: 'assets/css/[name].[contenthash:8].css',
       }),
       new HtmlWebpackPlugin({
         title: 'Tokyomap.live - Tokyo Live Map',
@@ -83,8 +84,8 @@ module.exports = (env, args) => {
     ],
     optimization: {
       minimizer: isProduction
-        ? [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})]
-        : [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
+        ? [new TerserPlugin({}), new CssMinimizerPlugin()]
+        : [new TerserPlugin({}), new CssMinimizerPlugin()],
     },
     resolve: {
       extensions: ['.ts', '.js', '.tsx', 'jsx'],
@@ -108,7 +109,7 @@ module.exports = (env, args) => {
               loader: 'url-loader',
               options: {
                 // limit: 10,
-                name: 'assets/images/[name].[hash:8].[ext]',
+                name: 'assets/images/[name].[contenthash:8].[ext]',
               },
             },
           ],
@@ -121,7 +122,7 @@ module.exports = (env, args) => {
           test: /\.(woff2?|eot|ttf|otf)/,
           loader: 'file-loader',
           options: {
-            name: 'assets/fonts/[name].[hash:8].[ext]',
+            name: 'assets/fonts/[name].[contenthash:8].[ext]',
           },
         },
       ],

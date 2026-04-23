@@ -12,5 +12,5 @@ jobs:
         with:
           # todo: node-version: 18.8.0
           node-version: 14.20.0
-      - run: yarn install
-      - run: yarn test
+      - run: npm install
+      - run: npm test
