@@ -1,6 +1,7 @@
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Navigate, Route, Routes, useLocation} from 'react-router';
 
+import Error from './components/common/Error';
 import LeafletMap from './containers/LeafletMap/LeafletMap';
 
 const App: React.FC = () => {
@@ -14,7 +15,8 @@ const App: React.FC = () => {
     <Routes>
       <Route path="/" element={<LeafletMap />} />
       {/* todo: <Route path="/users" element={<Users/>}><Route path=":id" element={<UserProfile/>}/></Route> */}
-      <Route path="*" element={<Navigate to="/" replace />} />;
+      <Route path="/error" element={<Error />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

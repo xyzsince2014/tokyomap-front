@@ -197,6 +197,34 @@
         }
       }
 
+      &--cognito {
+        width: 100%;
+        padding: 1em 2em;
+        border: 2px solid #e0e0e0;
+        border-radius: .75em;
+        background: f.$colour-dark-orange;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+        color: #2c3e50;
+        font-size: 1.1em;
+        letter-spacing: -.01em;
+
+        &:hover {
+          border-color: #667eea;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          box-shadow: 0 8px 20px rgba(102, 126, 234, .3);
+          color: f.$colour-white;
+
+          #{&}__icon {
+            color: f.$colour-white;
+          }
+        }
+
+        @media (max-width: 768px) {
+          font-size: 1em;
+          padding: .9em 1.5em;
+        }
+      }
+
       @media (max-width: 768px) {
         width: 100%;
         min-width: auto;

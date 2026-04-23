@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+@use 'foundation' as f;
+
+.p-error {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  background-color: f.$colour-aqua-squeeze;
+  color: f.$colour-outer-space;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+
+  &__container {
+    text-align: center;
+    background: f.$colour-white;
+    padding: 3.5rem 2rem;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(f.$colour-black, 0.1);
+    max-width: 420px;
+    width: 90%;
+  }
+
+  &__icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.03em;
+  }
+
+  &__message {
+    color: f.$colour-nevada;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+  }
+
+  &__btn-group {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  &__btn {
+    flex: 1;
+    padding: 0.8rem 0;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+
+    &--primary {
+      background: linear-gradient(135deg, f.$colour-cornflower-blue 0%, f.$colour-studio 100%);
+      color: f.$colour-white;
+    }
+
+    &--secondary {
+      background: f.$colour-whisper;
+      color: f.$colour-outer-space;
+    }
+  }
+}
+
