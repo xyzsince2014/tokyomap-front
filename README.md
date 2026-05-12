@@ -8,21 +8,23 @@
 <p>A web mapping service which tracks locations of users in the Greater Tokyo Area.</p>
 <p>You can see it's demo <strong><a href="https://imgur.com/gallery/3tVWKBd">here</a></strong>.</p>
 
-## URL
-
-https://tokyomap.live
-
-※ The service is suspended to avoid running cost being charged.
-
-## System Structure
-
-<img src="https://user-images.githubusercontent.com/30502252/109414006-e3c0a880-79f3-11eb-8278-2a1b68b28f3a.png" width="75%"><br>
 
 ## How to dev
 
 ```bash
-# enable CloudFront and run backend containers beforehand
-yarn install
-yarn build:dev
-./sync-s3-dev.sh
+# add `eval "$(fnm env --use-on-cd)"` to .zshrc after installation
+brew install fnm
+fnm install --lts
+
+# install pnpm
+brew install pnpm
+pnpm setup
+pnpm install
+
+# run dev server
+pnpm start
+
+# push to S3 bucket
+pnpm build:dev
+./sync-s3.sh
 ```
