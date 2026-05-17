@@ -62,7 +62,7 @@ module.exports = (env, args) => {
       new Dotenv({path: isProduction ? './env/.env' : './env/.dev.env'}),
       new FaviconsWebpackPlugin({
         logo: './src/assets/favicon/favicon.svg', // Use SVG as source
-        outputPath: '/assets/favicon',
+        outputPath: 'assets/favicon',
         prefix: 'assets/favicon/',
         // Plugin will automatically generate all sizes and formats
         favicons: {
