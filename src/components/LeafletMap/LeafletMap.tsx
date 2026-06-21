@@ -1,6 +1,6 @@
 import * as L from 'leaflet';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
-import {BiLogOutCircle} from 'react-icons/bi';
+import {BiLogOutCircle, BiUserCircle} from 'react-icons/bi';
 import {TiMessage} from 'react-icons/ti';
 
 import Clock from '../Clock/Clock';
@@ -47,6 +47,17 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
               }}
             >
               <BiLogOutCircle />
+            </button>
+            {/* tokyomap is read-only for profile; editing is owned by the RS. */}
+            <button
+              type="button"
+              aria-label="Edit profile"
+              onClick={() => {
+                // open the RS-owned profile management page in a new tab
+                window.open(`${process.env.RESOURCE_DOMAIN!}/manage`, '_blank', 'noopener');
+              }}
+            >
+              <BiUserCircle />
             </button>
           </div>
           <div className="l-control__topright">
