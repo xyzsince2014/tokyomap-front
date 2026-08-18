@@ -54,7 +54,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
               aria-label="Edit profile"
               onClick={() => {
                 // open the RS-owned profile management page in a new tab
-                window.open(`${process.env.RESOURCE_DOMAIN!}/manage`, '_blank', 'noopener');
+                window.open(`${process.env.RESOURCE_DOMAIN!}/profile`, '_blank', 'noopener');
               }}
             >
               <BiUserCircle />
