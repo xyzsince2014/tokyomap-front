@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router';
 
 import Checkout, {CheckoutForm, EMPTY_FORM} from '../../components/Checkout/Checkout';
 import loadPaidy from '../../services/payment/paidyLoader';
+import {toCents} from '../../services/payment/money';
+import paymentErrorMessage from '../../services/payment/paymentErrorMessage';
 import paymentApiFactory, {Order} from '../../services/payment/paymentApiFactory';
 
 /*
@@ -85,12 +87,13 @@ const EnhancedCheckout: React.FC = () => {
     try {
       const {number, expMonth, expYear, cvc, amount} = form;
       const token = await window.Paidy.tokenize({number, expMonth, expYear, cvc});
-      const created = await api.createOrder(token.tokenId, amount);
+      // the payer types dollars; the API carries cents
+      const created = await api.createOrder(token.tokenId, toCents(amount));
       setOrder(created);
     } catch (e) {
-      // keep it user-facing: the raw PSP error code (e.g. invalid_request) is for the console, not the payer
+      // the raw PSP error code is for the console; the payer gets a message matched to the cause
       console.error('checkout payment failed', e);
-      setMessage('Payment could not be completed. Please check your card details and try again.');
+      setMessage(paymentErrorMessage(e));
     } finally {
       setBusy(false);
     }
@@ -109,8 +112,8 @@ const EnhancedCheckout: React.FC = () => {
     sdkReady,
     message,
     order,
-    // amount is whole US dollars, minimum 1
-    canPay: sdkReady && !busy && !settledOrInFlight && form.amount >= 1,
+    // amount is dollars as typed by the payer, minimum one cent
+    canPay: sdkReady && !busy && !settledOrInFlight && toCents(form.amount) >= 1,
   };
 
   return (

@@ -35,7 +35,7 @@ const paymentApiFactory = (optionalConfig: ApiConfig = {}) => {
    * authorisation outcome arrives asynchronously (poll {@link getOrder} for it).
    *
    * @param token the opaque token from paidy.js
-   * @param amount the amount to charge, in whole US dollars (minimum 1)
+   * @param amount the amount to charge, in cents (the minor unit)
    * @returns the created order (status pending_authorisation)
    */
   const createOrder = async (token: string, amount: number): Promise<Order> => {
@@ -64,7 +64,7 @@ const paymentApiFactory = (optionalConfig: ApiConfig = {}) => {
    * Captures an authorised payment — full, or partial when {@link amount} is given.
    *
    * @param paymentId the payment to capture
-   * @param amount optional partial amount; omit to capture the full amount
+   * @param amount optional partial amount in cents; omit to capture the full amount
    * @returns the updated order (status captured)
    */
   const capture = async (paymentId: string, amount?: number): Promise<Order> => {

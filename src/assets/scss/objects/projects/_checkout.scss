@@ -71,6 +71,23 @@ $paidy-muted: #8a8a90;
     }
   }
 
+  // the amount field carries a currency mark, so the payer sees it takes dollars and cents
+  &__amount {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 8px;
+
+    .p-checkout__input {
+      margin-top: 0;
+    }
+  }
+
+  &__currency {
+    color: $paidy-ink;
+    font-size: 1.1rem;
+  }
+
   &__row {
     display: flex;
     gap: 16px;

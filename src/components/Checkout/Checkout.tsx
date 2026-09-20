@@ -1,3 +1,4 @@
+import {toDollars} from '../../services/payment/money';
 import {Order} from '../../services/payment/paymentApiFactory';
 
 export interface CheckoutForm {
@@ -68,7 +69,7 @@ const Checkout: React.FC<CheckoutProps> = ({
             <dt>paymentId</dt>
             <dd>{order.paymentId}</dd>
             <dt>amount</dt>
-            <dd>{order.amount} USD</dd>
+            <dd>{toDollars(order.amount)} USD</dd>
           </dl>
           <button type="button" className="p-checkout__button" onClick={onDone}>
             Back to Top
@@ -87,15 +88,22 @@ const Checkout: React.FC<CheckoutProps> = ({
 
       <div className="p-checkout__card">
         <label className="p-checkout__field" htmlFor="checkout-amount">
-          Amount (USD)
-          <input
-            id="checkout-amount"
-            className="p-checkout__input"
-            type="number"
-            min={1}
-            value={amount}
-            onChange={e => onFormChange({amount: Number(e.target.value)})}
-          />
+          Amount
+          <span className="p-checkout__amount">
+            <span className="p-checkout__currency" aria-hidden="true">
+              $
+            </span>
+            <input
+              id="checkout-amount"
+              className="p-checkout__input"
+              type="number"
+              min={0.01}
+              step={0.01}
+              placeholder="0.00"
+              value={amount}
+              onChange={e => onFormChange({amount: Number(e.target.value)})}
+            />
+          </span>
         </label>
         <label className="p-checkout__field" htmlFor="checkout-number">
           Card number
