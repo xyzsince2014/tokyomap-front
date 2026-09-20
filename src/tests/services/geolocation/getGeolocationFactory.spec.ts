@@ -34,18 +34,12 @@ describe('getGeolocation()', () => {
 
   it('should fail', async () => {
     const mockGeolocation = {
-      getCurrentPosition: jest
-        .fn()
-        .mockImplementation((success, error) =>
-          Promise.reject(error(new Error('failed to get geolocation'))),
-        ),
+      // invoke the error callback only — wrapping it in a rejected promise leaves that promise
+      // unhandled, which kills the jest worker on Node >= 15
+      getCurrentPosition: jest.fn().mockImplementation((success, error) => error(new Error('failed to get geolocation'))),
     };
     Object.assign(navigator, {geolocation: mockGeolocation});
 
-    try {
-      void (await getGeolocation());
-    } catch (err) {
-      expect(err).toStrictEqual(Error('failed to get geolocation'));
-    }
+    await expect(getGeolocation()).rejects.toThrow('failed to get geolocation');
   });
 });

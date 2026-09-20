@@ -7,7 +7,7 @@ exports[`Spinner component snapshot 1`] = `
   <div
     aria-busy="true"
     className=""
-    style={Object {}}
+    style={{}}
   >
     <svg
       aria-label="audio-loading"
