@@ -1,6 +1,7 @@
 import * as L from 'leaflet';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
-import {BiLogOutCircle, BiUserCircle} from 'react-icons/bi';
+import {BiCreditCard, BiLogOutCircle, BiUserCircle} from 'react-icons/bi';
+import {useNavigate} from 'react-router';
 import {TiMessage} from 'react-icons/ti';
 
 import Clock from '../Clock/Clock';
@@ -18,7 +19,10 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   tweets = [],
   isAuthenticated = false,
   getGeolocationBegin = () => {},
-}) => (<>
+}) => {
+  const navigate = useNavigate();
+
+  return (<>
     <Map
       className="l-leafletmap"
       center={[35.680722, 139.767271]}
@@ -59,6 +63,9 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
             >
               <BiUserCircle />
             </button>
+            <button type="button" aria-label="Checkout" onClick={() => navigate('/checkout')}>
+              <BiCreditCard />
+            </button>
           </div>
           <div className="l-control__topright">
             <button type="button" data-modal-trigger="modal_tweet" onClick={getGeolocationBegin}>
@@ -87,5 +94,6 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       </div>
     )}
   </>);
+};
 
 export default LeafletMap;
