@@ -1,0 +1,195 @@
+@charset "UTF-8";
+
+@use 'foundation' as f;
+
+// Paidy-style palette (brand gradient magenta -> purple), scoped to this screen
+$paidy-from: #d92d97;
+$paidy-to: #7b2ff7;
+$paidy-bg: #f4f4f6;
+$paidy-line: #d9d9de;
+$paidy-ink: #1a1a1a;
+$paidy-muted: #8a8a90;
+
+.p-checkout {
+  max-width: 440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 32px 20px 48px;
+  background: $paidy-bg;
+
+  // branded gradient header, in place of a plain title
+  &__header {
+    margin-bottom: 20px;
+    padding: 24px 22px;
+    border-radius: 16px;
+    background: linear-gradient(120deg, $paidy-from, $paidy-to);
+    color: f.$colour-white;
+  }
+
+  &__brand {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: f.$font-weight-bold;
+    letter-spacing: -.01em;
+  }
+
+  &__tagline {
+    display: block;
+    margin-top: 4px;
+    font-size: .85rem;
+    opacity: .85;
+  }
+
+  // white rounded card holding the form fields
+  &__card {
+    padding: 4px 20px;
+    border-radius: 16px;
+    background: f.$colour-white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+  }
+
+  &__field {
+    display: block;
+    padding: 16px 0;
+    border-bottom: 1px solid $paidy-line;
+    color: $paidy-ink;
+    font-size: .8rem;
+    font-weight: f.$font-weight-bold;
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    border: none;
+    background: transparent;
+    color: $paidy-ink;
+    font-size: 1.1rem;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__row {
+    display: flex;
+    gap: 16px;
+
+    .p-checkout__field {
+      flex: 1;
+      border-bottom: none;
+    }
+  }
+
+  // pill-shaped gradient primary button (sits below the card, Paidy-style)
+  &__button {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(90deg, $paidy-from, $paidy-to);
+    color: f.$colour-white;
+    font-size: 1rem;
+    font-weight: f.$font-weight-bold;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+      opacity: .9;
+    }
+
+    &:disabled {
+      background: $paidy-line;
+      cursor: default;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__result {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    background: f.$colour-white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+    word-break: break-all;
+  }
+
+  &__message {
+    margin-top: 12px;
+    color: $paidy-muted;
+  }
+
+  &__done {
+    margin-top: 8px;
+    color: f.$colour-japanese-laurel;
+    font-weight: f.$font-weight-bold;
+
+    &--declined {
+      color: f.$colour-red;
+    }
+  }
+
+  &__hint {
+    margin-top: 20px;
+    color: $paidy-muted;
+    font-size: .8rem;
+    line-height: 1.6;
+  }
+
+  // completion screen
+  &__complete {
+    padding: 56px 24px;
+    text-align: center;
+  }
+
+  &__complete-mark {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 20px;
+    border: 4px solid f.$colour-japanese-laurel;
+    border-radius: 50%;
+    color: f.$colour-japanese-laurel;
+    font-size: 2.6rem;
+    line-height: 80px;
+  }
+
+  &__complete-title {
+    color: $paidy-ink;
+    font-size: 1.4rem;
+    font-weight: f.$font-weight-bold;
+  }
+
+  &__complete-lead {
+    margin-top: 8px;
+    color: $paidy-muted;
+  }
+
+  &__complete-detail {
+    margin: 24px 0;
+    padding: 16px;
+    border-radius: 12px;
+    background: f.$colour-white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+    text-align: left;
+    font-size: .9rem;
+
+    dt {
+      color: $paidy-muted;
+    }
+
+    dd {
+      margin: 0 0 12px;
+      font-weight: f.$font-weight-bold;
+      word-break: break-all;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
