@@ -145,9 +145,17 @@ module.exports = {
       },
     ],
   },
-  // apply `'react/prop-types': 'off'` only to tsx's
   overrides: [
     {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        // TypeScript itself resolves and checks identifiers (incl. type-only refs like `React.FC`),
+        // so eslint's no-undef is redundant here and misfires on them. Disable per typescript-eslint guidance.
+        'no-undef': 'off',
+      },
+    },
+    {
+      // apply `'react/prop-types': 'off'` only to tsx's
       files: ['*.tsx'],
       rules: {
         'react/prop-types': 'off',
