@@ -1,16 +1,5 @@
 import axios from 'axios';
-
-/*
- * Turns a failed payment request into what the payer should read.
- *
- * The PSP answers with RFC 6749-shaped `{error, error_description}`. Two transports reach us:
- * paidy.js rejects with an Error carrying `.status` / `.error`, and the BFF is called through
- * axios, which forwards the PSP body as the response data. Both are normalised here.
- *
- * A declined card never arrives on this path — the authorisation outcome is delivered by webhook
- * and shown from `order.status`. Everything handled here is a failed *request*, so telling the
- * payer to check their card details is wrong for most of these cases.
- */
+import statusCodes from 'http-status-codes';
 
 interface PspErrorShape {
   status?: number;
@@ -53,10 +42,14 @@ const paymentErrorMessage = (e: unknown): string => {
   }
 
   // the payer cannot fix these — do not send them back to the card form
-  if (code === 'invalid_api_key' || status === 401 || status === 403) {
+  if (
+    code === 'invalid_api_key' ||
+    status === statusCodes.UNAUTHORIZED ||
+    status === statusCodes.FORBIDDEN
+  ) {
     return 'Payment is temporarily unavailable. Please try again later.';
   }
-  if (code === 'server_error' || (status != null && status >= 500)) {
+  if (code === 'server_error' || (status != null && status >= statusCodes.INTERNAL_SERVER_ERROR)) {
     return 'Something went wrong on our side. Please try again in a moment.';
   }
   if (status == null) {

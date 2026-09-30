@@ -1,4 +1,4 @@
-import {toCents, toDollars} from '../../../services/payment/money';
+import {toCents, toDollars} from '../../utils/money';
 
 describe('toCents', () => {
   it('converts whole dollars', () => {

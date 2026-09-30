@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 
-import paymentErrorMessage from '../../../services/payment/paymentErrorMessage';
+import paymentErrorMessage from '../../utils/paymentErrorMessage';
 
 /** an error shaped the way paidy.js rejects: a plain Error carrying the PSP response. */
 const sdkError = (status: number, error: string): Error => {
@@ -42,7 +42,16 @@ describe('paymentErrorMessage', () => {
     expect(paymentErrorMessage(new Error('Network Error'))).toMatch(/network/i);
   });
 
+  it('reports a network failure for an axios error that carries no response', () => {
+    // an axios transport error: isAxiosError is true but response is undefined
+    expect(paymentErrorMessage(new AxiosError('Network Error'))).toMatch(/network/i);
+  });
+
   it('falls back to a generic message for an unmapped status', () => {
     expect(paymentErrorMessage(bffError(418))).toMatch(/could not be completed/i);
+  });
+
+  it('handles a nullish error without throwing', () => {
+    expect(paymentErrorMessage(undefined)).toMatch(/network/i);
   });
 });

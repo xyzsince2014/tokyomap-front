@@ -1,13 +1,9 @@
 import * as L from 'leaflet';
 import {Map, TileLayer, ZoomControl} from 'react-leaflet';
-import {BiCreditCard, BiLogOutCircle, BiUserCircle} from 'react-icons/bi';
-import {useNavigate} from 'react-router';
-import {TiMessage} from 'react-icons/ti';
 
-import Clock from '../Clock/Clock';
 import CustomMarker from '../../containers/LeafletMap/CustomMarker';
-import ModalTweet from '../../containers/LeafletMap/ModalTweet';
-import ModalAuth from '../../containers/LeafletMap/ModalAuth';
+import SignedInControls from './SignedInControls';
+import SignedOutControls from './SignedOutControls';
 
 export interface LeafletMapProps {
   tweets?: Tweet[];
@@ -19,10 +15,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   tweets = [],
   isAuthenticated = false,
   getGeolocationBegin = () => {},
-}) => {
-  const navigate = useNavigate();
-
-  return (<>
+}) => (<>
     <Map
       className="l-leafletmap"
       center={[35.680722, 139.767271]}
@@ -38,62 +31,12 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       {tweets.map(t => (
         <CustomMarker key={`tweet_${t.tweetId}`} tweet={t} />
       ))}
-      
     </Map>
     {isAuthenticated ? (
-      <div>
-        <div className="l-control">
-          <div className="l-control__topleft">
-            <button
-              type="button"
-              onClick={() => {
-                window.location.href = `${process.env.DOMAIN!}/api/auth/signout`;
-              }}
-            >
-              <BiLogOutCircle />
-            </button>
-            {/* tokyomap is read-only for profile; editing is owned by the RS. */}
-            <button
-              type="button"
-              aria-label="Edit profile"
-              onClick={() => {
-                // open the RS-owned profile management page in a new tab
-                window.open(`${process.env.RESOURCE_DOMAIN!}/profile`, '_blank', 'noopener');
-              }}
-            >
-              <BiUserCircle />
-            </button>
-            <button type="button" aria-label="Checkout" onClick={() => navigate('/checkout')}>
-              <BiCreditCard />
-            </button>
-          </div>
-          <div className="l-control__topright">
-            <button type="button" data-modal-trigger="modal_tweet" onClick={getGeolocationBegin}>
-              <TiMessage />
-            </button>
-          </div>
-          <div className="l-control__bottomleft">
-            <Clock />
-          </div>
-        </div>
-        <ModalTweet />
-      </div>
+      <SignedInControls getGeolocationBegin={getGeolocationBegin} />
     ) : (
-      <div>
-        <div className="l-control">
-          <div className="l-control__topright">
-            <button type="button" data-modal-trigger="modal_auth">
-              <TiMessage />
-            </button>
-          </div>
-          <div className="l-control__bottomleft">
-            <Clock />
-          </div>
-        </div>
-        <ModalAuth />
-      </div>
+      <SignedOutControls />
     )}
   </>);
-};
 
 export default LeafletMap;

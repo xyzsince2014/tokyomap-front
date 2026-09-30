@@ -1,4 +1,4 @@
-import getGeolocationFactory from '../../../services/geolocation/getGeolocationFactory';
+import getGeolocation from '../../../services/geolocation/getGeolocation';
 
 describe('getGeolocation()', () => {
   const testOptions: PositionOptions = {
@@ -7,7 +7,6 @@ describe('getGeolocation()', () => {
     maximumAge: 1000 * 60,
   };
 
-  const getGeolocation = getGeolocationFactory(testOptions);
 
   beforeEach(() => {
     Object.assign(navigator, {geolocation: jest.fn()});
@@ -28,6 +27,18 @@ describe('getGeolocation()', () => {
     };
     Object.assign(navigator, {geolocation: mockGeolocation});
 
+    const geolocation = await getGeolocation(testOptions);
+    expect(geolocation).toStrictEqual([10, 10]);
+  });
+
+  it('uses the default options when none are given', async () => {
+    const mockGeolocation = {
+      getCurrentPosition: jest.fn().mockImplementation(success =>
+        success({coords: {latitude: 10, longitude: 10}}),
+      ),
+    };
+    Object.assign(navigator, {geolocation: mockGeolocation});
+
     const geolocation = await getGeolocation();
     expect(geolocation).toStrictEqual([10, 10]);
   });
@@ -40,6 +51,6 @@ describe('getGeolocation()', () => {
     };
     Object.assign(navigator, {geolocation: mockGeolocation});
 
-    await expect(getGeolocation()).rejects.toThrow('failed to get geolocation');
+    await expect(getGeolocation(testOptions)).rejects.toThrow('failed to get geolocation');
   });
 });
