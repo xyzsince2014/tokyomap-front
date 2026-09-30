@@ -1,17 +1,17 @@
 import axios from 'axios';
 
-// todo: see https://d.potato4d.me/entry/20200831-factory-args/
 export interface ApiConfig {
   baseURL?: string;
   timeout?: number;
 }
 
 const DEFAULT_API_CONFIG: ApiConfig = {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   baseURL: `${process.env.DOMAIN!}/api`,
   timeout: 1000 * 10,
 };
 
-const axiosInstanceFactory = (optionalConfig: ApiConfig) => {
+const axiosFactory = (optionalConfig: ApiConfig) => {
   const config = {
     ...DEFAULT_API_CONFIG,
     ...optionalConfig,
@@ -26,4 +26,4 @@ const axiosInstanceFactory = (optionalConfig: ApiConfig) => {
   return axiosInstance;
 };
 
-export default axiosInstanceFactory;
+export default axiosFactory;

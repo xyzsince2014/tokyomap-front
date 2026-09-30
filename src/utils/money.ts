@@ -1,11 +1,3 @@
-/*
- * Dollars <-> cents at the PSP boundary.
- *
- * The API carries amounts in cents (the minor unit), the way real PSP APIs do: a 3% fee on
- * whole dollars rounds to zero below $34, and float dollars cannot represent money exactly.
- * The payer still types and reads dollars, so the conversion lives here, at the edge.
- */
-
 /**
  * Converts the dollars the payer typed into the cents the API expects.
  *

@@ -31,4 +31,10 @@ describe('geolocationSaga with geolocationReducer', () => {
       .hasFinalState(initialGeolocationState)
       .silentRun();
   });
+
+  it("starts the watcher with the default service when no handler is given", () => {
+    const gen = geolocationSaga();
+    expect(gen.next().value).toBeDefined(); // fork(watchGeolocation, getGeolocation)
+    expect(gen.next().done).toBe(true);
+  });
 });

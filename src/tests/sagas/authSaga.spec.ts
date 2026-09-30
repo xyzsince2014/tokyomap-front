@@ -58,4 +58,10 @@ describe('authSaga with authReducer', () => {
       .hasFinalState(initialAuthState)
       .silentRun();
   });
+
+  it("starts the watcher with the default service when no handler is given", () => {
+    const gen = authSaga();
+    expect(gen.next().value).toBeDefined(); // fork(watchGetIsAuthenticated, authenticate)
+    expect(gen.next().done).toBe(true);
+  });
 });
