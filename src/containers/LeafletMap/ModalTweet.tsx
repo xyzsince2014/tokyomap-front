@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {bindActionCreators, Dispatch} from 'redux';
 
-import {postTweet, TweetPosted} from '../../actions/socket/socketActionCreators';
+import {postTweet, TweetPosted} from '../../store/socketSlice';
 import ModalTweet from '../../components/LeafletMap/ModalTweet';
 import useAuth from '../../hooks/auth/useAuth';
 import useGeolocation from '../../hooks/geolocation/useGeolocation';
@@ -13,8 +13,8 @@ interface DispatchProps {
 
 export type EnhancedModalTweetProps = DispatchProps;
 
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps =>
-  bindActionCreators({postTweetBegin: tweetPosted => postTweet.begin(tweetPosted)}, dispatch);
+const mapDispatchToProps =
+  (dispatch: Dispatch): DispatchProps => bindActionCreators({postTweetBegin: tweetPosted => postTweet(tweetPosted)}, dispatch);
 
 const EnhancedModalTweet: React.FC<EnhancedModalTweetProps> = ({postTweetBegin}) => {
   const {userId} = useAuth();
