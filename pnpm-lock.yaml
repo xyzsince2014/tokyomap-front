@@ -11,6 +11,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^1.6.2
         version: 1.9.7(react-redux@7.2.9(react-dom@17.0.2(react@17.0.2))(react@17.0.2))(react@17.0.2)
+      '@tanstack/react-query':
+        specifier: ^4.44.0
+        version: 4.44.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@types/leaflet':
         specifier: ^1.5.12
         version: 1.9.21
@@ -1520,6 +1523,21 @@ packages:
 
   '@sinonjs/fake-timers@15.4.0':
     resolution: {integrity: sha512-DsG+8/LscQIQg68J6Ef3dv10u6nVyetYn923s3/sus5eaGfTo1of5WMZSLf0UJc9KDuKPilPH0UDJCjvNbDNCA==}
+
+  '@tanstack/query-core@4.44.0':
+    resolution: {integrity: sha512-swSgb7OiPRR3UuIL7NuDrZNSMGmQD+wdtHxPD7j60SvBEnxbXurl5XOirtGEX2gm2hbK6mC8kMV1I+uO3l0UOw==}
+
+  '@tanstack/react-query@4.44.0':
+    resolution: {integrity: sha512-RuIqHYrS98LrK/8kJJOJMMSQ/BCpojwsXDh7p0fBmp38ZOz6dlk+uyFRRusH+V+t3POoCsDOQ2zhomEYOeReXw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
 
   '@testing-library/react-hooks@7.0.2':
     resolution: {integrity: sha512-dYxpz8u9m4q1TuzfcUApqi8iFfR6R0FaMbr2hjZJy1uC8z+bO/K4v8Gs9eogGKYQop7QsrBTFkv/BCF7MzD2Cg==}
@@ -6709,6 +6727,11 @@ packages:
     resolution: {integrity: sha512-BVA4lR5PIviy2PMseNd2jbFQ+jwSwQGdJejf5ctd1rEXt0Ypd7yanUK9+lYechVlN5VaTJGsu2U/3MDDu6KgBA==}
     engines: {node: '>=0.10.0'}
 
+  use-sync-external-store@1.7.0:
+    resolution: {integrity: sha512-6L+EeigHMQhdaIPNIFUKwfWJSwWFQ8gJbJ2DLOs5sDIegTwR9fRxvnM3uciHKjIZhFz+KAv2emhWMRvDmMcY8A==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -8461,6 +8484,16 @@ snapshots:
   '@sinonjs/fake-timers@15.4.0':
     dependencies:
       '@sinonjs/commons': 3.0.1
+
+  '@tanstack/query-core@4.44.0': {}
+
+  '@tanstack/react-query@4.44.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)':
+    dependencies:
+      '@tanstack/query-core': 4.44.0
+      react: 17.0.2
+      use-sync-external-store: 1.7.0(react@17.0.2)
+    optionalDependencies:
+      react-dom: 17.0.2(react@17.0.2)
 
   '@testing-library/react-hooks@7.0.2(react-dom@17.0.2(react@17.0.2))(react-test-renderer@17.0.2(react@17.0.2))(react@17.0.2)':
     dependencies:
@@ -14484,6 +14517,10 @@ snapshots:
   url-parse-lax@1.0.0:
     dependencies:
       prepend-http: 1.0.4
+
+  use-sync-external-store@1.7.0(react@17.0.2):
+    dependencies:
+      react: 17.0.2
 
   util-deprecate@1.0.2: {}
 

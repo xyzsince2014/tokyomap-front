@@ -7,6 +7,11 @@ describe('getGeolocation()', () => {
     maximumAge: 1000 * 60,
   };
 
+  // typed stubs so the mock callbacks are not `any` (keeps no-unsafe-* happy)
+  const positionAt = (latitude: number, longitude: number): GeolocationPosition =>
+    ({coords: {latitude, longitude}}) as GeolocationPosition;
+  const geolocationError = (): GeolocationPositionError =>
+    ({code: 1, message: 'failed to get geolocation'}) as unknown as GeolocationPositionError;
 
   beforeEach(() => {
     Object.assign(navigator, {geolocation: jest.fn()});
@@ -14,16 +19,9 @@ describe('getGeolocation()', () => {
 
   it('should succeed', async () => {
     const mockGeolocation = {
-      getCurrentPosition: jest.fn().mockImplementation((success, error) =>
-        Promise.resolve(
-          success({
-            coords: {
-              latitude: 10,
-              longitude: 10,
-            },
-          }),
-        ),
-      ),
+      getCurrentPosition: jest
+        .fn()
+        .mockImplementation((success: PositionCallback) => success(positionAt(10, 10))),
     };
     Object.assign(navigator, {geolocation: mockGeolocation});
 
@@ -33,9 +31,9 @@ describe('getGeolocation()', () => {
 
   it('uses the default options when none are given', async () => {
     const mockGeolocation = {
-      getCurrentPosition: jest.fn().mockImplementation(success =>
-        success({coords: {latitude: 10, longitude: 10}}),
-      ),
+      getCurrentPosition: jest
+        .fn()
+        .mockImplementation((success: PositionCallback) => success(positionAt(10, 10))),
     };
     Object.assign(navigator, {geolocation: mockGeolocation});
 
@@ -47,7 +45,11 @@ describe('getGeolocation()', () => {
     const mockGeolocation = {
       // invoke the error callback only — wrapping it in a rejected promise leaves that promise
       // unhandled, which kills the jest worker on Node >= 15
-      getCurrentPosition: jest.fn().mockImplementation((success, error) => error(new Error('failed to get geolocation'))),
+      getCurrentPosition: jest
+        .fn()
+        .mockImplementation((_success: PositionCallback, error: PositionErrorCallback) =>
+          error(geolocationError()),
+        ),
     };
     Object.assign(navigator, {geolocation: mockGeolocation});
 

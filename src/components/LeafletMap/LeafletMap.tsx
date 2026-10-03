@@ -8,13 +8,11 @@ import SignedOutControls from './SignedOutControls';
 export interface LeafletMapProps {
   tweets?: Tweet[];
   isAuthenticated?: boolean;
-  getGeolocationBegin?: () => void;
 }
 
 const LeafletMap: React.FC<LeafletMapProps> = ({
   tweets = [],
   isAuthenticated = false,
-  getGeolocationBegin = () => {},
 }) => (<>
     <Map
       className="l-leafletmap"
@@ -32,11 +30,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
         <CustomMarker key={`tweet_${t.tweetId}`} tweet={t} />
       ))}
     </Map>
-    {isAuthenticated ? (
-      <SignedInControls getGeolocationBegin={getGeolocationBegin} />
-    ) : (
-      <SignedOutControls />
-    )}
+    {isAuthenticated ? <SignedInControls /> : <SignedOutControls />}
   </>);
 
 export default LeafletMap;

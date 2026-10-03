@@ -1,13 +1,12 @@
 import ReactDOM from 'react-dom'; // renderer
 import {Provider} from 'react-redux';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import {applyMiddleware, compose, createStore} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import {BrowserRouter} from 'react-router-dom';
 
 import App from './App';
 import rootReducer from './reducers/rootReducer';
-import authSaga from './sagas/authSaga';
-import geolocationSaga from './sagas/geolocationSaga';
 import socketSaga from './sagas/socketSaga';
 
 import './assets/scss/base.scss';
@@ -29,15 +28,18 @@ const enhancer = composeEnhancer(applyMiddleware(sagaMiddleWare));
 /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
 const store = createStore(rootReducer, enhancer);
 
-sagaMiddleWare.run(authSaga);
-sagaMiddleWare.run(geolocationSaga);
 sagaMiddleWare.run(socketSaga);
 
+// React Query owns server state (currently the auth session via useAuth); Redux keeps the rest.
+const queryClient = new QueryClient();
+
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </QueryClientProvider>,
   document.getElementById('root') as HTMLElement,
 );
