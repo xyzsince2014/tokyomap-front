@@ -1,99 +1,68 @@
-import { EventChannel, Task } from 'redux-saga';
-import { all, call, cancel, fork, put, take } from 'redux-saga/effects';
+import { EventChannel } from 'redux-saga';
+import { all, call, put, take, takeLatest } from 'redux-saga/effects';
 
-import { ConnectToSocketType, PostTweetType } from '../actions/socket/socketActionType';
 import {
-  PostTweetAction,
-  SocketAction,
   connectToSocket,
-} from '../actions/socket/socketActionCreators';
+  connectToSocketFailed,
+  postTweet,
+  SocketEvent,
+} from '../store/socketSlice';
 import { createSocket } from '../services/socket/createSocket';
 import { subscribe } from '../services/socket/subscriber';
 
 /**
- * Initialise the socket state.
- *
- * @param socket
+ * Pushes inbound server events (tweetsReceived / connectToSocketFailed) into the store.
  */
-export function* initSocketState(socket: SocketIOClient.Socket) {
-  yield socket.emit('initSocketState');
-}
-
-/**
- * Handles errors on socket connection.
- */
-export function* rejectConnectToSocket() {
-  yield put(connectToSocket.reject());
-}
-
-/**
- * Adds a tweet, and syncronises the socket state.
- *
- * @param socket
- */
-export function* updateSocketState(socket: SocketIOClient.Socket) {
-  while (true) {
-    const action = (yield take(PostTweetType.POST_TWEET_BEGIN)) as PostTweetAction;
-    yield socket.emit('postTweet', action.payload);
+function* watchInbound(socket: SocketIOClient.Socket) {
+  const channel = (yield call(subscribe, socket)) as EventChannel<SocketEvent>;
+  try {
+    while (true) {
+      const event = (yield take(channel)) as SocketEvent;
+      yield put(event);
+    }
+  } finally {
+    channel.close(); // remove the socket listeners when cancelled
   }
 }
 
 /**
- * Subscribes to the socketChannel.
- *
- * @param socket
+ * Forwards each postTweet to the socket server.
  */
-export function* subscribeChannel(socket: SocketIOClient.Socket) {
-  const eventChannel = (yield call(subscribe, socket)) as EventChannel<SocketAction>;
+function* watchOutbound(socket: SocketIOClient.Socket) {
   while (true) {
-    const action = (yield take(eventChannel)) as SocketAction;
-    yield put(action);
+    const action = (yield take(postTweet.type)) as ReturnType<typeof postTweet>;
+    socket.emit('postTweet', action.payload);
   }
 }
 
 /**
- * Watches for connectToSocket.begin.
- * On each one, connects the socket, then forks the three long-running workers which keep it in sync: initialise the state, subscribe to inbound events, and push outbound tweets.
- * A connection failure dispatches connectToSocket.reject.
+ * Connects, then runs the in/outbound loops until this task is cancelled.
+ * takeLatest cancels it when a new connectToSocket arrives, which cancels the loops and disconnects the old socket — no manual bookkeeping needed.
  *
- * @param socketHandler the socket factory to connect with (injectable for tests)
+ * @param socketHandler the socket factory to connect with
  */
-export function* watchSocket(socketHandler: typeof createSocket) {
-  let workers: Task[] = [];
-  let currentSocket: SocketIOClient.Socket | null = null;
+function* handleConnect(socketHandler: typeof createSocket) {
+  let socket: SocketIOClient.Socket;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    socket = (yield call(socketHandler, `${process.env.DOMAIN!}`)) as SocketIOClient.Socket;
+  } catch (e: unknown) {
+    yield put(connectToSocketFailed());
+    return;
+  }
 
-  while (true) {
-    yield take(ConnectToSocketType.CONNECT_TO_SOCKET_BEGIN);
-
-    // tear down any previous connection before opening a new one,
-    // so sockets and their listeners do not stack up across reconnects
-    if (workers.length > 0) {
-      yield all(workers.map(worker => cancel(worker)));
-      workers = [];
-    }
-    if (currentSocket) {
-      currentSocket.disconnect();
-      currentSocket = null;
-    }
-
-    try {
-      currentSocket = (yield call(socketHandler, `${process.env.DOMAIN!}`)) as SocketIOClient.Socket;
-      // fork is non-blocking, so all() returns immediately with the three worker tasks
-      workers = (yield all([
-        fork(initSocketState, currentSocket),
-        fork(subscribeChannel, currentSocket),
-        fork(updateSocketState, currentSocket),
-      ])) as Task[];
-
-    } catch (e: unknown) {
-      yield fork(rejectConnectToSocket);
-    }
+  socket.emit('initSocketState');
+  try {
+    // call (not fork) so this blocks here; cancelling the task cancels both loops
+    yield all([call(watchInbound, socket), call(watchOutbound, socket)]);
+  } finally {
+    socket.disconnect();
   }
 }
 
 /**
- * Root socket saga: starts the watcher with the real socket factory.
+ * Root socket saga.
  */
 export default function* socketSaga() {
-  yield fork(watchSocket, createSocket);
+  yield takeLatest(connectToSocket.type, handleConnect, createSocket);
 }
