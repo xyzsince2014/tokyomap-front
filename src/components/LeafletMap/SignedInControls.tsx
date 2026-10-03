@@ -5,12 +5,7 @@ import {useNavigate} from 'react-router';
 import Clock from '../Clock/Clock';
 import ModalTweet from '../../containers/LeafletMap/ModalTweet';
 
-export interface SignedInControlsProps {
-  getGeolocationBegin?: () => void;
-}
-
-const SignedInControls: React.FC<SignedInControlsProps> = ({getGeolocationBegin = () => {}}) => {
-
+const SignedInControls: React.FC = () => {
   // navigate('/path') sends the user to the /path page
   const navigate = useNavigate();
 
@@ -43,7 +38,7 @@ const SignedInControls: React.FC<SignedInControlsProps> = ({getGeolocationBegin 
           </button>
         </div>
         <div className="l-control__topright">
-          <button type="button" data-modal-trigger="modal_tweet" onClick={getGeolocationBegin}>
+          <button type="button" data-modal-trigger="modal_tweet">
             <TiMessage />
           </button>
         </div>
