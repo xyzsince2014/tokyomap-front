@@ -61,8 +61,18 @@ function* handleConnect(socketHandler: typeof createSocket) {
 }
 
 /**
+ * Tells the user when the socket connection cannot be set up.
+ */
+function* alertConnectFailed() {
+  yield call([window, 'alert'], 'Cannot connect to the live map. Reload the page.');
+}
+
+/**
  * Root socket saga.
  */
 export default function* socketSaga() {
-  yield takeLatest(connectToSocket.type, handleConnect, createSocket);
+  yield all([
+    takeLatest(connectToSocket.type, handleConnect, createSocket),
+    takeLatest(connectToSocketFailed.type, alertConnectFailed),
+  ]);
 }
