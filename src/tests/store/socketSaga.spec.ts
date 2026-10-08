@@ -3,7 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import {throwError} from 'redux-saga-test-plan/providers';
 import {eventChannel} from 'redux-saga';
 
-import socketSaga from '../../sagas/socketSaga';
+import socketSaga from '../../store/socketSaga';
 import {createSocket} from '../../services/socket/createSocket';
 import {subscribe} from '../../services/socket/subscriber';
 import {

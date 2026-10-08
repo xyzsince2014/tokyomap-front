@@ -82,7 +82,8 @@ module.exports = {
     '@typescript-eslint/no-unnecessary-type-assertion': 'error', // warns of a type assertion which does not change the type of an expression
     // todo: '@typescript-eslint/no-unused-vars': ['error', {varsIgnorePattern: '_'}],
     '@typescript-eslint/no-unused-vars': ['warn', {varsIgnorePattern: '_'}],
-    '@typescript-eslint/no-use-before-define': ['error'],
+    // functions: false — function declarations hoist, so top-down ordering (entry first) is safe
+    '@typescript-eslint/no-use-before-define': ['error', {functions: false}],
     '@typescript-eslint/no-empty-function': 'off',
     // todo: '@typescript-eslint/no-unsafe-assignment': 'error',
     // todo: '@typescript-eslint/no-unsafe-call': 'error',

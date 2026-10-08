@@ -1,27 +1,22 @@
-import { applyMiddleware, compose, createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 
-import socketReducer, { SocketState } from './socketSlice';
-import socketSaga from '../sagas/socketSaga';
-
-// the store holds a single slice (socket), so the whole store state is just that slice's state.
-export type RootState = SocketState;
-
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any */
-const composeEnhancer =
-  process.env.NODE_ENV === 'development' &&
-    typeof window === 'object' &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose;
-/* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any */
+import socketReducer from './socketSlice';
+import socketSaga from './socketSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
-/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
-const store = createStore(socketReducer, composeEnhancer(applyMiddleware(sagaMiddleware)));
-/* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call */
+// wire Redux DevTools and the default middleware
+const store = configureStore({
+  // a single reducer so the store state is just its slice's state
+  reducer: socketReducer,
+  // exclude redux-thunk from the default middleware as we use redux-saga instead, then append sagaMiddleware.
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
+  devTools: process.env.NODE_ENV === 'development',
+});
 
 sagaMiddleware.run(socketSaga);
 
 export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
