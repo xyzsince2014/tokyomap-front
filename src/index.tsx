@@ -8,7 +8,7 @@ import store from './store';
 
 import './assets/scss/base.scss';
 
-// React Query owns server state (the auth session via useAuth); the Redux store owns the socket slice.
+// the cache for server state which useQuery() reads from
 const queryClient = new QueryClient();
 
 ReactDOM.render(

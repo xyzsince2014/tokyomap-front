@@ -13,12 +13,12 @@ interface AuthenticateResult {
 }
 
 /**
- * Asks the BFF whether the current session is authenticated.
+ * Asks the BFF whether the current session is authenticated with the session cookie.
  *
- * @returns 
+ * @returns on 200, `{isAuthenticated: true, userId}`; on 401, `{isAuthenticated: false, userId: ''}`
  */
 const authenticate = async (): Promise<AuthenticateResult> => {
-  const axios = axiosFactory({});
+  const axios = axiosFactory();
 
   try {
     const response: AxiosResponse<AuthenticateResponse> = await axios.get(
@@ -45,6 +45,7 @@ const authenticate = async (): Promise<AuthenticateResult> => {
       isAuthenticated: true,
       userId: response.data.userId,
     };
+
   } catch (err) {
     throw new Error('Server Error');
   }
