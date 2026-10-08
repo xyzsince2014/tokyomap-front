@@ -5,11 +5,11 @@ import LeafletMap from './containers/LeafletMap/LeafletMap';
 import Checkout from './containers/Checkout/Checkout';
 
 const App: React.FC = () => {
-  // current location
+  // useLocation() returns {pathname, search, hash, state} of the current URL
   const {hash, pathname} = useLocation();
 
-  // Scroll to the top on every route change
-  // Skipped when the URL has a #hash, so anchor jumps are left intact.
+  // useEffect(callback, dependencies) runs the callback on mount and whenever a dependency changes
+  // scroll to the top on every route change; skipped when the URL has a #hash so anchor jumps are left intact
   useEffect(() => {
     if (!hash) {
       window.scrollTo(0, 0);
@@ -20,8 +20,8 @@ const App: React.FC = () => {
     <Routes>
       <Route path="/" element={<LeafletMap />} />
       <Route path="/checkout" element={<Checkout />} />
-      {/* todo: <Route path="/users" element={<Users/>}><Route path=":id" element={<UserProfile/>}/></Route> */}
-      <Route path="*" element={<Navigate to="/" replace />} />;
+      {/* <Navigate to="/" replace /> redirects unknown paths to "/", replacing history. */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

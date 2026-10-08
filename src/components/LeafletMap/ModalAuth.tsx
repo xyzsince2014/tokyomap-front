@@ -21,6 +21,7 @@ const ModalAuth = forwardRef<HTMLDivElement>(({}, ref) => (
               type="button"
               className="c-modal__select__btn c-modal__select__btn--email"
               onClick={() => {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 window.location.href = `${process.env.DOMAIN!}/api/auth/authorise`;
               }}
             >

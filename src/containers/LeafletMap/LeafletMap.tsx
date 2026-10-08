@@ -3,28 +3,31 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {connectToSocket} from '../../store/socketSlice';
 import {RootState} from '../../store';
-import DatetimeProvider from '../../providers/datetime/DatetimeProvider';
+import DatetimeProvider from './DatetimeProvider';
 import useAuth from '../../hooks/auth/useAuth';
 import LeafletMap from '../../components/LeafletMap/LeafletMap';
 
 /**
- * Container for the map screen.
- * Reads the state the map needs (tweets from Redux, auth from React Query), starts the socket on mount, and hands the data down as props.
+ * Reads the state the map needs (tweets from Redux, auth from ReactQuery), starts the socket on mount, and hands the data down as props.
  */
 const EnhancedLeafletMap: React.FC = () => {
+
+  /* Redux */
+  // useSelector(state => state.x) reads state.x from the store, and re-renders this component when state.x changes.
   const tweets = useSelector((state: RootState) => state.tweets);
 
-  // auth is server state: useAuth (React Query) fetches and caches it — no action/reducer/saga
-  const {isAuthenticated} = useAuth();
-
-  // dispatch sends an action into Redux, which a saga picks up and acts on.
+  // dispatch(action) sends the action into Redux; a reducer and/or saga handles it.
+  // action = {type, payload}
   const dispatch = useDispatch();
 
-  // kick off the socket connection on mount (auth is handled by useAuth, which fetches on its own).
-  // dispatch is stable, so this runs once.
+  // kick off the socket connection on mount (dispatch is stable, so this runs once)
   useEffect(() => {
     dispatch(connectToSocket());
   }, [dispatch]);
+
+  /* ReactQuery */
+  // fetch and cache auth with the custom hook
+  const {isAuthenticated} = useAuth();
 
   return (
     <DatetimeProvider>

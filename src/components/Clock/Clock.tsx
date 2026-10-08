@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 
-import DatetimeContext from '../../providers/datetime/datetimeContext';
+import DatetimeContext from '../../containers/LeafletMap/datetimeContext';
 
 const Clock: React.FC = () => {
   const {datetime} = useContext(DatetimeContext);
