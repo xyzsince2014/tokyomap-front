@@ -1,23 +1,17 @@
-import ReactDOM from 'react-dom'; // renderer
-import {Provider} from 'react-redux';
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {BrowserRouter} from 'react-router-dom';
+import {StrictMode} from 'react';
+import {createRoot} from 'react-dom/client';
 
+import AppProvider from './AppProvider';
 import App from './App';
-import store from './store';
 
 import './assets/scss/base.scss';
 
-// the cache for server state which useQuery() reads from
-const queryClient = new QueryClient();
-
-ReactDOM.render(
-  <QueryClientProvider client={queryClient}>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </QueryClientProvider>,
-  document.getElementById('root') as HTMLElement,
+// bootstrap: attach the React tree to the real DOM via React 18's createRoot
+// <StrictMode> double-invokes effects in dev to surface unsafe side effects
+createRoot(document.getElementById('root') as HTMLElement).render(
+  <StrictMode>
+    <AppProvider>
+      <App />
+    </AppProvider>
+  </StrictMode>,
 );

@@ -1,5 +1,5 @@
 import * as L from 'leaflet';
-import {Map, TileLayer, ZoomControl} from 'react-leaflet';
+import {MapContainer, TileLayer, ZoomControl} from 'react-leaflet';
 
 import CustomMarker from '../../containers/LeafletMap/CustomMarker';
 import SignedInControls from './SignedInControls';
@@ -14,7 +14,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
   tweets = [],
   isAuthenticated = false,
 }) => (<>
-    <Map
+    <MapContainer
       className="l-leafletmap"
       center={[35.680722, 139.767271]}
       zoom={15}
@@ -29,7 +29,7 @@ const LeafletMap: React.FC<LeafletMapProps> = ({
       {tweets.map(t => (
         <CustomMarker key={`tweet_${t.tweetId}`} tweet={t} />
       ))}
-    </Map>
+    </MapContainer>
     {isAuthenticated ? <SignedInControls /> : <SignedOutControls />}
   </>);
 

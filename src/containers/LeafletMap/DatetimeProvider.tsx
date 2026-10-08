@@ -3,7 +3,7 @@ import {useCallback, useEffect, useState} from 'react';
 import DatetimeContext from './datetimeContext';
 import {fetchCurrentDatetimeJst} from '../../utils/dateTime';
 
-const DatetimeProvider: React.FC = ({children}) => {
+const DatetimeProvider: React.FC<React.PropsWithChildren> = ({children}) => {
   /* local state */
   // useState(initialValue) returns [value, setter]; setter() updates the value and re-renders.
   const [datetime, setDatetime] = useState(fetchCurrentDatetimeJst());

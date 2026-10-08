@@ -1,29 +1,38 @@
-import {renderHook, act} from '@testing-library/react-hooks';
+import {renderHook, act} from '@testing-library/react';
 import useTimer from '../../../hooks/leafletMap/useTimer';
 
+// fake timers freeze the clock so the assertions are exact instead of racing the real wall-clock.
 describe('useTimer', () => {
-  it('timeRemaining is 5400 sec before the first tick', () => {
-    const duration = 1000 * 60 * 90; // msec for 90min
+  const duration = 1000 * 60 * 90; // 90 min in msec
+  const now = new Date('2026-01-01T00:00:00.000Z');
 
-    // 90 min from now, as `yyyy-mm-ddThh:mm:ss.sssZ`. Both getTime() and toISOString() work in
-    // absolute time, and so does useTimer — there is no local-time conversion to compensate for.
-    // add 1000 to absorb the test's own processing time
-    const disappearAt = new Date(new Date().getTime() + duration + 1000).toISOString();
-
-    const {result} = renderHook(() => useTimer(disappearAt));
-    expect(result.current.timeRemaining).toBe(duration / 1000);
+  beforeEach(() => {
+    jest.useFakeTimers();
+    jest.setSystemTime(now);
   });
 
-  it('tick recomputes the remaining time', () => {
-    const disappearAt = new Date(new Date().getTime() + 1000 * 60 * 90 + 1000).toISOString();
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
+  it('timeRemaining is the full duration before the first tick', () => {
+    // disappears 90 min from the (frozen) now
+    const disappearAt = new Date(now.getTime() + duration).toISOString();
+
+    const {result} = renderHook(() => useTimer(disappearAt));
+    expect(result.current.timeRemaining).toBe(duration / 1000); // 5400 sec
+  });
+
+  it('tick recomputes the remaining time against the current clock', () => {
+    const disappearAt = new Date(now.getTime() + duration).toISOString();
     const {result} = renderHook(() => useTimer(disappearAt));
 
+    // advance the frozen clock by 60s, then tick: remaining should drop by exactly 60s
     act(() => {
+      jest.setSystemTime(new Date(now.getTime() + 1000 * 60));
       result.current.tick();
     });
 
-    // tick re-reads the clock; the remaining time is still a valid number (and no greater)
-    expect(typeof result.current.timeRemaining).toBe('number');
-    expect(result.current.timeRemaining).toBeLessThanOrEqual(90 * 60);
+    expect(result.current.timeRemaining).toBe(duration / 1000 - 60); // 5340 sec
   });
 });
