@@ -95,7 +95,9 @@ module.exports = (env, args) => {
       rules: [
         {
           test: /\.tsx?$/,
-          use: ['ts-loader'],
+          // onlyCompileBundledFiles: type-check only files reachable from the entry, not tests
+          // (tests are checked by `tsc --noEmit` and run by jest, so the build need not type-check them)
+          use: [{ loader: 'ts-loader', options: { onlyCompileBundledFiles: true } }],
           exclude: /node_modules/,
         },
         {

@@ -1,8 +1,9 @@
-import io from 'socket.io-client';
+import {io} from 'socket.io-client';
 
 import {createSocket} from '../../../services/socket/createSocket';
 
-jest.mock('socket.io-client', () => ({__esModule: true, default: jest.fn()}));
+// socket.io-client v4 exposes io() as a named export
+jest.mock('socket.io-client', () => ({__esModule: true, io: jest.fn()}));
 
 type Handler = (arg?: unknown) => void;
 
