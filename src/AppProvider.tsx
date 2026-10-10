@@ -1,6 +1,6 @@
 import {Provider} from 'react-redux';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter} from 'react-router';
 
 import store from './store';
 
