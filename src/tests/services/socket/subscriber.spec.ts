@@ -2,6 +2,9 @@ import {subscribe} from '../../../services/socket/subscriber';
 import {AppSocket} from '../../../services/socket/socketEvents';
 import {tweetsReceived, connectToSocketFailed} from '../../../store/socketSlice';
 
+// the reject handlers log via devLog; silence it so the expected rejects do not print to the test output
+jest.mock('../../../utils/devLog', () => ({logError: jest.fn()}));
+
 type Handler = (arg?: unknown) => void;
 
 // a fake socket that records its event handlers so the test can trigger them

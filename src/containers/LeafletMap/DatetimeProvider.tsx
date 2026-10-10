@@ -4,7 +4,6 @@ import DatetimeContext from './datetimeContext';
 import {fetchCurrentDatetimeJst} from '../../utils/dateTime';
 
 const DatetimeProvider: React.FC<React.PropsWithChildren> = ({children}) => {
-  /* local state */
   // useState(initialValue) returns [value, setter]; setter() updates the value and re-renders.
   const [datetime, setDatetime] = useState(fetchCurrentDatetimeJst());
 
@@ -21,7 +20,7 @@ const DatetimeProvider: React.FC<React.PropsWithChildren> = ({children}) => {
     [tick] // the effect uses tick, so re-run if tick changes (runs once as tick is stable)
   );
 
-  return <DatetimeContext.Provider value={{datetime}}>{children}</DatetimeContext.Provider>;
+  return <DatetimeContext.Provider value={datetime}>{children}</DatetimeContext.Provider>;
 };
 
 export default DatetimeProvider;

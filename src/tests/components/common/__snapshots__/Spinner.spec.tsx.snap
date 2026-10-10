@@ -5,12 +5,14 @@ exports[`Spinner component snapshot 1`] = `
   className="l-spinner"
 >
   <div
-    aria-busy="true"
-    className=""
-    style={{}}
+    aria-busy={true}
+    aria-label="three-dots-loading"
+    className="sc-bdvwhi cpZYiI"
+    data-testid="three-dots-loading"
+    role="progressbar"
   >
     <svg
-      aria-label="audio-loading"
+      data-testid="three-dots-svg"
       fill="#333"
       height={80}
       viewBox="0 0 120 30"
@@ -33,7 +35,7 @@ exports[`Spinner component snapshot 1`] = `
           values="15;9;15"
         />
         <animate
-          attributeName="fillOpacity"
+          attributeName="fill-opacity"
           begin="0s"
           calcMode="linear"
           dur="0.8s"
@@ -44,7 +46,7 @@ exports[`Spinner component snapshot 1`] = `
         />
       </circle>
       <circle
-        attributeName="fillOpacity"
+        attributeName="fill-opacity"
         cx="60"
         cy="15"
         from="1"
@@ -62,7 +64,7 @@ exports[`Spinner component snapshot 1`] = `
           values="9;15;9"
         />
         <animate
-          attributeName="fillOpacity"
+          attributeName="fill-opacity"
           begin="0s"
           calcMode="linear"
           dur="0.8s"
@@ -88,7 +90,7 @@ exports[`Spinner component snapshot 1`] = `
           values="15;9;15"
         />
         <animate
-          attributeName="fillOpacity"
+          attributeName="fill-opacity"
           begin="0s"
           calcMode="linear"
           dur="0.8s"
