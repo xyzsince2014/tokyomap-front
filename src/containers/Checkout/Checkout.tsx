@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router';
 
 import Checkout, {CheckoutForm, EMPTY_FORM} from '../../components/Checkout/Checkout';
 import loadPaidy from '../../services/payment/paidyLoader';
+import {logError} from '../../utils/devLog';
 import {toCents} from '../../utils/money';
 import paymentErrorMessage from '../../utils/paymentErrorMessage';
 import {getConfig, getOrder, createOrder, Order} from '../../services/payment/payment';
@@ -91,8 +92,7 @@ const EnhancedCheckout: React.FC = () => {
       const created = await createOrder(token.tokenId, toCents(amount));
       setOrder(created);
     } catch (e) {
-      // the raw PSP error code is for the console; the payer gets a message matched to the cause
-      console.error('checkout payment failed', e);
+      logError('checkout payment failed', e);
       setMessage(paymentErrorMessage(e));
     } finally {
       setBusy(false);

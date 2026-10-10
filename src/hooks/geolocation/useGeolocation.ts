@@ -7,11 +7,7 @@ const DEFAULT_GEOLOCATION: L.LatLngTuple = [35.680722, 139.767271];
 
 /**
  * Local-state hook for the browser's geolocation.
- *
- * fetchGeolocation() calls the same getGeolocation() service on demand (e.g. when posting a tweet),
- * stores the result, and returns it. On failure it warns the user and falls back to the default,
- * matching the old saga's behaviour. State is local to the component that calls this hook, which is
- * fine here: only ModalTweet needs the value, and it fetches it right when it posts.
+ * fetchGeolocation() calls the same getGeolocation() service on demand (e.g. when posting a tweet), stores the result, and returns it.
  */
 const useGeolocation = () => {
   const [geolocation, setGeolocation] = useState<L.LatLngTuple>(DEFAULT_GEOLOCATION);
@@ -22,7 +18,7 @@ const useGeolocation = () => {
       setGeolocation(current);
       return current;
     } catch {
-      window.alert('Could not get your location. Please allow location access and try again.');
+      window.alert('Cannot not get your location.');
       return DEFAULT_GEOLOCATION;
     }
   }, []);

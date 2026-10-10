@@ -15,7 +15,7 @@
     "email": "xyzsince2014@gmail.com"
   },
   "scripts": {
-    "start": "webpack serve --mode development",
+    "start": "NODE_OPTIONS=--disable-warning=DEP0060 webpack serve --mode development",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "lint:es": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
