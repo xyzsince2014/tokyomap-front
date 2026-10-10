@@ -1,4 +1,5 @@
 import {subscribe} from '../../../services/socket/subscriber';
+import {AppSocket} from '../../../services/socket/socketEvents';
 import {tweetsReceived, connectToSocketFailed} from '../../../store/socketSlice';
 
 type Handler = (arg?: unknown) => void;
@@ -14,7 +15,7 @@ const makeFakeSocket = () => {
     off,
   };
   return {
-    socket: socket as unknown as SocketIOClient.Socket,
+    socket: socket as unknown as AppSocket,
     off,
     trigger: (event: string, arg?: unknown) => handlers[event]?.(arg),
   };

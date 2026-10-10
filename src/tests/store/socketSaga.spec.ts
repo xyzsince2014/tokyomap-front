@@ -4,6 +4,7 @@ import {throwError} from 'redux-saga-test-plan/providers';
 import {eventChannel} from 'redux-saga';
 
 import socketSaga from '../../store/socketSaga';
+import {AppSocket} from '../../services/socket/socketEvents';
 import {createSocket} from '../../services/socket/createSocket';
 import {subscribe} from '../../services/socket/subscriber';
 import {
@@ -15,7 +16,7 @@ import {
 
 // a minimal socket stub; only emit/disconnect are exercised by the saga
 const fakeSocket = () =>
-  ({emit: jest.fn(), disconnect: jest.fn()} as unknown as SocketIOClient.Socket);
+  ({emit: jest.fn(), disconnect: jest.fn()} as unknown as AppSocket);
 
 const tweets = [{tweetId: 't1'}] as Tweet[];
 
@@ -48,7 +49,7 @@ describe('socketSaga', () => {
   it('forwards a postTweet to the socket server', async () => {
     // keep emit as a standalone mock so the assertion does not reference it as an unbound method
     const emit = jest.fn();
-    const socket = {emit, disconnect: jest.fn()} as unknown as SocketIOClient.Socket;
+    const socket = {emit, disconnect: jest.fn()} as unknown as AppSocket;
     const channel = eventChannel(() => () => {});
 
     await expectSaga(socketSaga)

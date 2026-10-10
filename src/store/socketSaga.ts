@@ -1,6 +1,7 @@
 import { EventChannel } from 'redux-saga';
 import { all, call, put, take, takeLatest } from 'redux-saga/effects';
 
+import { AppSocket, SOCKET_EVENTS } from '../services/socket/socketEvents';
 import {
   connectToSocket,
   connectToSocketFailed,
@@ -25,23 +26,22 @@ export default function* socketSaga() {
 
 /**
  * Connects, then runs the in/outbound loops until this task is cancelled.
- * takeLatest cancels it when a new connectToSocket arrives, which cancels the loops and disconnects the old socket — no manual bookkeeping needed.
+ * takeLatest cancels it when a new connectToSocket arrives, which cancels the loops and disconnects the old socket.
  *
  * @param socketHandler the socket factory to connect with
  */
 function* handleConnect(socketHandler: typeof createSocket) {
-  let socket: SocketIOClient.Socket;
+  let socket: AppSocket;
 
   try {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    socket = (yield call(socketHandler, `${process.env.DOMAIN!}`)) as SocketIOClient.Socket;
+    socket = (yield call(socketHandler, `${process.env.DOMAIN!}`)) as AppSocket;
   } catch (e: unknown) {
     // dispatch connectToSocketFailed so the root saga alerts the user, then bail out (socket is unset)
     yield put(connectToSocketFailed());
     return;
   }
 
-  socket.emit('initSocketState');
+  socket.emit(SOCKET_EVENTS.INIT);
 
   try {
     // call (not fork) so this blocks here; cancelling the task cancels both loops
@@ -54,7 +54,7 @@ function* handleConnect(socketHandler: typeof createSocket) {
 /**
  * Pushes inbound server events (tweetsReceived / connectToSocketFailed) into the store.
  */
-function* watchInbound(socket: SocketIOClient.Socket) {
+function* watchInbound(socket: AppSocket) {
   // bridge the socket's inbound messages into a saga channel (each server event becomes one SocketEvent action)
   const channel = (yield call(subscribe, socket)) as EventChannel<SocketEvent>;
   try {
@@ -73,12 +73,12 @@ function* watchInbound(socket: SocketIOClient.Socket) {
 /**
  * Forwards each postTweet to the socket server.
  */
-function* watchOutbound(socket: SocketIOClient.Socket) {
+function* watchOutbound(socket: AppSocket) {
   while (true) {
     // block here until the user dispatches postTweet, then take that (typed) action
     const action = (yield take(postTweet.type)) as ReturnType<typeof postTweet>;
     // forward its payload to the server over the socket
-    socket.emit('postTweet', action.payload);
+    socket.emit(SOCKET_EVENTS.POST, action.payload);
   }
 }
 
