@@ -1,4 +1,4 @@
-import { createAction, createReducer, PayloadAction } from '@reduxjs/toolkit';
+import { createAction, createReducer } from '@reduxjs/toolkit';
 import { useCallback, useEffect, useRef, useReducer } from 'react';
 
 interface ModalState {
@@ -15,15 +15,14 @@ const setModalIdAction = createAction<{ modalId: string }>('MODAL/SET_MODAL_ID')
 const setScrollTopAction = createAction('MODAL/SET_SCROLL_TOP');
 
 /**
- * createReducer() builds a reducer from a map of "action type -> handler".
- * When an action is dispatched, its handler runs and returns the next state.
+ * createReducer() builds a reducer by registering a handler per action with the builder callback.
  */
-const modalReducer = createReducer<ModalState>(initialState, {
-  // on SET_MODAL_ID: remember which modal is open
-  [setModalIdAction.type]: (state, action: PayloadAction<{ modalId: string }>) => ({ ...state, modalId: action.payload.modalId }),
-
-  // on SET_SCROLL_TOP: record the current page scroll position, so it can be restored after the modal closes.
-  [setScrollTopAction.type]: state => ({ ...state, scrollTop: document.documentElement.scrollTop || document.body.scrollTop }),
+const modalReducer = createReducer<ModalState>(initialState, builder => {
+  builder
+    // on SET_MODAL_ID: remember which modal is open
+    .addCase(setModalIdAction, (state, action) => ({ ...state, modalId: action.payload.modalId }))
+    // on SET_SCROLL_TOP: record the current page scroll position, so it can be restored after the modal closes
+    .addCase(setScrollTopAction, state => ({ ...state, scrollTop: document.documentElement.scrollTop || document.body.scrollTop }));
 });
 
 /**
@@ -57,7 +56,7 @@ const useModal = () => {
 
   const openModal = useCallback(
     (element: HTMLDivElement) => {
-      dispatch(setScrollTopAction);
+      dispatch(setScrollTopAction());
       element.setAttribute('aria-hidden', 'false');
       element.setAttribute('tabindex', '1');
       window.addEventListener('scroll', stopScroll, true);
