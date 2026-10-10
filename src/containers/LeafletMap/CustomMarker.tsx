@@ -7,7 +7,7 @@ interface EnhancedCustomMarkerProps {
 
 const EnhancedCustormMarker: React.FC<EnhancedCustomMarkerProps> = ({tweet}) => {
   const {timeRemaining} = useTimer(tweet.disappearAt);
-  return timeRemaining > 0 ? <CustormMarker tweet={tweet} timeRemaining={timeRemaining} /> : <></>;
+  return timeRemaining > 0 ? <CustormMarker tweet={tweet} timeRemaining={timeRemaining} /> : null;
 };
 
 export default EnhancedCustormMarker;

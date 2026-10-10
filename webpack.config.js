@@ -102,7 +102,20 @@ module.exports = (env, args) => {
         },
         {
           test: /\.s?css$/,
-          use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                // the modern API resolves @use via sass loadPaths (sass-loader 8 did it through
+                // webpack); add the scss root so bare specifiers like @use 'foundation' resolve
+                sassOptions: {
+                  loadPaths: [path.resolve(__dirname, 'src/assets/scss')],
+                },
+              },
+            },
+          ],
         },
         {
           test: /\.(jpe?g|png|gif|svg)$/,

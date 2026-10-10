@@ -19,7 +19,7 @@ module.exports = {
     'plugin:import/recommended', // enables eslint-plugin-import
     'plugin:import/typescript',
     'plugin:@typescript-eslint/recommended', // 組込ルールに関するESLint公式推奨設定"eslint:recommended"の中でTSの文法と衝突するものをOFF
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/recommended-type-checked', // v6+ renamed from recommended-requiring-type-checking
     'prettier', // uses eslint-config-prettier
   ],
   parser: '@typescript-eslint/parser',
@@ -81,7 +81,7 @@ module.exports = {
     '@typescript-eslint/indent': 'off', // enforces consistent indentation
     '@typescript-eslint/no-unnecessary-type-assertion': 'error', // warns of a type assertion which does not change the type of an expression
     // todo: '@typescript-eslint/no-unused-vars': ['error', {varsIgnorePattern: '_'}],
-    '@typescript-eslint/no-unused-vars': ['warn', {varsIgnorePattern: '_'}],
+    '@typescript-eslint/no-unused-vars': ['warn', {varsIgnorePattern: '_', caughtErrors: 'none'}],
     // functions: false — function declarations hoist, so top-down ordering (entry first) is safe
     '@typescript-eslint/no-use-before-define': ['error', {functions: false}],
     '@typescript-eslint/no-empty-function': 'off',
@@ -92,7 +92,10 @@ module.exports = {
     '@typescript-eslint/no-unsafe-assignment': 'warn',
     '@typescript-eslint/no-unsafe-call': 'warn',
     '@typescript-eslint/no-unsafe-member-access': 'warn',
+    '@typescript-eslint/no-unsafe-argument': 'warn', // same stance as the rest of the unsafe-* family
     '@typescript-eslint/no-explicit-any': 'warn',
+    // async handlers passed to JSX attributes (onClick, onSubmit) are fine in React
+    '@typescript-eslint/no-misused-promises': ['error', {checksVoidReturn: {attributes: false}}],
 
     // prefer-arrow functions
     'prefer-arrow/prefer-arrow-functions': [
@@ -105,6 +108,9 @@ module.exports = {
     ],
 
     // react rules
+    // the codebase uses arrow-function components (and even eslint-plugin-prefer-arrow); airbnb 19
+    // defaults this to function-declaration, so align it to arrow instead of rewriting every component
+    'react/function-component-definition': ['error', {namedComponents: 'arrow-function', unnamedComponents: 'arrow-function'}],
     'react/jsx-filename-extension': ['error', {extensions: ['jsx', 'tsx']}],
     'react/jsx-one-expression-per-line': 'off',
     'react/jsx-uses-vars': 'error',

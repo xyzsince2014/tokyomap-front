@@ -12,7 +12,6 @@ import LeafletMap from '../../components/LeafletMap/LeafletMap';
  */
 const EnhancedLeafletMap: React.FC = () => {
 
-  /* Redux */
   // useSelector(state => state.x) reads state.x from the store, and re-renders this component when state.x changes.
   const tweets = useSelector((state: RootState) => state.tweets);
 
@@ -25,7 +24,6 @@ const EnhancedLeafletMap: React.FC = () => {
     dispatch(connectToSocket());
   }, [dispatch]);
 
-  /* ReactQuery */
   // fetch and cache auth with the custom hook
   const {isAuthenticated} = useAuth();
 

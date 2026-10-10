@@ -1,4 +1,4 @@
-import { io, ManagerOptions, SocketOptions } from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 import { AppSocket } from './socketEvents';
 
