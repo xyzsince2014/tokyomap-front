@@ -1,42 +1,45 @@
-import {connect} from 'react-redux';
-import {bindActionCreators, Dispatch} from 'redux';
+import {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import {TiMessage} from 'react-icons/ti';
 
-import {postTweet, TweetPosted} from '../../store/socketSlice';
+import {postTweet} from '../../store/socketSlice';
 import ModalTweet from '../../components/LeafletMap/ModalTweet';
 import useAuth from '../../hooks/auth/useAuth';
 import useGeolocation from '../../hooks/geolocation/useGeolocation';
-import useModal from '../../hooks/leafletMap/useModal';
 
-interface DispatchProps {
-  postTweetBegin: (tweetPosted: TweetPosted) => void;
-}
-
-export type EnhancedModalTweetProps = DispatchProps;
-
-const mapDispatchToProps =
-  (dispatch: Dispatch): DispatchProps => bindActionCreators({postTweetBegin: tweetPosted => postTweet(tweetPosted)}, dispatch);
-
-const EnhancedModalTweet: React.FC<EnhancedModalTweetProps> = ({postTweetBegin}) => {
+/**
+ * The tweet feature, self-contained: owns the open state, renders its own trigger button and the
+ * modal, and dispatches the tweet on post. The parent just drops in <ModalTweet /> — no state leaks
+ * into the presentational controls.
+ */
+const EnhancedModalTweet: React.FC = () => {
   const {userId} = useAuth();
-  const modalRef = useModal();
   const {fetchGeolocation} = useGeolocation();
+  const dispatch = useDispatch();
+  const [isOpen, setOpen] = useState(false);
 
   const handlePost = async (): Promise<void> => {
     const message = document.getElementById('message') as HTMLInputElement;
     if (!message.value || message.value.length > 256) {
-      /* eslint-disable no-alert */
+      // eslint-disable-next-line no-alert
       window.alert('invalid input');
-      /* eslint-enable no-alert */
       return;
     }
 
-    // fetch the current position at post time
+    // fetch the current position at post time, then dispatch the tweet (the saga sends it over the socket)
     const geolocation = await fetchGeolocation();
-    postTweetBegin({userId, message: message.value, geolocation});
+    dispatch(postTweet({userId, message: message.value, geolocation}));
     message.value = '';
   };
 
-  return <ModalTweet ref={modalRef} handlePost={handlePost} />;
+  return (
+    <>
+      <button type="button" aria-label="Share a moment" onClick={() => setOpen(true)}>
+        <TiMessage />
+      </button>
+      <ModalTweet isOpen={isOpen} onClose={() => setOpen(false)} handlePost={handlePost} />
+    </>
+  );
 };
 
-export default connect(null, mapDispatchToProps)(EnhancedModalTweet);
+export default EnhancedModalTweet;
