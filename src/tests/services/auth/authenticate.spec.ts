@@ -36,7 +36,7 @@ describe('authenticate()', () => {
     mockAdapter.onGet('/auth/authenticate').reply(statusCodes.INTERNAL_SERVER_ERROR);
     try {
       void (await authenticate());
-    } catch (err: any) {
+    } catch (err) {
       expect(err).toStrictEqual(Error('Server Error'));
     }
   });
